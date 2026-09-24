@@ -1,4 +1,9 @@
-export default function Home() {
+import Link from "next/link";
+import { getHomeContent } from "@/lib/content";
+
+export default async function Home() {
+  const home = await getHomeContent();
+
   return (
     <main className="min-h-[calc(100vh-73px)] bg-[#07111f] text-slate-100">
       <section className="relative flex min-h-[calc(100vh-73px)] items-center overflow-hidden">
@@ -7,34 +12,33 @@ export default function Home() {
         <div className="relative mx-auto grid w-full max-w-7xl items-center gap-16 px-6 py-24 md:grid-cols-[1.2fr_0.8fr]">
           <div>
             <p className="mb-6 text-sm font-medium uppercase tracking-[0.3em] text-cyan-300">
-              Researcher · Computational Biology · Data
+              {home.eyebrow}
             </p>
 
             <h1 className="text-6xl font-semibold leading-none tracking-tight md:text-8xl">
-              Rita
+              {home.firstName}
               <br />
-              <span className="text-slate-400">Neupane.</span>
+              <span className="text-slate-400">{home.lastName}</span>
             </h1>
 
             <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-400 md:text-xl">
-              I investigate biological and public-health questions through
-              computation, data, and research.
+              {home.intro}
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
-              <a
-                href="/research"
+              <Link
+                href={home.primaryCta.href}
                 className="rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-[#07111f] transition hover:bg-cyan-300"
               >
-                Explore my research
-              </a>
+                {home.primaryCta.label}
+              </Link>
 
-              <a
-                href="/about"
+              <Link
+                href={home.secondaryCta.href}
                 className="rounded-full border border-white/15 px-6 py-3 text-sm text-slate-300 transition hover:border-white/30 hover:text-white"
               >
-                Get to know me
-              </a>
+                {home.secondaryCta.label}
+              </Link>
             </div>
           </div>
 
@@ -45,11 +49,11 @@ export default function Home() {
               <div className="flex h-full items-center justify-center">
                 <div className="text-center">
                   <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-cyan-400/30 bg-cyan-400/5 text-3xl font-semibold text-cyan-300">
-                    RN
+                    {home.photoPlaceholderInitials}
                   </div>
 
                   <p className="mt-5 text-sm text-slate-500">
-                    Photograph coming soon
+                    {home.photoPlaceholderText}
                   </p>
                 </div>
               </div>
