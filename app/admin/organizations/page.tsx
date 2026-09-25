@@ -11,7 +11,6 @@ type OrganizationRow = {
   image_id: string | null;
   sort_order: number;
   is_visible: boolean;
-  image: { id: string; alt_text: string | null } | { id: string; alt_text: string | null }[] | null;
 };
 
 export default async function AdminOrganizations({
@@ -24,10 +23,15 @@ export default async function AdminOrganizations({
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("organizations")
-    .select("id, name, image_id, sort_order, is_visible, image:media_assets(id, alt_text)")
+    .select("id, name, image_id, sort_order, is_visible")
     .order("sort_order", { ascending: true });
 
-  const organizations = (data ?? []) as OrganizationRow[];
+  const organizations = (data ?? []) as Omit<OrganizationRow, "image">[];
+  const imageIds = organizations.map((organization) => organization.image_id).filter((id): id is string => Boolean(id));
+  const { data: mediaRows } = imageIds.length
+    ? await supabase.from("media_assets").select("id, alt_text").in("id", imageIds)
+    : { data: [] as { id: string; alt_text: string | null }[] };
+  const mediaById = new Map((mediaRows ?? []).map((media) => [media.id, media]));
 
   return (
     <>
@@ -35,10 +39,10 @@ export default async function AdminOrganizations({
       <AdminHeader title="Organizations" text="Manage the organizations shown on the home page, including their logos." backHref="/admin" backLabel="Back to dashboard" />
       <SavedNotice show={saved === "1"} text="Organization saved." />
       {actionError && <p role="alert" className="mt-8 text-sm text-red-300">The organization could not be updated. Please try again.</p>}
-      <div className="mt-8"><Panel><form action={async (formData) => { "use server"; await createOrganization(formData); }} className="grid gap-4 sm:grid-cols-[1fr_180px_auto] sm:items-end"><div><label className="text-sm text-slate-300" htmlFor="new-org-name">Organization name</label><input id="new-org-name" name="name" required maxLength={200} placeholder="e.g. National Innovation Center" className="mt-2 w-full rounded-2xl border border-white/10 bg-[#07111f] px-4 py-3 text-white outline-none focus:border-cyan-400/60" /></div><div><label className="text-sm text-slate-300" htmlFor="new-org-order">Display order</label><input id="new-org-order" name="sort_order" type="number" min={0} max={9999} defaultValue={organizations.length} className="mt-2 w-full rounded-2xl border border-white/10 bg-[#07111f] px-4 py-3 text-white outline-none focus:border-cyan-400/60" /></div><button type="submit" className="rounded-full bg-cyan-400 px-5 py-3 text-sm font-semibold text-[#07111f]">Add organization</button></form></Panel></div>
+      <div className="mt-8"><Panel><form action={createOrganization} className="grid gap-4 sm:grid-cols-[1fr_180px_auto] sm:items-end"><div><label className="text-sm text-slate-300" htmlFor="new-org-name">Organization name</label><input id="new-org-name" name="name" required maxLength={200} placeholder="e.g. National Innovation Center" className="mt-2 w-full rounded-2xl border border-white/10 bg-[#07111f] px-4 py-3 text-white outline-none focus:border-cyan-400/60" /></div><div><label className="text-sm text-slate-300" htmlFor="new-org-order">Display order</label><input id="new-org-order" name="sort_order" type="number" min={0} max={9999} defaultValue={organizations.length} className="mt-2 w-full rounded-2xl border border-white/10 bg-[#07111f] px-4 py-3 text-white outline-none focus:border-cyan-400/60" /></div><button type="submit" className="rounded-full bg-cyan-400 px-5 py-3 text-sm font-semibold text-[#07111f]">Add organization</button></form></Panel></div>
       <div className="mt-10 space-y-6">
         {error ? <Panel><p className="text-red-300">Could not load organizations.</p></Panel> : organizations.map((organization) => {
-          const image = Array.isArray(organization.image) ? organization.image[0] : organization.image;
+          const image = organization.image_id ? mediaById.get(organization.image_id) ?? null : null;
           return (
             <Panel key={organization.id}>
               <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
