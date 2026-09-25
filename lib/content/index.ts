@@ -189,7 +189,9 @@ export async function getHomeContent(): Promise<HomeContent> {
 }
 
 export async function getAboutContent(): Promise<AboutContent> {
-  return pageHeader(await getPage("about"));
+  const page = await getPage("about");
+  const body = pageSection(page, "about_body");
+  return { ...pageHeader(page), body: body.body ?? "" };
 }
 
 export async function getResearchContent() {

@@ -51,7 +51,7 @@ export type PageHeader = {
   intro: string;
 };
 
-export type AboutContent = PageHeader;
+export type AboutContent = PageHeader & { body: string };
 
 export type ResearchItem = {
   id: string;

@@ -15,7 +15,7 @@ export default async function About() {
         </h1>
 
         <p className="mt-8 max-w-3xl text-lg leading-8 text-slate-400">
-          {about.intro}
+          {about.body}
         </p>
       </div>
     </main>
