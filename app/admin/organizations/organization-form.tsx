@@ -14,8 +14,8 @@ export function OrganizationForm({ organization }: { organization: Organization 
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     startTransition(async () => {
-      const result = await updateOrganization(form);
-      setMessage(result.error ?? "Saved.");
+      await updateOrganization(form);
+      setMessage("Saved.");
     });
   }
 
