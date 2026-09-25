@@ -1,60 +1,43 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Manrope, Playfair_Display } from "next/font/google";
 import Link from "next/link";
 import { getSiteSettings } from "@/lib/content";
 import OwnerLoginButton from "@/app/_components/owner-login-button";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-});
+const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"] });
+const playfair = Playfair_Display({ variable: "--font-display", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Rita Neupane",
   description: "Portfolio of Rita Neupane",
 };
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const site = await getSiteSettings();
 
   return (
-    <html lang="en" className={`${manrope.variable} antialiased`}>
-      <body className="min-h-screen bg-[#07111f] font-sans text-slate-100">
-        <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#07111f]/90 backdrop-blur-xl">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-            <Link
-              href="/"
-              className="text-lg font-semibold tracking-tight transition hover:text-cyan-300"
-            >
-              {site.brandMark}
-              <span className="text-cyan-400">.</span>
+    <html lang="en" className={`${manrope.variable} ${playfair.variable} antialiased`}>
+      <body className="min-h-screen bg-[#f7f5f0] font-sans text-[#171717]">
+        <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f7f5f0]/95 backdrop-blur">
+          <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+            <Link href="/" className="font-display text-xl font-semibold tracking-tight">
+              {site.brandMark}<span className="text-[#9a6b3f]">.</span>
             </Link>
-
-            <div className="hidden items-center gap-8 text-sm text-slate-400 md:flex">
+            <div className="hidden items-center gap-7 text-sm text-black/55 md:flex">
               {site.navigation.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="transition hover:text-white"
-                >
+                <Link key={item.href} href={item.href} className="transition hover:text-black">
                   {item.label}
                 </Link>
               ))}
             </div>
-
-            <Link
-              href={site.navCta.href}
-              className="rounded-full border border-cyan-400/40 px-4 py-2 text-sm text-cyan-300 transition hover:bg-cyan-400/10"
-            >
-              {site.navCta.label}
-            </Link>
+            {site.navCta?.href && site.navCta?.label && (
+              <Link href={site.navCta.href} className="text-sm font-medium text-[#7b5330] hover:text-black">
+                {site.navCta.label} ↗
+              </Link>
+            )}
           </div>
         </nav>
-
         {children}
         <OwnerLoginButton />
       </body>
