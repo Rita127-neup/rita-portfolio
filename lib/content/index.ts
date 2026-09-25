@@ -20,6 +20,7 @@ import type {
   PublicationLink,
   ResearchItem,
   ProfileInfo,
+  Organization,
   SiteSettings,
 } from "./types";
 
@@ -142,6 +143,21 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
       (link) => (link.url ? { label: link.label, url: link.url } : { label: link.label }),
     ),
   };
+});
+
+export const getOrganizations = cache(async (): Promise<Organization[]> => {
+  const { data, error } = await getPublicSupabaseClient()
+    .from("organizations")
+    .select("id, name, image_id, sort_order")
+    .eq("is_visible", true)
+    .order("sort_order", { ascending: true });
+  if (error) fail("organizations", error.message);
+  return (data ?? []).map((row) => ({
+    id: row.id,
+    name: row.name,
+    logoId: row.image_id,
+    sortOrder: row.sort_order,
+  }));
 });
 
 export const getProfileInfo = cache(async (): Promise<ProfileInfo> => {
