@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import Link from "next/link";
 import { getSiteSettings } from "@/lib/content";
+import OwnerLoginButton from "@/app/_components/owner-login-button";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -55,6 +56,7 @@ export default async function RootLayout({
         </nav>
 
         {children}
+        <OwnerLoginButton />
       </body>
     </html>
   );
