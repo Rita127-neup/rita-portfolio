@@ -144,7 +144,7 @@ export default async function Home() {
             Organizations
           </p>
           <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
-            Organizations I have worked with
+            Organizations
           </h2>
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
