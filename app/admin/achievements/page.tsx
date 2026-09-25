@@ -52,7 +52,7 @@ export default async function AdminAchievements({
       <RecordList
         error={!!error}
         errorText="Could not load achievements. Please try again."
-        emptyText="No achievements have been added yet. Adding new entries is not available in this version."
+        emptyText="No achievements found."
         rows={achievements.map((achievement) => ({
           id: achievement.id,
           eyebrow: achievement.issuer ?? undefined,
