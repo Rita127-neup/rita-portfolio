@@ -62,3 +62,28 @@ export async function updateAchievement(
   revalidatePath("/admin/achievements");
   redirect("/admin/achievements?saved=1");
 }
+
+
+export async function createAchievement(
+  _prevState: AchievementFormState,
+  formData: FormData,
+): Promise<AchievementFormState> {
+  await requireAdmin();
+  const values = readAchievementForm(formData);
+  const result = validateAchievement(values);
+  if (!result.ok) return { error: "Please fix the highlighted fields.", fieldErrors: result.errors, values };
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("achievements").insert(result.data).select("id").single();
+  if (error || !data) return { error: "The achievement could not be created. Please try again.", fieldErrors: {}, values };
+  revalidatePath("/admin/achievements");
+  redirect("/admin/achievements?saved=1");
+}
+
+export async function deleteAchievement(id: string): Promise<void> {
+  await requireAdmin();
+  if (!isUuid(id)) throw new Error("This achievement could not be found.");
+  const supabase = await createClient();
+  const { error } = await supabase.from("achievements").delete().eq("id", id);
+  if (error) throw new Error("The achievement could not be deleted.");
+  revalidatePath("/admin/achievements");
+}
