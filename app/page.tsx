@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getHomeContent, getProfileInfo } from "@/lib/content";
+import { getHomeContent, getOrganizations, getProfileInfo } from "@/lib/content";
 
 export default async function Home() {
-  const [home, profile] = await Promise.all([getHomeContent(), getProfileInfo()]);
+  const [home, profile, organizations] = await Promise.all([getHomeContent(), getProfileInfo(), getOrganizations()]);
 
   return (
     <main className="min-h-[calc(100vh-73px)] bg-[#07111f] text-slate-100">
@@ -148,22 +148,16 @@ export default async function Home() {
           </h2>
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { name: "ICAD", mark: "IC" },
-              { name: "Rotaract Club of Central Lumbini", mark: "RC" },
-              { name: "LSDT", mark: "LS" },
-              { name: "National Innovation Center", mark: "NI" },
-            ].map((organization) => (
-              <div
-                key={organization.name}
-                className="flex min-h-32 items-center gap-4 rounded-2xl border border-white/10 bg-[#0c1a2d] px-6 py-5 transition hover:border-cyan-400/30"
-              >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/5 text-sm font-semibold text-cyan-300">
-                  {organization.mark}
+            {organizations.map((organization) => (
+              <div key={organization.id} className="flex min-h-32 items-center gap-4 rounded-2xl border border-white/10 bg-[#0c1a2d] px-6 py-5 transition hover:border-cyan-400/30">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-cyan-400/20 bg-cyan-400/5">
+                  {organization.logoId ? (
+                    <Image src={`/media/organization/${organization.id}?v=${organization.logoId}`} alt={organization.name} width={56} height={56} unoptimized className="h-full w-full object-contain p-1.5" />
+                  ) : (
+                    <span className="text-sm font-semibold text-cyan-300">{organization.name.slice(0, 2).toUpperCase()}</span>
+                  )}
                 </div>
-                <p className="text-sm font-medium leading-6 text-slate-200">
-                  {organization.name}
-                </p>
+                <p className="text-sm font-medium leading-6 text-slate-200">{organization.name}</p>
               </div>
             ))}
           </div>
