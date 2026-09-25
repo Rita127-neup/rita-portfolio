@@ -104,6 +104,8 @@ export async function deletePublication(id: string): Promise<void> {
   await requireAdmin();
   if (!isUuid(id)) throw new Error("This publication could not be found.");
   const supabase = await createClient();
+  const { error: linkError } = await supabase.from("publication_links").delete().eq("publication_id", id);
+  if (linkError) throw new Error("The publication links could not be deleted.");
   const { error } = await supabase.from("publications").delete().eq("id", id);
   if (error) throw new Error("The publication could not be deleted.");
   revalidatePath("/admin/publications");
