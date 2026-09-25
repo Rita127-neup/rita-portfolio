@@ -52,7 +52,7 @@ export default async function AdminExperiences({
       <RecordList
         error={!!error}
         errorText="Could not load experiences. Please try again."
-        emptyText="No experiences have been added yet. Adding new entries is not available in this version."
+        emptyText="No experiences found."
         rows={experiences.map((experience) => ({
           id: experience.id,
           eyebrow: experience.organization,
