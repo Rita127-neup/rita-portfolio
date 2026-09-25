@@ -61,3 +61,30 @@ export async function updateResearchItem(
   revalidatePath("/research");
   redirect("/admin/research?saved=1");
 }
+
+
+export async function createResearchItem(
+  _prevState: ResearchFormState,
+  formData: FormData,
+): Promise<ResearchFormState> {
+  await requireAdmin();
+  const values = readResearchForm(formData);
+  const result = validateResearch(values);
+  if (!result.ok) return { error: "Please fix the highlighted fields.", fieldErrors: result.errors, values };
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("research_items").insert(result.data).select("id").single();
+  if (error || !data) return { error: "The research item could not be created. Please try again.", fieldErrors: {}, values };
+  revalidatePath("/admin/research");
+  revalidatePath("/research");
+  redirect("/admin/research?saved=1");
+}
+
+export async function deleteResearchItem(id: string): Promise<void> {
+  await requireAdmin();
+  if (!isUuid(id)) throw new Error("This research item could not be found.");
+  const supabase = await createClient();
+  const { error } = await supabase.from("research_items").delete().eq("id", id);
+  if (error) throw new Error("The research item could not be deleted.");
+  revalidatePath("/admin/research");
+  revalidatePath("/research");
+}
