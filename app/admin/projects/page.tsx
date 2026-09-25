@@ -107,7 +107,7 @@ export default async function AdminProjects({
                 >
                   Edit
                 </Link>
-                <DeleteButton action={() => deleteProject(project.id)} />
+                <DeleteButton action={deleteProject.bind(null, project.id)} />
               </li>
             ))}
           </ul>
