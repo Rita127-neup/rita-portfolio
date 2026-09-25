@@ -104,7 +104,7 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     supabase
       .from("site_settings")
       .select(
-        "meta_title, meta_description, brand_mark, nav_cta_label, nav_cta_href, contact_email",
+        "meta_title, meta_description, brand_mark, nav_cta_label, nav_cta_href, contact_email, phone, birthday, location",
       )
       .eq("id", 1)
       .maybeSingle(),
