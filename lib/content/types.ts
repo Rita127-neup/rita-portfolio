@@ -25,6 +25,13 @@ export type SiteSettings = {
   socialLinks: SocialLink[];
 };
 
+export type ProfileInfo = {
+  email: string;
+  phone: string;
+  birthday: string;
+  location: string;
+};
+
 export type LinkButton = {
   label: string;
   href: string;
