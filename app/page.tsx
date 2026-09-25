@@ -100,7 +100,7 @@ export default async function Home() {
         <section className="border-t border-[#d8d5cd] bg-[#ebe9e2] px-6 py-12 md:py-14">
           <div className="mx-auto max-w-6xl">
             <div className="flex items-end justify-between gap-6">
-              <div><p className="section-label">Research & publications</p><h2 className="section-title">Research I have contributed to.</h2></div>
+              <div><p className="section-label">My research</p><h2 className="section-title">Research I have conducted.</h2></div>
               <Link href="/publications" className="hidden text-sm font-semibold text-[#315c4a] md:block">All →</Link>
             </div>
             <div className="mt-6 grid gap-x-8 md:grid-cols-3">
