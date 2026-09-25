@@ -5,6 +5,27 @@
   --font-display: var(--font-display), Georgia, serif;
 }
 
+@layer components {
+  .section-label {
+    font-size: 0.7rem;
+    line-height: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #777c75;
+  }
+
+  .section-title {
+    margin-top: 0.75rem;
+    max-width: 42rem;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+  }
+}
+
 ::selection {
   background: #d8c0a5;
   color: #171717;
