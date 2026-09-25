@@ -3,7 +3,7 @@ import { requireAdmin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { AdminHeader, AdminNav, Panel, SavedNotice } from "../_components/admin-ui";
 import { OrganizationForm, OrganizationLogoUpload } from "./organization-form";
-import { deleteOrganization, removeOrganizationLogo } from "./actions";
+import { createOrganization, deleteOrganization, removeOrganizationLogo } from "./actions";
 
 type OrganizationRow = {
   id: string;
@@ -49,7 +49,8 @@ export default async function AdminOrganizations({
                       <Image src={`/media/organization/${organization.id}?v=${image.id}`} alt={image.alt_text ?? organization.name} width={96} height={96} unoptimized className="max-h-24 w-auto object-contain" />
                     ) : <span className="text-sm text-slate-500">No logo</span>}
                   </div>
-                  <OrganizationLogoUpload organizationId={organization.id} hasLogo={!!image} />\n                  <form action={deleteOrganization} className="mt-3" onSubmit={(event) => { if (!confirm(`Delete ${organization.name}?`)) event.preventDefault(); }}>\n                    <input type="hidden" name="id" value={organization.id} />\n                    <button type="submit" className="rounded-full border border-red-400/20 px-4 py-2 text-sm text-red-300 hover:border-red-400/50 hover:text-red-200">Delete organization</button>\n                  </form>
+                  <OrganizationLogoUpload organizationId={organization.id} hasLogo={!!image} />
+                  <form action={deleteOrganization} className="mt-3" onSubmit={(event) => { if (!confirm(`Delete ${organization.name}?`)) event.preventDefault(); }}>\n                    <input type="hidden" name="id" value={organization.id} />\n                    <button type="submit" className="rounded-full border border-red-400/20 px-4 py-2 text-sm text-red-300 hover:border-red-400/50 hover:text-red-200">Delete organization</button>\n                  </form>
                   {image && (
                     <form action={removeOrganizationLogo} className="mt-3">
                       <input type="hidden" name="id" value={organization.id} />
