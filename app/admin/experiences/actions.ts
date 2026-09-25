@@ -62,3 +62,28 @@ export async function updateExperience(
   revalidatePath("/admin/experiences");
   redirect("/admin/experiences?saved=1");
 }
+
+
+export async function createExperience(
+  _prevState: ExperienceFormState,
+  formData: FormData,
+): Promise<ExperienceFormState> {
+  await requireAdmin();
+  const values = readExperienceForm(formData);
+  const result = validateExperience(values);
+  if (!result.ok) return { error: "Please fix the highlighted fields.", fieldErrors: result.errors, values };
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("experiences").insert(result.data).select("id").single();
+  if (error || !data) return { error: "The experience could not be created. Please try again.", fieldErrors: {}, values };
+  revalidatePath("/admin/experiences");
+  redirect("/admin/experiences?saved=1");
+}
+
+export async function deleteExperience(id: string): Promise<void> {
+  await requireAdmin();
+  if (!isUuid(id)) throw new Error("This experience could not be found.");
+  const supabase = await createClient();
+  const { error } = await supabase.from("experiences").delete().eq("id", id);
+  if (error) throw new Error("The experience could not be deleted.");
+  revalidatePath("/admin/experiences");
+}
