@@ -2,4 +2,10 @@
 
 @theme inline {
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), Georgia, serif;
+}
+
+::selection {
+  background: #d8c0a5;
+  color: #171717;
 }
