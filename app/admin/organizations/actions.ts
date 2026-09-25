@@ -38,20 +38,19 @@ export async function deleteOrganization(formData: FormData): Promise<void> {
   revalidatePath("/admin/organizations");
 }
 
-export async function updateOrganization(formData: FormData): Promise<{ error?: string }> {
+export async function updateOrganization(formData: FormData): Promise<void> {
   await requireAdmin();
   const id = String(formData.get("id") ?? "");
   const name = String(formData.get("name") ?? "").trim();
   const sortOrder = Number(formData.get("sort_order"));
   const isVisible = formData.get("is_visible") === "on";
   if (!id || !name || !Number.isInteger(sortOrder) || sortOrder < 0 || sortOrder > 9999)
-    return { error: "Please enter a valid name and display order." };
+    return;
   const supabase = await createClient();
   const { error } = await supabase.from("organizations").update({ name, sort_order: sortOrder, is_visible: isVisible, updated_at: new Date().toISOString() }).eq("id", id);
-  if (error) return { error: "The organization could not be saved." };
+  if (error) return;
   revalidatePath("/");
   revalidatePath("/admin/organizations");
-  return {};
 }
 
 export async function registerOrganizationLogo(formData: FormData): Promise<{ error?: string }> {
