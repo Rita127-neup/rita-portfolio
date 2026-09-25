@@ -85,6 +85,38 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <section className="border-t border-white/10 bg-[#07111f] px-6 py-24">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-sm font-medium uppercase tracking-[0.3em] text-cyan-300">
+            Organizations
+          </p>
+          <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+            Organizations I have worked with
+          </h2>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { name: "ICAD", mark: "IC" },
+              { name: "Rotaract Club of Central Lumbini", mark: "RC" },
+              { name: "LSDT", mark: "LS" },
+              { name: "National Innovation Center", mark: "NI" },
+            ].map((organization) => (
+              <div
+                key={organization.name}
+                className="flex min-h-32 items-center gap-4 rounded-2xl border border-white/10 bg-[#0c1a2d] px-6 py-5 transition hover:border-cyan-400/30"
+              >
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/5 text-sm font-semibold text-cyan-300">
+                  {organization.mark}
+                </div>
+                <p className="text-sm font-medium leading-6 text-slate-200">
+                  {organization.name}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
