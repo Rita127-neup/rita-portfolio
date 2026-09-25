@@ -10,17 +10,16 @@ const EXTENSIONS: Record<string, string> = { "image/jpeg": "jpg", "image/png": "
 const PATH_PATTERN = /^logos\/[0-9a-f-]{36}\.(jpg|png|webp)$/;
 const MAX_BYTES = 2 * 1024 * 1024;
 
-export async function createOrganization(formData: FormData): Promise<{ error?: string }> {
+export async function createOrganization(formData: FormData): Promise<void> {
   await requireAdmin();
   const name = String(formData.get("name") ?? "").trim();
   const sortOrder = Number(formData.get("sort_order"));
-  if (!name || !Number.isInteger(sortOrder) || sortOrder < 0 || sortOrder > 9999) return { error: "Please enter a valid name and display order." };
+  if (!name || !Number.isInteger(sortOrder) || sortOrder < 0 || sortOrder > 9999) return;
   const supabase = await createClient();
   const { error } = await supabase.from("organizations").insert({ name, sort_order: sortOrder, is_visible: true });
-  if (error) return { error: "The organization could not be added." };
+  if (error) return;
   revalidatePath("/");
   revalidatePath("/admin/organizations");
-  return {};
 }
 
 export async function deleteOrganization(formData: FormData): Promise<void> {
