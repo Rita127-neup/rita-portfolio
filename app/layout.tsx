@@ -9,15 +9,10 @@ const manrope = Manrope({
   subsets: ["latin"],
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const site = await getSiteSettings();
-
-  return {
-    title: site.metaTitle,
-    description: site.metaDescription,
-  };
-}
-
+export const metadata: Metadata = {
+  title: "Rita Neupane",
+  description: "Portfolio of Rita Neupane",
+};
 export default async function RootLayout({
   children,
 }: Readonly<{

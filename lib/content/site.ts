@@ -1,3 +1,7 @@
+// Reference copy of the content seeded into Supabase. The site reads this
+// content from Supabase (see ./index.ts); keep this file until every public
+// page has been verified, then it can be removed.
+
 import type { ContactContent, HomeContent, SiteSettings } from "./types";
 
 export const siteSettings: SiteSettings = {
@@ -29,6 +33,7 @@ export const homeContent: HomeContent = {
     "I investigate biological and public-health questions through computation, data, and research.",
   primaryCta: { label: "Explore my research", href: "/research" },
   secondaryCta: { label: "Get to know me", href: "/about" },
+  photoAlt: "Rita Neupane",
   photoPlaceholderInitials: "RN",
   photoPlaceholderText: "Photograph coming soon",
 };

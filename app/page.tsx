@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getHomeContent } from "@/lib/content";
 
@@ -39,6 +40,15 @@ export default async function Home() {
               >
                 {home.secondaryCta.label}
               </Link>
+
+              {home.cv && (
+                <a
+                  href={home.cv.href}
+                  className="rounded-full border border-white/15 px-6 py-3 text-sm text-slate-300 transition hover:border-white/30 hover:text-white"
+                >
+                  {home.cv.label}
+                </a>
+              )}
             </div>
           </div>
 
@@ -46,17 +56,31 @@ export default async function Home() {
             <div className="absolute -inset-4 rounded-[2rem] border border-cyan-400/10" />
 
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c1a2d]">
-              <div className="flex h-full items-center justify-center">
-                <div className="text-center">
-                  <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-cyan-400/30 bg-cyan-400/5 text-3xl font-semibold text-cyan-300">
-                    {home.photoPlaceholderInitials}
-                  </div>
+              {home.photoUrl ? (
+                // Served from the private bucket via a signed-URL redirect,
+                // so it bypasses the image optimizer.
+                <Image
+                  src={home.photoUrl}
+                  alt={home.photoAlt}
+                  fill
+                  unoptimized
+                  loading="eager"
+                  sizes="(min-width: 768px) 28rem, 100vw"
+                  className="object-cover"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center">
+                  <div className="text-center">
+                    <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-cyan-400/30 bg-cyan-400/5 text-3xl font-semibold text-cyan-300">
+                      {home.photoPlaceholderInitials}
+                    </div>
 
-                  <p className="mt-5 text-sm text-slate-500">
-                    {home.photoPlaceholderText}
-                  </p>
+                    <p className="mt-5 text-sm text-slate-500">
+                      {home.photoPlaceholderText}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

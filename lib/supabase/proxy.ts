@@ -32,7 +32,22 @@ export async function updateSession(request: NextRequest) {
   // Do not run code between createServerClient and getClaims(): it validates
   // the JWT and refreshes an expired session. Authorization (admin checks)
   // still happens server-side and in RLS, not here.
-  await supabase.auth.getClaims();
+  const { data } = await supabase.auth.getClaims();
+
+  // Optimistic gate: send visitors without a session to the login page before
+  // any admin route renders. Pages still run requireAdmin() themselves.
+  const { pathname } = request.nextUrl;
+  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
+  if (!data?.claims && isAdminRoute && pathname !== "/admin/login") {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/admin/login";
+    loginUrl.search = "";
+    const redirectResponse = NextResponse.redirect(loginUrl);
+    response.cookies
+      .getAll()
+      .forEach((cookie) => redirectResponse.cookies.set(cookie));
+    return redirectResponse;
+  }
 
   return response;
 }

@@ -1,3 +1,7 @@
+// Reference copy of the content seeded into Supabase. The site reads this
+// content from Supabase (see ./index.ts); keep this file until every public
+// page has been verified, then it can be removed.
+
 import type { PageHeader, Project } from "./types";
 
 export const projectsPage: PageHeader = {

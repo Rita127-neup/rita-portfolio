@@ -36,6 +36,9 @@ export type HomeContent = {
   secondaryCta: LinkButton;
   /** Omit until a photo is supplied; the UI shows the initials placeholder. */
   photoUrl?: string;
+  photoAlt: string;
+  /** Omit until a CV is uploaded; the UI hides the download button. */
+  cv?: LinkButton;
   photoPlaceholderInitials: string;
   photoPlaceholderText: string;
 };
