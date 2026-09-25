@@ -176,7 +176,7 @@ export function RecordList({
                 >
                   Edit
                 </Link>
-                {deleteAction && <DeleteButton action={() => deleteAction(row.id)} />}
+                {deleteAction && <DeleteButton action={deleteAction.bind(null, row.id)} />}
               </div>
             </li>
           ))}
