@@ -41,7 +41,12 @@ export const PAGE_CONFIG: Record<string, PageConfig> = {
     path: "/about",
     titleLabel: "Title",
     muted: null,
-    sections: {},
+    sections: {
+      about_body: {
+        name: "About content",
+        fields: { body: "About text" },
+      },
+    },
     links: false,
   },
   research: {
