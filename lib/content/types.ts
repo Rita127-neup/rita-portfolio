@@ -19,6 +19,9 @@ export type SiteSettings = {
   navigation: NavItem[];
   navCta: NavItem;
   contactEmail: string;
+  phone: string;
+  birthday: string;
+  location: string;
   socialLinks: SocialLink[];
 };
 
