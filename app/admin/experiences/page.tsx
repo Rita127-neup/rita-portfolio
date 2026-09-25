@@ -1,3 +1,4 @@
+import { deleteExperience } from "./actions";
 import { requireAdmin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import {
@@ -45,12 +46,13 @@ export default async function AdminExperiences({
         backHref="/admin"
         backLabel="Back to dashboard"
       />
+      <div className="mt-6"><a href="/admin/experiences/new" className="inline-block rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-[#07111f]">Add experience</a></div>
       <SavedNotice show={saved === "1"} text="Experience saved." />
 
       <RecordList
         error={!!error}
         errorText="Could not load experiences. Please try again."
-        emptyText="No experiences have been added yet. Adding new entries is not available in this version."
+        emptyText="No experiences found."
         rows={experiences.map((experience) => ({
           id: experience.id,
           eyebrow: experience.organization,
@@ -63,6 +65,7 @@ export default async function AdminExperiences({
             </>
           ),
         }))}
+        deleteAction={deleteExperience}
       />
     </>
   );

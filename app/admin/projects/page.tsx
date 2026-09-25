@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { DeleteButton } from "../_components/delete-button";
 import { requireAdmin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { AdminNav, Badge } from "../_components/admin-ui";
+import { deleteProject } from "./actions";
 
 type ProjectRow = {
   id: string;
@@ -45,9 +47,12 @@ export default async function AdminProjects({
         Admin
       </p>
       <h1 className="mt-6 text-5xl font-semibold">Projects</h1>
-      <p className="mt-4 text-slate-400">
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+        <p className="text-slate-400">
         Projects shown on the public projects page, in display order.
-      </p>
+        </p>
+        <Link href="/admin/projects/new" className="rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-[#07111f]">Add project</Link>
+      </div>
 
       {saved === "1" && (
         <p
@@ -102,6 +107,7 @@ export default async function AdminProjects({
                 >
                   Edit
                 </Link>
+                <DeleteButton action={deleteProject.bind(null, project.id)} />
               </li>
             ))}
           </ul>

@@ -107,24 +107,13 @@ export async function createProject(
   redirect("/admin/projects?saved=1");
 }
 
+
 export async function deleteProject(id: string): Promise<void> {
   await requireAdmin();
-
-  if (!isProjectId(id)) {
-    throw new Error("This project could not be found.");
-  }
-
+  if (!isProjectId(id)) throw new Error("This project could not be found.");
   const supabase = await createClient();
-
-  const { error } = await supabase
-    .from("projects")
-    .delete()
-    .eq("id", id);
-
-  if (error) {
-    throw new Error("The project could not be deleted.");
-  }
-
+  const { error } = await supabase.from("projects").delete().eq("id", id);
+  if (error) throw new Error("The project could not be deleted.");
   revalidatePath("/admin/projects");
   revalidatePath("/projects");
 }

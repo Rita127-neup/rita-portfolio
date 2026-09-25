@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { SignOutButton } from "../sign-out-button";
+import { DeleteButton } from "./delete-button";
 
 const navItems = [
   { label: "Dashboard", href: "/admin" },
@@ -135,11 +136,13 @@ export function RecordList({
   error,
   errorText,
   emptyText,
+  deleteAction,
 }: {
   rows: ListRow[];
   error: boolean;
   errorText: string;
   emptyText: string;
+  deleteAction?: (id: string) => Promise<void>;
 }) {
   return (
     <div className="mt-12 overflow-hidden rounded-3xl border border-white/10 bg-[#0c1a2d]">
@@ -166,12 +169,15 @@ export function RecordList({
                 <div className="mt-3 flex flex-wrap gap-2">{row.badges}</div>
               </div>
 
-              <Link
-                href={row.editHref}
-                className="rounded-full border border-cyan-400/40 px-4 py-2 text-sm text-cyan-300 transition hover:bg-cyan-400/10"
-              >
-                Edit
-              </Link>
+              <div className="flex items-center gap-2">
+                <Link
+                  href={row.editHref}
+                  className="rounded-full border border-cyan-400/40 px-4 py-2 text-sm text-cyan-300 transition hover:bg-cyan-400/10"
+                >
+                  Edit
+                </Link>
+                {deleteAction && <DeleteButton action={deleteAction.bind(null, row.id)} />}
+              </div>
             </li>
           ))}
         </ul>

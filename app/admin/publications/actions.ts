@@ -82,3 +82,32 @@ export async function updatePublication(
   revalidatePath("/publications");
   redirect("/admin/publications?saved=1");
 }
+
+
+export async function createPublication(
+  _prevState: PublicationFormState,
+  formData: FormData,
+): Promise<PublicationFormState> {
+  await requireAdmin();
+  const values = readPublicationForm(formData);
+  const result = validatePublication(values);
+  if (!result.ok) return { error: "Please fix the highlighted fields.", fieldErrors: result.errors, values };
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("publications").insert(result.data.publication).select("id").single();
+  if (error || !data) return { error: "The publication could not be created. Please try again.", fieldErrors: {}, values };
+  revalidatePath("/admin/publications");
+  revalidatePath("/publications");
+  redirect("/admin/publications?saved=1");
+}
+
+export async function deletePublication(id: string): Promise<void> {
+  await requireAdmin();
+  if (!isUuid(id)) throw new Error("This publication could not be found.");
+  const supabase = await createClient();
+  const { error: linkError } = await supabase.from("publication_links").delete().eq("publication_id", id);
+  if (linkError) throw new Error("The publication links could not be deleted.");
+  const { error } = await supabase.from("publications").delete().eq("id", id);
+  if (error) throw new Error("The publication could not be deleted.");
+  revalidatePath("/admin/publications");
+  revalidatePath("/publications");
+}

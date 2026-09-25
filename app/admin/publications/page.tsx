@@ -1,3 +1,4 @@
+import { deletePublication } from "./actions";
 import { requireAdmin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import {
@@ -46,6 +47,7 @@ export default async function AdminPublications({
         backHref="/admin"
         backLabel="Back to dashboard"
       />
+      <div className="mt-6"><a href="/admin/publications/new" className="inline-block rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-[#07111f]">Add publication</a></div>
       <SavedNotice show={saved === "1"} text="Publication saved." />
 
       <RecordList
@@ -65,6 +67,7 @@ export default async function AdminPublications({
             </>
           ),
         }))}
+        deleteAction={deletePublication}
       />
     </>
   );
