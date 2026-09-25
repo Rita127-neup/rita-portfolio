@@ -18,6 +18,9 @@ export const siteSettings: SiteSettings = {
   ],
   navCta: { label: "Let's connect", href: "/contact" },
   contactEmail: "neupanereeta8@gmail.com",
+  phone: "+977 9761700496",
+  birthday: "2007-08-24",
+  location: "Siddharthanagar-09, Rupandehi",
   socialLinks: [
     { label: "GitHub", url: "https://github.com/Rita127-neup" },
     { label: "LinkedIn" },
