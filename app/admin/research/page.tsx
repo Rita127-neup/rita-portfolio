@@ -46,7 +46,7 @@ export default async function AdminResearch({
         backHref="/admin"
         backLabel="Back to dashboard"
       />
-      <div className="mt-6"><a href="/admin/research/new" className="inline-block rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-[#07111f]">Add researc</a></div>
+      <div className="mt-6"><a href="/admin/research/new" className="inline-block rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-[#07111f]">Add research item</a></div>
       <SavedNotice show={saved === "1"} text="Research item saved." />
 
       <RecordList
