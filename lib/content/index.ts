@@ -19,6 +19,7 @@ import type {
   Publication,
   PublicationLink,
   ResearchItem,
+  ProfileInfo,
   SiteSettings,
 } from "./types";
 
@@ -134,9 +135,30 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     ),
     navCta: { label: s.nav_cta_label, href: s.nav_cta_href },
     contactEmail: s.contact_email ?? "",
+    phone: s.phone ?? "",
+    birthday: s.birthday ?? "",
+    location: s.location ?? "",
     socialLinks: (social.data as { label: string; url: string | null }[]).map(
       (link) => (link.url ? { label: link.label, url: link.url } : { label: link.label }),
     ),
+  };
+});
+
+export const getProfileInfo = cache(async (): Promise<ProfileInfo> => {
+  const { data, error } = await getPublicSupabaseClient()
+    .from("site_settings")
+    .select("contact_email, phone, birthday, location")
+    .eq("id", 1)
+    .maybeSingle();
+
+  if (error) fail("profile information", error.message);
+  if (!data) fail("profile information", "the settings row is missing.");
+
+  return {
+    email: data.contact_email ?? "",
+    phone: data.phone ?? "",
+    birthday: data.birthday ?? "",
+    location: data.location ?? "",
   };
 });
 

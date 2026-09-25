@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getHomeContent } from "@/lib/content";
+import { getHomeContent, getProfileInfo } from "@/lib/content";
 
 export default async function Home() {
-  const home = await getHomeContent();
+  const [home, profile] = await Promise.all([getHomeContent(), getProfileInfo()]);
 
   return (
     <main className="min-h-[calc(100vh-73px)] bg-[#07111f] text-slate-100">
@@ -82,6 +82,58 @@ export default async function Home() {
                 </div>
               )}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#07111f] px-6 py-24">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-sm font-medium uppercase tracking-[0.3em] text-cyan-300">
+            Personal information
+          </p>
+          <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+            Get to know me
+          </h2>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              ["Email", profile.email, `mailto:${profile.email}`],
+              ["Phone", profile.phone, `tel:${profile.phone.replace(/\s/g, "")}`],
+              ["Birthday", profile.birthday, null],
+              ["Location", profile.location, null],
+            ].map(([label, value, href]) => (
+              <div key={label} className="rounded-2xl border border-white/10 bg-[#0c1a2d] px-6 py-5">
+                <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">{label}</p>
+                {href ? (
+                  <a href={href} className="mt-2 block break-words text-base text-slate-200 transition hover:text-cyan-300">{value}</a>
+                ) : (
+                  <p className="mt-2 text-base text-slate-200">{value}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#07111f] px-6 py-24">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-sm font-medium uppercase tracking-[0.3em] text-cyan-300">
+            Education
+          </p>
+          <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+            Education
+          </h2>
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
+            {[
+              { school: "Jaycees Boarding Secondary School", level: "Grades 9 & 10", field: "Optional Mathematics", years: "2021–2023" },
+              { school: "Tilottama Secondary School", level: "Grades 11 & 12", field: "Science (Biology + Mathematics)", years: "2023–2025" },
+            ].map((item) => (
+              <div key={item.school} className="rounded-2xl border border-white/10 bg-[#0c1a2d] p-7">
+                <p className="text-sm font-medium uppercase tracking-[0.2em] text-cyan-300">{item.years}</p>
+                <h3 className="mt-4 text-xl font-semibold text-slate-100">{item.school}</h3>
+                <p className="mt-3 text-slate-300">{item.level}</p>
+                <p className="mt-1 text-slate-500">{item.field}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

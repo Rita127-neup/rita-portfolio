@@ -44,6 +44,12 @@ export function SiteSettingsForm({
         />
       </div>
 
+      <div className="grid gap-6 md:grid-cols-3">
+        <TextField name="phone" label="Phone" required maxLength={30} defaultValue={values.phone} error={errors.phone} />
+        <TextField name="birthday" label="Birthday" type="date" required defaultValue={values.birthday} error={errors.birthday} />
+        <TextField name="location" label="Location" required maxLength={150} defaultValue={values.location} error={errors.location} />
+      </div>
+
       <TextField
         name="meta_title"
         label="Browser tab title"

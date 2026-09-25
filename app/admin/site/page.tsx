@@ -33,7 +33,7 @@ export default async function AdminSite({
     supabase
       .from("site_settings")
       .select(
-        "brand_mark, meta_title, meta_description, contact_email, nav_cta_label, nav_cta_href",
+        "brand_mark, meta_title, meta_description, contact_email, phone, birthday, location, nav_cta_label, nav_cta_href",
       )
       .eq("id", 1)
       .maybeSingle(),
@@ -109,6 +109,9 @@ export default async function AdminSite({
               meta_title: settings.meta_title,
               meta_description: settings.meta_description,
               contact_email: settings.contact_email ?? "",
+              phone: settings.phone ?? "",
+              birthday: settings.birthday ?? "",
+              location: settings.location ?? "",
               nav_cta_label: settings.nav_cta_label,
               nav_cta_href: settings.nav_cta_href,
             }}

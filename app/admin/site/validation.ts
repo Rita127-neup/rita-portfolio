@@ -21,6 +21,9 @@ export type SiteSettingsFormValues = {
   meta_title: string;
   meta_description: string;
   contact_email: string;
+  phone: string;
+  birthday: string;
+  location: string;
   nav_cta_label: string;
   nav_cta_href: string;
 };
@@ -33,6 +36,9 @@ export function readSiteSettingsForm(
     meta_title: readText(formData, "meta_title"),
     meta_description: readText(formData, "meta_description"),
     contact_email: readText(formData, "contact_email"),
+    phone: readText(formData, "phone"),
+    birthday: readText(formData, "birthday"),
+    location: readText(formData, "location"),
     nav_cta_label: readText(formData, "nav_cta_label"),
     nav_cta_href: readText(formData, "nav_cta_href"),
   };
@@ -51,6 +57,9 @@ export function validateSiteSettings(
   set("brand_mark", checkRequired(values.brand_mark, 20));
   set("meta_title", checkRequired(values.meta_title, 200));
   set("meta_description", checkRequired(values.meta_description, 500));
+  set("phone", checkRequired(values.phone, 30));
+  set("birthday", checkRequired(values.birthday, 10));
+  set("location", checkRequired(values.location, 150));
   set("nav_cta_label", checkRequired(values.nav_cta_label, 50));
   if (!values.contact_email) errors.contact_email = "This field is required.";
   else if (!isEmail(values.contact_email))

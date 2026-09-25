@@ -19,7 +19,17 @@ export type SiteSettings = {
   navigation: NavItem[];
   navCta: NavItem;
   contactEmail: string;
+  phone: string;
+  birthday: string;
+  location: string;
   socialLinks: SocialLink[];
+};
+
+export type ProfileInfo = {
+  email: string;
+  phone: string;
+  birthday: string;
+  location: string;
 };
 
 export type LinkButton = {
