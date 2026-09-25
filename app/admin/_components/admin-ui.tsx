@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { SignOutButton } from "../sign-out-button";
+import { DeleteButton } from "./delete-button";
 
 const navItems = [
   { label: "Dashboard", href: "/admin" },
@@ -135,11 +136,13 @@ export function RecordList({
   error,
   errorText,
   emptyText,
+  deleteAction,
 }: {
   rows: ListRow[];
   error: boolean;
   errorText: string;
   emptyText: string;
+  deleteAction?: (id: string) => Promise<void>;
 }) {
   return (
     <div className="mt-12 overflow-hidden rounded-3xl border border-white/10 bg-[#0c1a2d]">
