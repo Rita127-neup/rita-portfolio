@@ -10,6 +10,35 @@ const EXTENSIONS: Record<string, string> = { "image/jpeg": "jpg", "image/png": "
 const PATH_PATTERN = /^logos\/[0-9a-f-]{36}\.(jpg|png|webp)$/;
 const MAX_BYTES = 2 * 1024 * 1024;
 
+export async function createOrganization(formData: FormData): Promise<{ error?: string }> {
+  await requireAdmin();
+  const name = String(formData.get("name") ?? "").trim();
+  const sortOrder = Number(formData.get("sort_order"));
+  if (!name || !Number.isInteger(sortOrder) || sortOrder < 0 || sortOrder > 9999) return { error: "Please enter a valid name and display order." };
+  const supabase = await createClient();
+  const { error } = await supabase.from("organizations").insert({ name, sort_order: sortOrder, is_visible: true });
+  if (error) return { error: "The organization could not be added." };
+  revalidatePath("/");
+  revalidatePath("/admin/organizations");
+  return {};
+}
+
+export async function deleteOrganization(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const id = String(formData.get("id") ?? "");
+  if (!id) return;
+  const supabase = await createClient();
+  const { data: old } = await supabase.from("organizations").select("image_id").eq("id", id).single();
+  if (old?.image_id) {
+    const { data: media } = await supabase.from("media_assets").select("object_path").eq("id", old.image_id).maybeSingle();
+    await supabase.from("media_assets").delete().eq("id", old.image_id);
+    if (media?.object_path) await discardFiles(supabase, [media.object_path]);
+  }
+  await supabase.from("organizations").delete().eq("id", id);
+  revalidatePath("/");
+  revalidatePath("/admin/organizations");
+}
+
 export async function updateOrganization(formData: FormData): Promise<{ error?: string }> {
   await requireAdmin();
   const id = String(formData.get("id") ?? "");
