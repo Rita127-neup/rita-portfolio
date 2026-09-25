@@ -62,6 +62,13 @@ const sections: Section[] = [
     href: "/admin/cv",
   },
   {
+    title: "Organizations",
+    text: "Manage organizations, logos, order, and visibility.",
+    href: "/admin/organizations",
+    table: "organizations",
+    liveColumn: "is_visible",
+  },
+  {
     title: "Photo",
     text: "Upload, replace, or remove the home page photo.",
     href: "/admin/photo",
