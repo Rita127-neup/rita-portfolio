@@ -58,7 +58,11 @@ export function OrganizationLogoUpload({ organizationId, hasLogo }: { organizati
       const path = `logos/${crypto.randomUUID()}.${ext}`;
       const { error: uploadError } = await createClient().storage.from("portfolio-files").upload(path, file, { contentType: file.type, upsert: false });
       if (uploadError) return setError("The logo could not be uploaded.");
-      const result = await registerOrganizationLogo(new FormData(Object.assign(new FormData(), { })));
+      const form = new FormData();
+      form.set("id", organizationId);
+      form.set("path", path);
+      const result = await registerOrganizationLogo(form);
+      if (result.error) setError(result.error);
     });
   }
 
