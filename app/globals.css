@@ -2,6 +2,7 @@
 
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-lora), Georgia, serif;
 }
 
 @layer components {
@@ -11,21 +12,21 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: #777c75;
+    color: #9a742d;
   }
 
   .section-title {
     margin-top: 0.75rem;
     max-width: 42rem;
-    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display), Georgia, serif;
     font-size: clamp(2rem, 4vw, 3.25rem);
     line-height: 1.05;
     letter-spacing: -0.025em;
-    font-weight: 650;
+    font-weight: 600;
   }
 }
 
 ::selection {
-  background: #d8c0a5;
-  color: #171717;
+  background: #c09238;
+  color: #202033;
 }
