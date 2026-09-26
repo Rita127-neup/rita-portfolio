@@ -22,6 +22,7 @@ export const projects: Project[] = [
       "A machine-learning study of genomic prediction for ciprofloxacin resistance in E. coli, focusing on geographic generalization, model calibration, and population shift.",
     tags: ["AMR", "Machine Learning", "Genomics", "Python"],
     status: "Research",
+    imageId: null,
   },
   {
     id: "dengue-lens-nepal",
@@ -31,6 +32,7 @@ export const projects: Project[] = [
       "A public-data project exploring dengue surveillance in Nepal through data analysis, visualization, and accessible public-health information.",
     tags: ["Dengue", "Public Health", "Data", "Nepal"],
     status: "Independent Project",
+    imageId: null,
   },
   {
     id: "dengue-fever-nepal",
@@ -40,6 +42,7 @@ export const projects: Project[] = [
       "An analysis of national dengue surveillance data from 2019–2024, investigating temporal patterns and relationships between dengue cases and environmental variables.",
     tags: ["Epidemiology", "Statistics", "Public Health"],
     status: "Research",
+    imageId: null,
   },
   {
     id: "caffeine-consumption",
@@ -49,6 +52,7 @@ export const projects: Project[] = [
       "A community-based study examining caffeine consumption patterns, sources, motivations, and related behaviors among adults in Siddharthanagar, Nepal.",
     tags: ["Survey Research", "Statistics", "Public Health"],
     status: "Published Research",
+    imageId: null,
   },
   {
     id: "health-prediction-models",
@@ -58,5 +62,6 @@ export const projects: Project[] = [
       "Machine-learning projects exploring symptom-based disease prediction and mental-health prediction using structured health data.",
     tags: ["Machine Learning", "Python", "Health Data"],
     status: "Independent Project",
+    imageId: null,
   },
 ];
