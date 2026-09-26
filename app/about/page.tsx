@@ -4,9 +4,9 @@ export default async function About() {
   const about = await getAboutContent();
 
   return (
-    <main className="min-h-screen bg-[#f7f8f7] px-6 py-16 md:py-20 text-[#171917]">
+    <main className="min-h-screen bg-[#f7f1df] px-6 py-16 md:py-20 text-[#202033]">
       <div className="mx-auto max-w-5xl">
-        <p className="text-sm uppercase tracking-[0.3em] text-[#315c4a]">
+        <p className="text-sm uppercase tracking-[0.3em] text-[#9a742d]">
           {about.eyebrow}
         </p>
 
@@ -14,7 +14,7 @@ export default async function About() {
           {about.title}
         </h1>
 
-        <p className="mt-8 max-w-3xl text-lg leading-8 text-[#5f665f]">
+        <p className="mt-8 max-w-3xl text-lg leading-8 text-[#5e6270]">
           {about.body}
         </p>
       </div>
