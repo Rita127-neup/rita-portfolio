@@ -14,7 +14,8 @@ export type HomeContent = {
   photoUrl?: string; photoAlt: string; cv?: LinkButton; photoPlaceholderInitials: string; photoPlaceholderText: string;
 };
 export type PageHeader = { eyebrow: string; title: string; titleMuted?: string; intro: string };
-export type AboutContent = PageHeader & { body: string };
+export type EducationItem = { school: string; detail: string; years: string };
+export type AboutContent = PageHeader & { body: string; education: EducationItem[] };
 export type ResearchItem = { id: string; category: string; title: string; summary: string; tags: string[] };
 export type Project = { id: string; category: string; title: string; description: string; tags: string[]; status: string; imageId: string | null };
 export type PublicationLink = { label: string; url: string; variant: "primary" | "secondary" };
