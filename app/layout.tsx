@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Manrope, Playfair_Display } from "next/font/google";
+import { Inter } from "next/font/google";
 import Link from "next/link";
 import { getSiteSettings } from "@/lib/content";
 import OwnerLoginButton from "@/app/_components/owner-login-button";
 import "./globals.css";
 
-const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"] });
-const playfair = Playfair_Display({ variable: "--font-display", subsets: ["latin"] });
+const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Rita Neupane",
@@ -17,9 +16,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const site = await getSiteSettings();
 
   return (
-    <html lang="en" className={`${manrope.variable} ${playfair.variable} antialiased`}>
-      <body className="min-h-screen bg-[#f7f5f0] font-sans text-[#171717]">
-        <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#f7f5f0]/95 backdrop-blur">
+    <html lang="en" className={`${inter.variable} antialiased`}>
+      <body className="min-h-screen bg-[#f7f8f7] font-sans text-[#171917]">
+        <nav className="sticky top-0 z-50 border-b border-[#dfe3df] bg-[#f7f8f7]/95 backdrop-blur">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
             <Link href="/" className="font-display text-xl font-semibold tracking-tight">
               {site.brandMark}<span className="text-[#9a6b3f]">.</span>
