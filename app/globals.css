@@ -26,6 +26,11 @@
   }
 }
 
+.bg-dot-paper {
+  background-image: radial-gradient(rgba(92, 78, 48, 0.12) 0.7px, transparent 0.7px);
+  background-size: 5px 5px;
+}
+
 ::selection {
   background: #c09238;
   color: #202033;
