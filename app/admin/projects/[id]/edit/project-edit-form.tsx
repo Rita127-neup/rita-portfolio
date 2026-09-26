@@ -13,6 +13,7 @@ export type EditableProject = {
   status: string;
   tags: string[];
   link_url: string | null;
+  image_id: string | null;
   sort_order: number;
   is_published: boolean;
 };
