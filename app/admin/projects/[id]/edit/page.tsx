@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { AdminNav } from "../../../_components/admin-ui";
+import { ProjectImageUpload } from "./project-image-upload";
 import { isProjectId } from "../../validation";
 import {
   ProjectEditForm,
@@ -25,7 +26,7 @@ export default async function EditProject({
   const { data: project, error } = await supabase
     .from("projects")
     .select(
-      "id, title, category, description, status, tags, link_url, sort_order, is_published",
+      "id, title, category, description, status, tags, link_url, image_id, sort_order, is_published",
     )
     .eq("id", id)
     .maybeSingle<EditableProject>();
@@ -52,7 +53,7 @@ export default async function EditProject({
         {project.title}
       </h1>
 
-      <div className="mt-12 rounded-3xl border border-white/10 bg-[#0c1a2d] p-8">
+      <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_360px]">\n        <div className="rounded-3xl border border-white/10 bg-[#0c1a2d] p-8">
         <ProjectEditForm project={project} />
       </div>
     </>
