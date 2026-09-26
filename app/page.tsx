@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ProjectVisual } from "@/app/_components/project-visual";
 import {
   getAboutContent,
   getHomeContent,
@@ -41,7 +42,7 @@ export default async function Home() {
   });
 
   return (
-    <main className="min-h-screen bg-[#f7f1df] text-[#202033] bg-dot-paper">
+    <main className="site-shell bg-dot-paper">
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-6 pb-14 pt-14 md:grid-cols-[1.15fr_0.85fr] md:pb-18 md:pt-18">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#9a742d]">{home.eyebrow}</p>
@@ -82,9 +83,7 @@ export default async function Home() {
             <div className="mt-7 grid gap-6 md:grid-cols-3">
               {featuredProjects.map((project, index) => (
                 <Link key={project.id} href={"/projects#" + project.id} className="group overflow-hidden rounded-2xl border border-[#d8cfbb] bg-[#fbf6e8] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(50,43,30,0.10)]">
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#e9e1cf]">
-                    {project.imageId ? <Image src={"/media/project/" + project.id + "?v=" + project.imageId} alt={project.title} fill unoptimized className="object-cover transition duration-700 group-hover:scale-[1.04]" /> : <div className="flex h-full items-center justify-center bg-gradient-to-br from-[#e8dfcb] via-[#f3ead8] to-[#d8c9ab]"><span className="font-display text-5xl text-[#9a742d]/30">{String(index + 1).padStart(2, "0")}</span></div>}
-                  </div>
+                  <ProjectVisual id={project.id} title={project.title} category={project.category} compact />
                   <div className="p-5">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9a742d]">{project.category}</p>
                     <h3 className="mt-2 text-xl font-semibold tracking-tight group-hover:text-[#9a742d]">{project.title}</h3>
