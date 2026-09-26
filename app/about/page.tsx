@@ -31,7 +31,7 @@ export default async function About() {
               <article className="grid gap-3 border-b border-[#d7cdb9] pb-8 md:grid-cols-[1fr_auto] md:gap-8">
                 <div>
                   <h2 className="font-display text-2xl leading-tight md:text-3xl">
-                    Tilottama College / Tilottama Secondary School
+                    Tilottama Secondary School
                   </h2>
                   <p className="mt-2 text-sm uppercase tracking-[0.14em] text-[#777b86]">
                     Biology • Grades 11–12
