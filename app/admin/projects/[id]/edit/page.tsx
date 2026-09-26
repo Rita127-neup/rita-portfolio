@@ -53,8 +53,11 @@ export default async function EditProject({
         {project.title}
       </h1>
 
-      <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_360px]">\n        <div className="rounded-3xl border border-white/10 bg-[#0c1a2d] p-8">
-        <ProjectEditForm project={project} />
+      <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_360px]">
+        <div className="rounded-3xl border border-white/10 bg-[#0c1a2d] p-8">
+          <ProjectEditForm project={project} />
+        </div>
+        <ProjectImageUpload projectId={project.id} imageId={project.image_id} />
       </div>
     </>
   );
