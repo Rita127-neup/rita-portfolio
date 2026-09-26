@@ -269,7 +269,7 @@ export async function getProjectsContent() {
     getPage("projects"),
     getPublicSupabaseClient()
       .from("projects")
-      .select("slug, category, title, description, tags, status")
+      .select("slug, category, title, description, tags, status, image_id")
       .eq("is_published", true)
       .order("sort_order", { ascending: true }),
   ]);
@@ -284,6 +284,7 @@ export async function getProjectsContent() {
       description: string;
       tags: string[] | null;
       status: string;
+      image_id: string | null;
     }[]
   ).map((row) => ({
     id: row.slug,
@@ -292,6 +293,7 @@ export async function getProjectsContent() {
     description: row.description,
     tags: row.tags ?? [],
     status: row.status,
+    imageId: row.image_id,
   }));
 
   return { page: pageHeader(page), items };
