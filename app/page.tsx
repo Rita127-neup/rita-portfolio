@@ -83,7 +83,7 @@ export default async function Home() {
             <div className="mt-7 grid gap-6 md:grid-cols-3">
               {featuredProjects.map((project, index) => (
                 <Link key={project.id} href={"/projects#" + project.id} className="group overflow-hidden rounded-2xl border border-[#d8cfbb] bg-[#fbf6e8] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(50,43,30,0.10)]">
-                  <ProjectVisual id={project.id} title={project.title} category={project.category} compact />
+                  <ProjectVisual id={project.id} imageId={project.imageId} title={project.title} category={project.category} compact />
                   <div className="p-5">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9a742d]">{project.category}</p>
                     <h3 className="mt-2 text-xl font-semibold tracking-tight group-hover:text-[#9a742d]">{project.title}</h3>
