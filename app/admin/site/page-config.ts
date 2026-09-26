@@ -46,6 +46,10 @@ export const PAGE_CONFIG: Record<string, PageConfig> = {
         name: "About content",
         fields: { body: "About text" },
       },
+      education: {
+        name: "Education",
+        fields: { body: "One entry per line: School | Program / credential | Years" },
+      },
     },
     links: false,
   },
