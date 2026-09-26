@@ -1,23 +1,2 @@
 import { getAboutContent } from "@/lib/content";
-
-export default async function About() {
-  const about = await getAboutContent();
-
-  return (
-    <main className="min-h-screen bg-[#f7f1df] px-6 py-16 md:py-20 text-[#202033]">
-      <div className="mx-auto max-w-5xl">
-        <p className="text-sm uppercase tracking-[0.3em] text-[#9a742d]">
-          {about.eyebrow}
-        </p>
-
-        <h1 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-[-0.045em] md:text-7xl">
-          {about.title}
-        </h1>
-
-        <p className="mt-8 max-w-3xl text-lg leading-8 text-[#5e6270]">
-          {about.body}
-        </p>
-      </div>
-    </main>
-  );
-}
+export default async function About(){const a=await getAboutContent();return <main className="site-shell bg-dot-paper"><div className="page-wrap"><p className="editorial-kicker">{a.eyebrow}</p><h1 className="editorial-title">{a.title}</h1><div className="mt-12 grid gap-10 border-t border-[#d7cdb9] pt-10 md:grid-cols-[0.45fr_1fr]"><p className="text-xs uppercase tracking-[0.18em] text-[#777b86]">A little about me</p><p className="max-w-3xl font-display text-2xl leading-[1.45] tracking-[-0.02em] md:text-3xl">{a.body}</p></div></div></main>}
