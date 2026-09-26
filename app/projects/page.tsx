@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { displayNumber, getProjectsContent } from "@/lib/content";
 
 export default async function Projects() {
@@ -24,50 +25,29 @@ export default async function Projects() {
           <p className="mt-8 text-lg leading-8 text-[#5e6270]">{page.intro}</p>
         </div>
 
-        <div className="mt-14 md:mt-12 md:mt-14 grid gap-6 md:grid-cols-2">
+        <div className="mt-14 grid gap-8 md:grid-cols-2">
           {projects.map((project, index) => (
-            <article
-              key={project.id}
-              className="group relative overflow-hidden rounded-2xl border border-[#d8cfbb] bg-[#fbf6e8] p-8 transition duration-300 hover:-translate-y-1 hover:border-[#9a742d]/30"
-            >
-              <div className="absolute right-8 top-8 text-4xl font-semibold text-[#202033]/5 transition group-hover:text-cyan-400/10">
-                {displayNumber(index)}
+            <article key={project.id} className="group overflow-hidden rounded-[1.5rem] border border-[#d8cfbb] bg-[#fbf6e8] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(50,43,30,0.10)]">
+              <div className="relative aspect-[16/10] overflow-hidden bg-[#e9e1cf]">
+                {project.imageId ? (
+                  <Image src={"/media/project/" + project.id + "?v=" + project.imageId} alt={project.title} fill unoptimized className="object-cover transition duration-700 group-hover:scale-[1.03]" />
+                ) : (
+                  <div className="flex h-full items-center justify-center bg-gradient-to-br from-[#e8dfcb] via-[#f3ead8] to-[#d8c9ab]"><span className="font-display text-7xl text-[#9a742d]/30">{String(index + 1).padStart(2, "0")}</span></div>
+                )}
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-[#202033]/60 to-transparent p-5 pt-16">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white">{project.category}</p>
+                  <span className="text-xs text-white/80">{project.status}</span>
+                </div>
               </div>
-
-              <div className="relative">
-                <div className="flex items-center justify-between">
-                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#9a742d]">
-                    {project.category}
-                  </p>
-
-                  <span className="rounded-full border border-[#d8cfbb] px-3 py-1 text-xs text-[#777b86]">
-                    {project.status}
-                  </span>
+              <div className="p-7 md:p-8">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-display text-xl text-[#9a9d97]">{displayNumber(index)}</span>
+                  <span className="text-xs text-[#777b86]">Project ↗</span>
                 </div>
-
-                <h2 className="mt-8 max-w-lg text-2xl font-semibold tracking-[-0.02em] tracking-[-0.02em] md:text-3xl">
-                  {project.title}
-                </h2>
-
-                <p className="mt-5 max-w-xl leading-7 text-[#5e6270]">
-                  {project.description}
-                </p>
-
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-[#d8cfbb] px-3 py-1.5 text-xs text-[#5e6270]"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-10">
-                  <button className="text-sm font-medium text-[#9a742d] transition group-hover:text-[#76571e]">
-                    View project →
-                  </button>
+                <h2 className="mt-5 text-2xl font-semibold tracking-[-0.02em] md:text-3xl">{project.title}</h2>
+                <p className="mt-4 leading-7 text-[#5e6270]">{project.description}</p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => <span key={tag} className="rounded-full border border-[#d8cfbb] px-3 py-1.5 text-xs text-[#5e6270]">{tag}</span>)}
                 </div>
               </div>
             </article>
