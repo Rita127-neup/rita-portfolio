@@ -229,7 +229,23 @@ export async function getHomeContent(): Promise<HomeContent> {
 export async function getAboutContent(): Promise<AboutContent> {
   const page = await getPage("about");
   const body = pageSection(page, "about_body");
-  return { ...pageHeader(page), body: body.body ?? "" };
+  const educationSection = pageSection(page, "education");
+
+  const education = (educationSection.body ?? "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [school = "", detail = "", years = ""] = line.split("|").map((part) => part.trim());
+      return { school, detail, years };
+    })
+    .filter((item) => item.school);
+
+  return {
+    ...pageHeader(page),
+    body: body.body ?? "",
+    education,
+  };
 }
 
 export async function getResearchContent() {
