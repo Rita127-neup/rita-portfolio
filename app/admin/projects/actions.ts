@@ -57,12 +57,14 @@ export async function registerProjectImage(formData: FormData): Promise<{ error?
     return { error: "The image could not be saved." };
   }
 
-  const { error: updateError } = await supabase.from("projects")
-    .update({ image_id: media.id, updated_at: new Date().toISOString() }).eq("id", id);
-  if (updateError) {
+  const { data: linked, error: linkError } = await supabase.rpc("link_project_image", {
+    p_project_id: id,
+    p_image_id: media.id,
+  });
+  if (linkError || linked !== true) {
     await supabase.from("media_assets").delete().eq("id", media.id);
     await discardFiles(supabase, [path]);
-    return { error: "The image could not be linked." };
+    return { error: linkError?.message ?? "The image could not be linked." };
   }
 
   if (old.image_id) {
