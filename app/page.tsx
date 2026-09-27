@@ -70,6 +70,26 @@ export default async function Home() {
               <div className="flex aspect-[4/5] items-center justify-center"><span className="font-display text-5xl text-[#9a742d]">{home.photoPlaceholderInitials}</span></div>
             )}
           </div>
+        <div className="mt-6 border-t border-[#d8cfbb] pt-5">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9a742d]">
+            Education
+          </p>
+          <div className="mt-3 space-y-3">
+            {about.education.map((item) => (
+              <div key={item.school}>
+                <p className="font-display text-lg leading-tight">{item.school}</p>
+                <p className="mt-1 text-[11px] uppercase tracking-[0.1em] text-[#777b86]">
+                  {item.detail}
+                </p>
+                <p className="mt-1 text-xs font-semibold text-[#9a742d]">
+                  {item.years.includes("–")
+                    ? `Enrolled ${item.years.split("–")[0]} · Graduated ${item.years.split("–")[1]}`
+                    : item.years}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
         </div>
       </section>
 
