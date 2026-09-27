@@ -139,9 +139,9 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     phone: s.phone ?? "",
     birthday: s.birthday ?? "",
     location: s.location ?? "",
-    socialLinks: (social.data as { label: string; url: string | null }[]).map(
-      (link) => (link.url ? { label: link.label, url: link.url } : { label: link.label }),
-    ),
+    socialLinks: (social.data as { label: string; url: string | null }[])
+      .filter((link) => !["linkedin", "google scholar"].includes(link.label.trim().toLowerCase()))
+      .map((link) => (link.url ? { label: link.label, url: link.url } : { label: link.label })),
   };
 });
 
