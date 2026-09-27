@@ -74,18 +74,12 @@ export default async function Home() {
           <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9a742d]">
             Education
           </p>
-          <div className="mt-3 space-y-3">
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
             {about.education.map((item) => (
-              <div key={item.school}>
+              <div key={item.school} className="rounded-xl border border-[#d8cfbb] bg-[#fbf6e8]/60 p-4">
                 <p className="font-display text-lg leading-tight">{item.school}</p>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.1em] text-[#777b86]">
-                  {item.detail}
-                </p>
-                <p className="mt-1 text-xs font-semibold text-[#9a742d]">
-                  {item.years.includes("–")
-                    ? `Enrolled ${item.years.split("–")[0]} · Graduated ${item.years.split("–")[1]}`
-                    : item.years}
-                </p>
+                <p className="mt-1 text-[11px] uppercase tracking-[0.1em] text-[#777b86]">{item.detail}</p>
+                <p className="mt-2 text-xs font-semibold text-[#9a742d]">{item.years}</p>
               </div>
             ))}
           </div>
