@@ -13,7 +13,7 @@ export default async function About() {
           <p className="text-xs uppercase tracking-[0.18em] text-[#777b86]">
             A little about me
           </p>
-          <p className="max-w-3xl font-display text-xl leading-[1.55] tracking-[-0.015em] md:text-2xl">
+          <p className="max-w-3xl font-display text-lg leading-[1.6] tracking-[-0.01em] md:text-xl">
             {a.intro}
           </p>
         </div>
