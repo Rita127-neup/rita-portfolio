@@ -43,47 +43,44 @@ export default async function Home() {
 
   return (
     <main className="site-shell bg-dot-paper">
-      <section className="mx-auto grid max-w-6xl items-center gap-10 px-6 pb-14 pt-14 md:grid-cols-[1.15fr_0.85fr] md:pb-18 md:pt-18">
+      <section className="mx-auto grid max-w-6xl items-start gap-10 px-6 pb-14 pt-14 md:grid-cols-[1.15fr_0.85fr] md:pb-16 md:pt-16">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#9a742d]">{home.eyebrow}</p>
-          <h1 className="mt-5 max-w-4xl font-display text-[3.6rem] font-semibold leading-[0.98] tracking-[-0.045em] md:text-[5.8rem] lg:text-[6.5rem]">
-            {home.firstName}
-            {home.lastName && <><br /><span className="text-[#6f746d]">{home.lastName}</span></>}
-          </h1>
-          <p className="mt-6 max-w-2xl text-base leading-7 text-[#555b55] md:text-lg">{home.intro}</p>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-[#555b55] md:text-lg">{home.intro}</p>
           <div className="mt-6 flex flex-wrap items-center gap-5 text-sm">
             <Link href={home.primaryCta.href} className="font-semibold text-[#9a742d] underline decoration-[#9a742d]/30 underline-offset-8 hover:decoration-[#9a742d]">{home.primaryCta.label} →</Link>
             <Link href={home.secondaryCta.href} className="font-semibold text-[#30342f] underline decoration-black/15 underline-offset-8 hover:decoration-black/50">{home.secondaryCta.label} →</Link>
             {home.cv && <a href={home.cv.href} className="font-semibold text-[#30342f] underline decoration-black/15 underline-offset-8 hover:decoration-black/50">{home.cv.label} →</a>}
           </div>
           {socialLinks.length > 0 && (
-            <div className="mt-5 flex flex-wrap gap-4 text-xs font-medium uppercase tracking-[0.14em] text-[#777b86]">
+            <div className="mt-4 flex flex-wrap gap-4 text-xs font-medium uppercase tracking-[0.14em] text-[#777b86]">
               {socialLinks.map((link) => <a key={link.label} href={link.url} target="_blank" rel="noreferrer" className="hover:text-[#9a742d]">{link.label}</a>)}
             </div>
           )}
+          <h1 className="mt-5 max-w-3xl font-display text-[2.8rem] font-semibold leading-[0.98] tracking-[-0.04em] md:text-[4rem]">
+            {home.firstName} {home.lastName}
+          </h1>
         </div>
         <div className="mx-auto w-full max-w-xs md:justify-self-end">
-          <div className="overflow-hidden rounded-[1.5rem] bg-[#dedbd2]">
+          <div className="relative overflow-hidden rounded-[1.5rem] bg-[#dedbd2]">
             {home.photoUrl ? (
               <Image src={home.photoUrl} alt={home.photoAlt} width={640} height={800} unoptimized loading="eager" className="aspect-[4/5] w-full object-cover" />
             ) : (
               <div className="flex aspect-[4/5] items-center justify-center"><span className="font-display text-5xl text-[#9a742d]">{home.photoPlaceholderInitials}</span></div>
             )}
           </div>
-        <div className="mt-6 border-t border-[#d8cfbb] pt-5">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9a742d]">
-            Education
-          </p>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            {about.education.map((item) => (
-              <div key={item.school} className="rounded-xl border border-[#d8cfbb] bg-[#fbf6e8]/60 p-4">
-                <p className="font-display text-lg leading-tight">{item.school}</p>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.1em] text-[#777b86]">{item.detail}</p>
-                <p className="mt-2 text-xs font-semibold text-[#9a742d]">{item.years}</p>
-              </div>
-            ))}
+          <div className="mt-5 border-t border-[#d8cfbb] pt-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9a742d]">Education</p>
+            <div className="mt-3 space-y-3">
+              {about.education.map((item) => (
+                <div key={item.school}>
+                  <p className="font-display text-base leading-tight">{item.school}</p>
+                  <p className="mt-1 text-[10px] uppercase tracking-[0.1em] text-[#777b86]">{item.detail}</p>
+                  <p className="mt-1 text-xs font-semibold text-[#9a742d]">{item.years}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
         </div>
       </section>
 
