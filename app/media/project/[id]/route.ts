@@ -8,7 +8,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
   const { data } = await getPublicSupabaseClient()
     .from("projects")
     .select("image:media_assets(object_path)")
-    .eq("id", id)
+    .eq("slug", id)
     .eq("is_published", true)
     .maybeSingle<{ image: { object_path: string } | null }>();
 
