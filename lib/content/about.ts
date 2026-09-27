@@ -10,4 +10,16 @@ export const aboutContent: AboutContent = {
   intro:
     "I am interested in the intersection of biology, computation, mathematics, and public health.",
   body: "",
+  education: [
+    {
+      school: "Tilottama Secondary School",
+      detail: "Biology • Grades 11–12",
+      years: "2023–2025",
+    },
+    {
+      school: "Jaycees Boarding Secondary School",
+      detail: "Secondary Education • SEE",
+      years: "Completed",
+    },
+  ],
 };
