@@ -13,44 +13,12 @@ export default async function About() {
           <p className="text-xs uppercase tracking-[0.18em] text-[#777b86]">
             A little about me
           </p>
-          <p className="max-w-3xl font-display text-2xl leading-[1.45] tracking-[-0.02em] md:text-3xl">
+          <p className="max-w-3xl font-display text-xl leading-[1.55] tracking-[-0.015em] md:text-2xl">
             {a.intro}
           </p>
         </div>
 
-        <section className="mt-24 border-t border-[#d7cdb9] pt-10">
-          <div className="grid gap-10 md:grid-cols-[0.45fr_1fr]">
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-[#777b86]">
-                Education
-              </p>
-              <p className="mt-3 text-sm text-[#9a742d]">Academic background</p>
-            </div>
 
-            <div className="space-y-10">
-              {a.education.map((item, index) => (
-                <article
-                  key={item.school}
-                  className={
-                    index < a.education.length - 1
-                      ? "grid gap-3 border-b border-[#d7cdb9] pb-8 md:grid-cols-[1fr_auto] md:gap-8"
-                      : "grid gap-3 md:grid-cols-[1fr_auto] md:gap-8"
-                  }
-                >
-                  <div>
-                    <h2 className="font-display text-2xl leading-tight md:text-3xl">
-                      {item.school}
-                    </h2>
-                    <p className="mt-2 text-sm uppercase tracking-[0.14em] text-[#777b86]">
-                      {item.detail}
-                    </p>
-                  </div>
-                  <p className="text-sm text-[#777b86] md:text-right">{item.years}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
       </div>
     </main>
   );
