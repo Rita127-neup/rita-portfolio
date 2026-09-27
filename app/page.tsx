@@ -74,10 +74,10 @@ export default async function Home() {
             </div>
           </div>
         </div>
-        <div className="mx-auto w-full max-w-sm md:justify-self-end">
+        <div className="mx-auto w-full max-w-md md:justify-self-end">
           <div className="relative overflow-hidden rounded-[1.5rem] bg-[#dedbd2]">
             {home.photoUrl ? (
-              <Image src={home.photoUrl} alt={home.photoAlt} width={720} height={900} unoptimized loading="eager" className="aspect-[4/5] w-full object-cover" />
+              <Image src={home.photoUrl} alt={home.photoAlt} width={800} height={1000} unoptimized loading="eager" className="aspect-[4/5] w-full object-cover" />
             ) : (
               <div className="flex aspect-[4/5] items-center justify-center"><span className="font-display text-5xl text-[#9a742d]">{home.photoPlaceholderInitials}</span></div>
             )}
