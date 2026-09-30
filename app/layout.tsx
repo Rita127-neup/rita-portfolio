@@ -11,6 +11,10 @@ const lora = Lora({ variable: "--font-lora", subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Rita Neupane",
   description: "Research, computational biology, public health, and data-driven work by Rita Neupane.",
+  icons: {
+    icon: "/media/hero-photo",
+    apple: "/media/hero-photo",
+  },
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
