@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   title: "Rita Neupane",
   description: "Research, computational biology, public health, and data-driven work by Rita Neupane.",
   icons: {
-    icon: "/media/hero-photo",
-    apple: "/media/hero-photo",
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
   },
 };
 
