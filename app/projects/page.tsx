@@ -27,6 +27,7 @@ export default async function Projects() {
                 imageId={project.imageId}
                 title={project.title}
                 category={project.category}
+                href={project.linkUrl || project.githubUrl || undefined}
                 compact
               />
               <div className="p-5">
