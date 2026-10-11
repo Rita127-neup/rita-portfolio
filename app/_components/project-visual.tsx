@@ -4,6 +4,11 @@ const projectArtwork: Record<string, string> = {
   "dengue-ewars": "/project-art/dengue-ewars.svg",
   "public-data-advocacy": "/project-art/public-data-advocacy.svg",
   "nepal-education-data-engine": "/project-art/nepal-education-data-engine.svg",
+  "ecoli-amr": "/project-art/ecoli-amr.svg",
+  "dengue-lens-nepal": "/project-art/dengue-lens-nepal.svg",
+  "dengue-fever-nepal": "/project-art/dengue-fever-nepal.svg",
+  "caffeine-consumption": "/project-art/caffeine-consumption.svg",
+  "health-prediction-models": "/project-art/health-prediction-models.svg",
 };
 
 export function ProjectVisual({
