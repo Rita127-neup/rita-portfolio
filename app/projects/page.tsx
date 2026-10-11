@@ -35,7 +35,7 @@ export default async function Projects() {
                   {project.status}
                 </p>
                 <h2 className="mt-1.5 text-base font-semibold tracking-tight group-hover:text-[#9a742d]">
-                  {project.title}
+                  <a href={project.linkUrl || project.githubUrl || ("/projects#" + project.id)} target={(project.linkUrl || project.githubUrl) ? "_blank" : undefined} rel={(project.linkUrl || project.githubUrl) ? "noreferrer" : undefined} className="hover:underline decoration-[#9a742d]/40 underline-offset-4">{project.title} <span className="text-xs text-[#9a742d]">↗</span></a>
                 </h2>
                 <p className="mt-1.5 line-clamp-3 text-xs leading-5 text-[#666c78]">
                   {project.description}
