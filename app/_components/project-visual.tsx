@@ -24,7 +24,8 @@ export function ProjectVisual({
   category: string;
   compact?: boolean;
 }) {
-  const artwork = imageId ? `/media/project/${id}?v=${imageId}` : projectArtwork[id];
+  // Prefer the custom project artwork when one exists; use uploaded imagery as a fallback.
+  const artwork = projectArtwork[id] ?? (imageId ? `/media/project/${id}?v=${imageId}` : undefined);
 
   return (
     <div className={`grain group relative overflow-hidden bg-[#dcd4c2] ${compact ? "aspect-[16/10]" : "aspect-[16/9]"}`}>
