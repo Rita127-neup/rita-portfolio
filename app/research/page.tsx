@@ -2,6 +2,7 @@ import { displayNumber, getResearchContent } from "@/lib/content";
 
 const researchLinks: Record<string, string> = {
   "dengue-nepal": "https://doi.org/10.5281/zenodo.21773367",
+  "caffeine-consumption-patterns-among-adults-in-siddharthanagar-09-bhairahawa-nepal": "https://doi.org/10.5281/zenodo.21785947",
   "ecoli-amr-generalization": "https://github.com/Rita127-neup/ecoli-amr-calibration",
 };
 
