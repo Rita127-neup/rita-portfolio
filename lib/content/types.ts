@@ -17,7 +17,10 @@ export type PageHeader = { eyebrow: string; title: string; titleMuted?: string; 
 export type EducationItem = { school: string; detail: string; years: string };
 export type AboutContent = PageHeader & { body: string; education: EducationItem[] };
 export type ResearchItem = { id: string; category: string; title: string; summary: string; tags: string[] };
-export type Project = { id: string; category: string; title: string; description: string; tags: string[]; status: string; imageId: string | null };
+export type Project = {
+  id: string; category: string; title: string; description: string; tags: string[];
+  status: string; imageId: string | null; githubUrl?: string | null; linkUrl?: string | null;
+};
 export type PublicationLink = { label: string; url: string; variant: "primary" | "secondary" };
 export type Publication = { id: string; category: string; title: string; byline: string; summary: string; tags: string[]; status: string; links: PublicationLink[] };
 export type ContactContent = { eyebrow: string; title: string; intro: string; emailCardTitle: string; emailCardText: string; emailButtonLabel: string; socialCardTitle: string };
