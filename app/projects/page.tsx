@@ -8,7 +8,7 @@ export default async function Projects() {
     <main className="site-shell bg-dot-paper">
       <div className="page-wrap">
         <p className="editorial-kicker">{page.eyebrow}</p>
-        <h1 className="editorial-title">
+        <h1 className="editorial-title projects-page-title">
           {page.title}
           <br />
           <span className="editorial-title-muted">{page.titleMuted}</span>
