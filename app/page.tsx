@@ -98,15 +98,25 @@ export default async function Home() {
               <Link href="/projects" className="hidden text-sm font-semibold text-[#9a742d] md:block">View all →</Link>
             </div>
             <div className="mt-7 grid gap-6 md:grid-cols-3">
-              {featuredProjects.map((project, index) => (
-                <Link key={project.id} href={"/projects#" + project.id} className="group overflow-hidden rounded-2xl border border-[#d8cfbb] bg-[#fbf6e8] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(50,43,30,0.10)]">
-                  <ProjectVisual id={project.id} imageId={project.imageId} title={project.title} category={project.category} compact />
+              {featuredProjects.map((project) => (
+                <article key={project.id} className="group overflow-hidden rounded-2xl border border-[#d8cfbb] bg-[#fbf6e8] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(50,43,30,0.10)]">
+                  <Link href={"/projects#" + project.id} aria-label={`Explore ${project.title} on the projects page`}>
+                    <ProjectVisual id={project.id} imageId={project.imageId} title={project.title} category={project.category} compact />
+                  </Link>
                   <div className="p-5">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9a742d]">{project.category}</p>
-                    <h3 className="mt-2 text-xl font-semibold tracking-tight group-hover:text-[#9a742d]">{project.title}</h3>
+                    <h3 className="mt-2 text-xl font-semibold tracking-tight group-hover:text-[#9a742d]">
+                      <Link href={"/projects#" + project.id} className="hover:text-[#9a742d]">{project.title}</Link>
+                    </h3>
                     <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#666c78]">{project.description}</p>
+                    {(project.githubUrl || project.linkUrl) && (
+                      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-[#e3dac8] pt-3">
+                        {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#9a742d]">GitHub ↗</a>}
+                        {project.linkUrl && <a href={project.linkUrl} target="_blank" rel="noreferrer" className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#454a55]">Live dashboard ↗</a>}
+                      </div>
+                    )}
                   </div>
-                </Link>
+                </article>
               ))}
             </div>
           </div>
