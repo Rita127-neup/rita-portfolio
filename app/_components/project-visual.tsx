@@ -7,8 +7,8 @@ const projectArtwork: Record<string, string> = {
   "ecoli-amr": "/project-art/ecoli-amr.svg",
   "dengue-lens-nepal": "/project-art/dengue-lens-nepal.svg",
   "dengue-fever-nepal": "/project-art/dengue-fever-nepal.svg",
-  "caffeine-consumption": "/project-art/caffeine-consumption.svg?v=2",
-  "health-prediction-models": "/project-art/health-prediction-models.svg?v=2",
+  "caffeine-consumption": "/project-art/caffeine-study-v3.svg",
+  "health-prediction-models": "/project-art/health-models-v3.svg",
 };
 
 export function ProjectVisual({
