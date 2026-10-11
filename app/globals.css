@@ -128,3 +128,12 @@ body {
     padding-block: 3.5rem 4rem;
   }
 }
+
+
+@layer components {
+  .projects-page-title {
+    font-size: clamp(2.25rem, 5.2vw, 4.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+}
