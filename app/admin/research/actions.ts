@@ -72,7 +72,40 @@ export async function createResearchItem(
   const result = validateResearch(values);
   if (!result.ok) return { error: "Please fix the highlighted fields.", fieldErrors: result.errors, values };
   const supabase = await createClient();
-  const { data, error } = await supabase.from("research_items").insert(result.data).select("id").single();
+
+  // Generate the required unique slug from the title; admins should not need to enter it manually.
+  const baseSlug = values.title
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 100)
+    .replace(/-+$/g, "");
+  if (!baseSlug) {
+    return { error: "Please use a title containing letters or numbers.", fieldErrors: { title: "A title with letters or numbers is required." }, values };
+  }
+
+  let slug = baseSlug;
+  let suffix = 2;
+  while (true) {
+    const { data: existing, error: slugError } = await supabase
+      .from("research_items")
+      .select("id")
+      .eq("slug", slug)
+      .maybeSingle();
+    if (slugError) {
+      return { error: "Could not check the research item URL. Please try again.", fieldErrors: {}, values };
+    }
+    if (!existing) break;
+    slug = `${baseSlug}-${suffix++}`;
+  }
+
+  const { data, error } = await supabase
+    .from("research_items")
+    .insert({ ...result.data, slug })
+    .select("id")
+    .single();
   if (error || !data) return { error: "The research item could not be created. Please try again.", fieldErrors: {}, values };
   revalidatePath("/admin/research");
   revalidatePath("/research");
