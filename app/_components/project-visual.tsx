@@ -16,18 +16,20 @@ export function ProjectVisual({
   imageId,
   title,
   category,
+  href,
   compact = false,
 }: {
   id: string;
   imageId?: string | null;
   title: string;
   category: string;
+  href?: string | null;
   compact?: boolean;
 }) {
   // Prefer the custom project artwork when one exists; use uploaded imagery as a fallback.
   const artwork = projectArtwork[id] ?? (imageId ? `/media/project/${id}?v=${imageId}` : undefined);
 
-  return (
+  const visual = (
     <div className={`grain group relative overflow-hidden bg-[#dcd4c2] ${compact ? "aspect-[16/10]" : "aspect-[16/9]"}`}>
       {artwork ? (
         <Image
@@ -52,5 +54,13 @@ export function ProjectVisual({
         <span className="shrink-0 text-xs text-white/75">Explore ↗</span>
       </div>
     </div>
+  );
+
+  if (!href) return visual;
+  const external = href.startsWith("http://") || href.startsWith("https://");
+  return (
+    <a href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined} aria-label={`Open ${title}`}>
+      {visual}
+    </a>
   );
 }
