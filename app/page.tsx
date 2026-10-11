@@ -139,7 +139,7 @@ export default async function Home() {
               {featuredPublications.map((publication) => (
                 <article key={publication.id} className="border-t border-[#d8cfbb] py-5">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#777b86]">{publication.category}</p>
-                  <h3 className="mt-2 text-lg font-semibold leading-snug">{publication.title}</h3>
+                  <h3 className="mt-2 text-lg font-semibold leading-snug">{publication.links.find((link) => link.url)?.url ? <a href={publication.links.find((link) => link.url)!.url} target="_blank" rel="noreferrer" className="transition-colors hover:text-[#9a742d]">{publication.title} <span className="text-sm text-[#9a742d]">↗</span></a> : publication.title}</h3>
                   <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#666c78]">{publication.byline}</p>
                   <div className="mt-3 flex flex-wrap gap-3">
                     {publication.links.filter((link) => link.url).slice(0, 2).map((link) => <a key={link.label} href={link.url} target="_blank" rel="noreferrer" className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#9a742d]">{link.label} ↗</a>)}
