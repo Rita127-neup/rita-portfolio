@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getProjectsContent } from "@/lib/content";
 import { ProjectVisual } from "@/app/_components/project-visual";
 
@@ -18,10 +17,9 @@ export default async function Projects() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <Link
+            <article
               key={project.id}
               id={project.id}
-              href={"/projects#" + project.id}
               className="group overflow-hidden rounded-2xl border border-[#d8cfbb] bg-[#fbf6e8] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(50,43,30,0.10)]"
             >
               <ProjectVisual
@@ -51,11 +49,22 @@ export default async function Projects() {
                     </span>
                   ))}
                 </div>
-                <span className="mt-4 inline-block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9a742d]">
-                  Explore ↗
-                </span>
+                {(project.githubUrl || project.linkUrl) && (
+                  <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-[#e3dac8] pt-4">
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#9a742d] hover:text-[#72521c]">
+                        GitHub repository ↗
+                      </a>
+                    )}
+                    {project.linkUrl && (
+                      <a href={project.linkUrl} target="_blank" rel="noreferrer" className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#454a55] hover:text-[#9a742d]">
+                        Live dashboard ↗
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
-            </Link>
+            </article>
           ))}
         </div>
       </div>
