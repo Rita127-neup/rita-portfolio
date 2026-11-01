@@ -73,6 +73,11 @@ const sections: Section[] = [
     text: "Upload, replace, or remove the home page photo.",
     href: "/admin/photo",
   },
+  {
+    title: "Home photo gallery",
+    text: "Add multiple photos to the home page and manage the clickable gallery.",
+    href: "/admin/gallery",
+  },
 ];
 
 async function getSummary(section: Section): Promise<string | null> {
