@@ -206,7 +206,7 @@ export async function getHomeGallery(): Promise<{ id: string; src: string; alt: 
     .order("created_at", { ascending: true });
   if (error) fail("the home photo gallery", error.message);
   return (data ?? []).flatMap((row) => {
-    const media = row.media as { id: string; alt_text: string | null } | null;
+    const media = Array.isArray(row.media) ? row.media[0] : row.media;
     return media ? [{ id: row.id, src: `/media/gallery/${row.id}`, alt: media.alt_text ?? "" }] : [];
   });
 }
