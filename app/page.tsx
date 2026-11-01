@@ -1,18 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ProjectVisual } from "@/app/_components/project-visual";
+import { HomePhotoGallery } from "@/app/_components/home-photo-gallery";
 import {
   getAboutContent,
   getHomeContent,
   getOrganizations,
   getProfileInfo,
   getProjectsContent,
+  getHomeGallery,
   getPublicationsContent,
   getSiteSettings,
 } from "@/lib/content";
 
 export default async function Home() {
-  const [home, profile, organizations, projects, publications, about, site] = await Promise.all([
+  const [home, profile, organizations, projects, publications, about, site, gallery] = await Promise.all([
     getHomeContent(),
     getProfileInfo(),
     getOrganizations(),
@@ -20,6 +22,7 @@ export default async function Home() {
     getPublicationsContent(),
     getAboutContent(),
     getSiteSettings(),
+    getHomeGallery(),
   ]);
 
   const featuredProjects = projects.items.slice(0, 3);
@@ -75,19 +78,13 @@ export default async function Home() {
           </div>
         </div>
         <div className="mx-auto w-full max-w-md md:justify-self-end">
-          <div className="relative overflow-hidden rounded-[1.5rem] bg-[#dedbd2]">
-            {home.photoUrl ? (
-              <Image src={home.photoUrl} alt={home.photoAlt} width={800} height={1000} unoptimized loading="eager" className="aspect-[4/5] w-full object-cover" />
-            ) : (
-              <div className="flex aspect-[4/5] items-center justify-center"><span className="font-display text-5xl text-[#9a742d]">{home.photoPlaceholderInitials}</span></div>
-            )}
-            {profile.birthday && (
-              <div className="absolute bottom-4 left-4 rounded-full border border-white/50 bg-[#fbf6e8]/90 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#454a55] backdrop-blur-sm">
-                Born {profile.birthday}
-              </div>
-            )}
-          </div>
-        </div>
+          <HomePhotoGallery
+            photoUrl={home.photoUrl}
+            photoAlt={home.photoAlt}
+            placeholderInitials={home.photoPlaceholderInitials}
+            birthday={profile.birthday}
+            photos={gallery.map((photo) => ({ src: photo.src, alt: photo.alt }))}
+          />        </div>
       </section>
 
       {featuredProjects.length > 0 && (
