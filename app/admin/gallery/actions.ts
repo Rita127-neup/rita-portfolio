@@ -75,8 +75,8 @@ export async function removeGalleryPhoto(id: string) {
     .select("media:media_assets(id, object_path)")
     .eq("id", id)
     .maybeSingle();
-  if (error || !data?.media) redirect("/admin/gallery?error=remove");
-  const media = data.media as { id: string; object_path: string };
+  const media = Array.isArray(data?.media) ? data.media[0] : data?.media;
+  if (error || !media) redirect("/admin/gallery?error=remove");
   const { error: deleteError } = await supabase.from("home_gallery_images").delete().eq("id", id);
   if (deleteError) redirect("/admin/gallery?error=remove");
   await supabase.from("media_assets").delete().eq("id", media.id);
