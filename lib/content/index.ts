@@ -197,6 +197,20 @@ export const getCurrentCv = cache(
   },
 );
 
+/** Additional photos managed from the admin dashboard. */
+export async function getHomeGallery(): Promise<{ id: string; src: string; alt: string }[]> {
+  const { data, error } = await getPublicSupabaseClient()
+    .from("home_gallery_images")
+    .select("id, media:media_assets(id, alt_text)")
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+  if (error) fail("the home photo gallery", error.message);
+  return (data ?? []).flatMap((row) => {
+    const media = row.media as { id: string; alt_text: string | null } | null;
+    return media ? [{ id: row.id, src: `/media/gallery/${row.id}`, alt: media.alt_text ?? "" }] : [];
+  });
+}
+
 /** Storage path of the home page photo, or null if none is uploaded. */
 export async function getHeroPhotoPath(): Promise<string | null> {
   const page = await getPage("home");
