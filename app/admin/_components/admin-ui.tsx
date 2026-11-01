@@ -15,6 +15,7 @@ const navItems = [
   { label: "Site & pages", href: "/admin/site" },
   { label: "CV", href: "/admin/cv" },
   { label: "Photo", href: "/admin/photo" },
+  { label: "Home gallery", href: "/admin/gallery" },
 ];
 
 export function AdminNav() {
