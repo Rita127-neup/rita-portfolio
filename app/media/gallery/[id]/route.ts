@@ -14,6 +14,6 @@ export async function GET(
     .select("media:media_assets(object_path)")
     .eq("id", id)
     .maybeSingle();
-  const media = data?.media as { object_path: string } | null;
+  const media = Array.isArray(data?.media) ? data.media[0] : data?.media;
   return redirectToSignedFile(media?.object_path ?? null, { cacheSeconds: 120 });
 }
