@@ -41,6 +41,21 @@ export default async function AdminGallery({
       {params.error === "remove" && <p role="alert" className="mt-6 text-sm text-red-300">Could not remove that photo. Please try again.</p>}
 
       <Panel>
+        <h2 className="mb-2 text-2xl font-semibold">Add a photo</h2>
+        <p className="mb-6 text-sm text-slate-400">JPEG, PNG or WebP, up to 5 MB. Portrait photos work best.</p>
+        <UploadForm
+          folder="photos"
+          types={PHOTO_EXTENSIONS}
+          maxBytes={PHOTO_MAX_BYTES}
+          fileLabel="Image file"
+          fileHint="Choose a photo to add. This will not replace your main photo."
+          textField={{ name: "alt_text", label: "Description", defaultValue: "", maxLength: 200, hint: "A short description for screen readers." }}
+          submitLabel="Add to gallery"
+          register={registerGalleryPhoto}
+        />
+      </Panel>
+
+      <Panel>
         <h2 className="text-2xl font-semibold">Gallery photos ({photos.length})</h2>
         {error ? (
           <p role="alert" className="mt-4 text-red-300">Could not load gallery photos.</p>
@@ -61,21 +76,6 @@ export default async function AdminGallery({
             ))}
           </div>
         )}
-      </Panel>
-
-      <Panel>
-        <h2 className="mb-2 text-2xl font-semibold">Add a photo</h2>
-        <p className="mb-6 text-sm text-slate-400">JPEG, PNG or WebP, up to 5 MB. Portrait photos work best.</p>
-        <UploadForm
-          folder="photos"
-          types={PHOTO_EXTENSIONS}
-          maxBytes={PHOTO_MAX_BYTES}
-          fileLabel="Image file"
-          fileHint="Choose a photo to add. This will not replace your main photo."
-          textField={{ name: "alt_text", label: "Description", defaultValue: "", maxLength: 200, hint: "A short description for screen readers." }}
-          submitLabel="Add to gallery"
-          register={registerGalleryPhoto}
-        />
       </Panel>
     </>
   );
