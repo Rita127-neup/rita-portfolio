@@ -35,7 +35,7 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
             <p className="section-label">Photo journal</p>
             <h2 className="section-title">A few moments along the way.</h2>
           </div>
-          <div className="mt-7 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+          <div className="mt-7 grid grid-cols-2 gap-5 md:grid-cols-3">
             {photos.map((photo, index) => (
               <article key={photo.id} className="min-w-0">
                 <button
