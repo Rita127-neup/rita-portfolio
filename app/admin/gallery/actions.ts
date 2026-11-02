@@ -8,41 +8,89 @@ import { requireAdmin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { PHOTO_EXTENSIONS, PHOTO_MAX_BYTES, PHOTO_PATH_PATTERN } from "@/lib/storage";
 
-export async function registerGalleryPhoto(path: string, altText: string) {
+type GalleryUpload = { path: string; altText: string };
+
+export async function registerGalleryPhotos(uploads: GalleryUpload[]) {
   await requireAdmin();
-  if (typeof path !== "string" || !PHOTO_PATH_PATTERN.test(path))
-    return { error: "The upload could not be verified." };
-  const alt = typeof altText === "string" ? altText.trim() : "";
-  const altError = checkRequired(alt, 200);
-  if (altError) return { error: altError };
+
+  if (!Array.isArray(uploads) || uploads.length < 1 || uploads.length > 5) {
+    return { error: "Choose between one and five photos per upload." };
+  }
+
+  const cleanUploads: GalleryUpload[] = [];
+  for (const upload of uploads) {
+    if (
+      !upload ||
+      typeof upload.path !== "string" ||
+      !PHOTO_PATH_PATTERN.test(upload.path)
+    ) {
+      return { error: "An upload could not be verified. Please try again." };
+    }
+    const altText =
+      typeof upload.altText === "string" ? upload.altText.trim() : "";
+    const altError = checkRequired(altText, 200);
+    if (altError) return { error: "Photo description: " + altError };
+    cleanUploads.push({ path: upload.path, altText });
+  }
 
   const supabase = await createClient();
-  const file = await verifyUpload(supabase, path, Object.keys(PHOTO_EXTENSIONS), PHOTO_MAX_BYTES);
-  if (!file.ok) {
-    if (file.discard) await discardFiles(supabase, [path]);
-    return { error: file.error };
-  }
-  if (!path.endsWith(`.${PHOTO_EXTENSIONS[file.mimeType]}`)) {
-    await discardFiles(supabase, [path]);
-    return { error: "This file type is not allowed." };
+  const verified: {
+    path: string;
+    altText: string;
+    mimeType: string;
+    size: number;
+  }[] = [];
+
+  for (const upload of cleanUploads) {
+    const file = await verifyUpload(
+      supabase,
+      upload.path,
+      Object.keys(PHOTO_EXTENSIONS),
+      PHOTO_MAX_BYTES,
+    );
+    if (!file.ok) {
+      if (file.discard) await discardFiles(supabase, [upload.path]);
+      await discardFiles(supabase, verified.map((item) => item.path));
+      return { error: file.error };
+    }
+    if (!upload.path.endsWith("." + PHOTO_EXTENSIONS[file.mimeType])) {
+      await discardFiles(supabase, [
+        upload.path,
+        ...verified.map((item) => item.path),
+      ]);
+      return { error: "One of the selected files has an invalid type." };
+    }
+    verified.push({
+      ...upload,
+      mimeType: file.mimeType,
+      size: file.size,
+    });
   }
 
-  const { data: media, error: mediaError } = await supabase
-    .from("media_assets")
-    .insert({
-      bucket: "portfolio-files",
-      object_path: path,
-      kind: "image",
-      mime_type: file.mimeType,
-      size_bytes: file.size,
-      alt_text: alt,
-      is_public: true,
-    })
-    .select("id")
-    .single();
-  if (mediaError || !media) {
-    await discardFiles(supabase, [path]);
-    return { error: "The photo could not be saved." };
+  const mediaIds: string[] = [];
+  for (const photo of verified) {
+    const { data: media, error } = await supabase
+      .from("media_assets")
+      .insert({
+        bucket: "portfolio-files",
+        object_path: photo.path,
+        kind: "image",
+        mime_type: photo.mimeType,
+        size_bytes: photo.size,
+        alt_text: photo.altText,
+        is_public: true,
+      })
+      .select("id")
+      .single();
+
+    if (error || !media) {
+      if (mediaIds.length) {
+        await supabase.from("media_assets").delete().in("id", mediaIds);
+      }
+      await discardFiles(supabase, verified.map((item) => item.path));
+      return { error: "The photos could not be saved. Please try again." };
+    }
+    mediaIds.push(media.id);
   }
 
   const { data: last } = await supabase
@@ -51,14 +99,21 @@ export async function registerGalleryPhoto(path: string, altText: string) {
     .order("sort_order", { ascending: false })
     .limit(1)
     .maybeSingle();
-  const { error } = await supabase.from("home_gallery_images").insert({
-    media_id: media.id,
-    sort_order: (last?.sort_order ?? 0) + 1,
-  });
+
+  const firstOrder = (last?.sort_order ?? 0) + 1;
+  const { error } = await supabase.from("home_gallery_images").insert(
+    mediaIds.map((mediaId, index) => ({
+      media_id: mediaId,
+      sort_order: firstOrder + index,
+    })),
+  );
+
   if (error) {
-    await supabase.from("media_assets").delete().eq("id", media.id);
-    await discardFiles(supabase, [path]);
-    return { error: "The photo could not be added to the gallery." };
+    await supabase.from("media_assets").delete().in("id", mediaIds);
+    await discardFiles(supabase, verified.map((item) => item.path));
+    return {
+      error: "The photos could not be added to the gallery. Please try again.",
+    };
   }
 
   revalidatePath("/");
@@ -68,7 +123,10 @@ export async function registerGalleryPhoto(path: string, altText: string) {
 
 export async function removeGalleryPhoto(id: string) {
   await requireAdmin();
-  if (typeof id !== "string" || !/^[0-9a-f-]{36}$/i.test(id)) redirect("/admin/gallery?error=remove");
+  if (typeof id !== "string" || !/^[0-9a-f-]{36}$/i.test(id)) {
+    redirect("/admin/gallery?error=remove");
+  }
+
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("home_gallery_images")
@@ -77,8 +135,13 @@ export async function removeGalleryPhoto(id: string) {
     .maybeSingle();
   const media = Array.isArray(data?.media) ? data.media[0] : data?.media;
   if (error || !media) redirect("/admin/gallery?error=remove");
-  const { error: deleteError } = await supabase.from("home_gallery_images").delete().eq("id", id);
+
+  const { error: deleteError } = await supabase
+    .from("home_gallery_images")
+    .delete()
+    .eq("id", id);
   if (deleteError) redirect("/admin/gallery?error=remove");
+
   await supabase.from("media_assets").delete().eq("id", media.id);
   await discardFiles(supabase, [media.object_path]);
   revalidatePath("/");

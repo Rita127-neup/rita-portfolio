@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProjectVisual } from "@/app/_components/project-visual";
 import { HomePhotoGallery } from "@/app/_components/home-photo-gallery";
+import { HomeGalleryWall } from "@/app/_components/home-gallery-wall";
 import {
   getAboutContent,
   getHomeContent,
@@ -83,9 +84,11 @@ export default async function Home() {
             photoAlt={home.photoAlt}
             placeholderInitials={home.photoPlaceholderInitials}
             birthday={profile.birthday}
-            photos={gallery.map((photo) => ({ src: photo.src, alt: photo.alt }))}
+            photos={[]}
           />        </div>
       </section>
+
+      <HomeGalleryWall photos={gallery} />
 
       {featuredProjects.length > 0 && (
         <section className="border-t border-[#d8cfbb] px-6 py-12 md:py-14">
