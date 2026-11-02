@@ -84,6 +84,7 @@ export default async function Home() {
             photoAlt={home.photoAlt}
             placeholderInitials={home.photoPlaceholderInitials}
             birthday={profile.birthday}
+            photos={[]}
           />        </div>
       </section>
 
