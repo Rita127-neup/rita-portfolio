@@ -35,7 +35,7 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
             <p className="section-label">Photo journal</p>
             <h2 className="section-title">A few moments along the way.</h2>
           </div>
-          <div className="mt-7 grid grid-cols-2 gap-5 md:grid-cols-3">
+          <div className="mt-7 grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-5">
             {photos.map((photo, index) => (
               <article key={photo.id} className="min-w-0">
                 <button
@@ -49,7 +49,7 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
                     alt={photo.alt}
                     fill
                     unoptimized
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 20vw"
                     className="object-cover transition duration-500 group-hover:scale-[1.04]"
                   />
                   <span className="absolute bottom-2 right-2 rounded-full bg-black/55 px-2.5 py-1 text-[10px] font-medium text-white opacity-0 transition group-hover:opacity-100">
