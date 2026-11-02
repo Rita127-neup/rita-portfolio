@@ -32,7 +32,7 @@ export default async function AdminGallery({
       <AdminNav />
       <AdminHeader
         title="Home photo gallery"
-        text="Add extra photos to the homepage. Visitors can select the thumbnails beneath your main photo to switch between them."
+        text="Add photos to the homepage photo journal. Each photo appears in a grid with its description below it. Visitors can click any photo to open it full-screen."
         backHref="/admin"
         backLabel="Back to dashboard"
       />
