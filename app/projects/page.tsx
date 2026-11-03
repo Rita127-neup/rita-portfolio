@@ -1,4 +1,5 @@
 import { getProjectsContent, displayNumber } from "@/lib/content";
+import { WorkMark } from "@/app/_components/work-mark";
 
 export default async function Projects() {
   const { page, items } = await getProjectsContent();
@@ -25,7 +26,7 @@ export default async function Projects() {
                   <p className="editorial-kicker">{project.category}</p>
                   <span className="text-[0.65rem] uppercase tracking-[0.14em] text-[#777b86]">{project.status}</span>
                 </div>
-                <h2 className="mt-3 max-w-3xl font-display text-2xl leading-tight md:text-3xl">{project.title}</h2>
+                <div className="mt-3 flex items-center gap-3"><WorkMark kind={project.id === "dengue-lens-nepal" ? "web" : "data"} /><h2 className="max-w-3xl font-display text-2xl leading-tight md:text-3xl">{project.title}</h2></div>
                 <p className="mt-4 max-w-3xl text-[0.98rem] leading-7 text-[#62676f]">{project.description}</p>
                 <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-[0.68rem] uppercase tracking-[0.12em] text-[#777b86]">
                   {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
