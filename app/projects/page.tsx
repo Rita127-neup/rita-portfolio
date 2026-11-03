@@ -1,8 +1,10 @@
-import { getProjectsContent } from "@/lib/content";
-import { ProjectVisual } from "@/app/_components/project-visual";
+import { getProjectsContent, displayNumber } from "@/lib/content";
 
 export default async function Projects() {
-  const { page, items: projects } = await getProjectsContent();
+  const { page, items } = await getProjectsContent();
+  const projects = items.filter((project) =>
+    ["dengue-lens-nepal", "nepal-education-data-engine"].includes(project.id)
+  );
 
   return (
     <main className="site-shell bg-dot-paper">
@@ -10,64 +12,35 @@ export default async function Projects() {
         <p className="editorial-kicker">{page.eyebrow}</p>
         <h1 className="editorial-title projects-page-title">
           {page.title}
-          <br />
-          <span className="editorial-title-muted">{page.titleMuted}</span>
+          {page.titleMuted && <><br /><span className="editorial-title-muted">{page.titleMuted}</span></>}
         </h1>
-        <p className="mt-6 max-w-2xl text-base leading-7 text-[#62676f]">{page.intro}</p>
+        <p className="mt-8 max-w-2xl text-lg leading-8 text-[#62676f]">{page.intro}</p>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <article
-              key={project.id}
-              id={project.id}
-              className="group overflow-hidden rounded-2xl border border-[#d8cfbb] bg-[#fbf6e8] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(50,43,30,0.10)]"
-            >
-              <ProjectVisual
-                id={project.id}
-                imageId={project.imageId}
-                title={project.title}
-                category={project.category}
-                href={project.linkUrl || project.githubUrl || undefined}
-                compact
-              />
-              <div className="p-4">
-                <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#9a742d]">
-                  {project.status}
-                </p>
-                <h2 className="mt-1.5 text-base font-semibold tracking-tight group-hover:text-[#9a742d]">
-                  <a href={project.linkUrl || project.githubUrl || ("/projects#" + project.id)} target={(project.linkUrl || project.githubUrl) ? "_blank" : undefined} rel={(project.linkUrl || project.githubUrl) ? "noreferrer" : undefined} className="hover:underline decoration-[#9a742d]/40 underline-offset-4">{project.title} <span className="text-xs text-[#9a742d]">↗</span></a>
-                </h2>
-                <p className="mt-1.5 line-clamp-3 text-xs leading-5 text-[#666c78]">
-                  {project.description}
-                </p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {project.tags.slice(0, 4).map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-[#d7cdb9] px-2 py-0.5 text-[9px] text-[#62676f]"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+        <div className="mt-16 border-y border-[#d7cdb9]">
+          {projects.map((project, index) => (
+            <article key={project.id} id={project.id} className="grid gap-6 border-b border-[#d7cdb9] py-9 last:border-b-0 md:grid-cols-[4rem_minmax(0,1fr)_13rem]">
+              <span className="font-display text-2xl text-[#a5a397]">{displayNumber(index)}</span>
+              <div>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+                  <p className="editorial-kicker">{project.category}</p>
+                  <span className="text-[0.65rem] uppercase tracking-[0.14em] text-[#777b86]">{project.status}</span>
                 </div>
-                {(project.githubUrl || project.linkUrl) && (
-                  <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-[#e3dac8] pt-3">
-                    {project.githubUrl && (
-                      <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-[9px] font-semibold uppercase tracking-[0.12em] text-[#9a742d] hover:text-[#72521c]">
-                        GitHub repository ↗
-                      </a>
-                    )}
-                    {project.linkUrl && (
-                      <a href={project.linkUrl} target="_blank" rel="noreferrer" className="text-[9px] font-semibold uppercase tracking-[0.12em] text-[#454a55] hover:text-[#9a742d]">
-                        Live dashboard ↗
-                      </a>
-                    )}
-                  </div>
-                )}
+                <h2 className="mt-3 max-w-3xl font-display text-2xl leading-tight md:text-3xl">{project.title}</h2>
+                <p className="mt-4 max-w-3xl text-[0.98rem] leading-7 text-[#62676f]">{project.description}</p>
+                <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-[0.68rem] uppercase tracking-[0.12em] text-[#777b86]">
+                  {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                </div>
               </div>
+              <aside className="flex flex-col gap-3 border-t border-[#e3dac8] pt-4 md:border-l md:border-t-0 md:pl-5 md:pt-1">
+                {project.linkUrl && <a href={project.linkUrl} target="_blank" rel="noreferrer" className="text-sm font-semibold text-[#9a742d] hover:text-[#72521c]">Open live project ↗</a>}
+                {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-sm font-semibold text-[#454a55] hover:text-[#9a742d]">Source code ↗</a>}
+              </aside>
             </article>
           ))}
         </div>
+        <p className="mt-8 max-w-2xl text-sm leading-6 text-[#777b86]">
+          Research studies are listed separately, with their datasets, methods, and publication status.
+        </p>
       </div>
     </main>
   );
