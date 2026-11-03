@@ -26,7 +26,7 @@ export default async function Research() {
     getResearchContent(),
     getPublicationsContent(),
   ]);
-  const publicationById = new Map(publications.map((item) => [item.id, item]));
+  const publicationById = new Map(publications.map((item) => [item.id, item] as const));
 
   return (
     <main className="site-shell bg-dot-paper">
