@@ -1,13 +1,13 @@
-import { getPublicationsContent, getResearchContent, displayNumber } from "@/lib/content";
+import { getProjectsContent, getPublicationsContent, getResearchContent, displayNumber } from "@/lib/content";
 
-const studyDetails: Record<string, { material: string; method: string; question: string; publicationId: string }> = {
+const studyDetails: Record<string, { material: string; method: string; question: string; publicationId?: string }> = {
   "ecoli-amr-generalization": {
     material: "7,274 quality-controlled E. coli genomes",
     method: "Genomic resistance prediction, external population validation, and post-hoc calibration",
     question: "Does a model trained in one population produce reliable resistance probabilities in another?",
     publicationId: "genomic-amr-ciprofloxacin-calibration",
   },
-  "dengue-nepal": {
+  "dengue-ewars": {\n    material: "Google Trends search activity and Nepal dengue surveillance records",\n    method: "Public-data audit and time-series comparison of search activity with confirmed cases",\n    question: "Can online search activity provide an earlier signal of dengue activity in Nepal?",\n  },\n  "dengue-nepal": {
     material: "161,892 nationally reported dengue cases, 2019–2024",
     method: "Retrospective analysis of surveillance records and environmental variables",
     question: "How did dengue incidence vary over time, and how did those patterns relate to environmental conditions?",
@@ -39,16 +39,16 @@ export default async function Research() {
         <p className="mt-8 max-w-2xl text-lg leading-8 text-[#62676f]">{page.intro}</p>
 
         <div className="mt-16 border-y border-[#bfb49e]">
-          {items.map((item, index) => {
+          {orderedItems.map((item, index) => {
             const details = studyDetails[item.id];
-            const publication = details ? publicationById.get(details.publicationId) : undefined;
+            const publication = details?.publicationId ? publicationById.get(details.publicationId) : undefined;
             return (
               <article key={item.id} className="grid gap-6 border-b border-[#d7cdb9] py-10 last:border-b-0 md:grid-cols-[4rem_minmax(0,1fr)]">
                 <span className="font-display text-2xl text-[#a5a397]">{displayNumber(index)}</span>
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <p className="editorial-kicker">{item.category} · Research study</p>
-                    {publication?.status && <span className="border border-[#cfc4ad] px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.1em] text-[#686b68]">{publication.status}</span>}
+                    {(publication?.status || item.id === "dengue-ewars") && <span className="border border-[#cfc4ad] px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.1em] text-[#686b68]">{publication?.status ?? "Independent research initiative"}</span>}
                   </div>
                   <h2 className="mt-3 max-w-4xl font-display text-2xl leading-tight md:text-3xl">{item.title}</h2>
                   <p className="mt-4 max-w-4xl text-[0.98rem] leading-7 text-[#555b67]">{item.summary}</p>
