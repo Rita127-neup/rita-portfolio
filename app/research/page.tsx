@@ -1,4 +1,5 @@
 import { getProjectsContent, getPublicationsContent, getResearchContent, displayNumber } from "@/lib/content";
+import { WorkMark } from "@/app/_components/work-mark";
 
 const studyDetails: Record<string, { material: string; method: string; question: string; publicationId?: string }> = {
   "ecoli-amr-generalization": {
@@ -85,7 +86,7 @@ export default async function Research() {
                     )}
                   </div>
 
-                  <h2 className="mt-3 max-w-4xl font-display text-2xl leading-tight md:text-3xl">{item.title}</h2>
+                  <div className="mt-3 flex items-center gap-3"><WorkMark kind={item.id === "ecoli-amr-generalization" ? "genomics" : item.id === "dengue-nepal" ? "epidemiology" : item.id === "dengue-ewars" ? "signal" : "survey"} /><h2 className="max-w-4xl font-display text-2xl leading-tight md:text-3xl">{item.title}</h2></div>
                   <p className="mt-4 max-w-4xl text-[0.98rem] leading-7 text-[#555b67]">{item.summary}</p>
 
                   {details && (
