@@ -160,7 +160,7 @@ export default async function Home() {
             {orderedOrganizations.length > 0 && (
               <div>
                 <p className="section-label">Organizations & communities</p>
-                <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-6">
+                <div className="mt-6 flex flex-nowrap items-center gap-x-4 overflow-x-auto pb-1">
                   {orderedOrganizations.map((organization) => (
                     <div key={organization.id} className="flex items-center gap-2.5">
                       <div className={`flex shrink-0 items-center justify-center overflow-hidden border border-[#c9bea8] bg-[#fbf6e8] ${/lsdt|icad|innovation/i.test(organization.name) ? "h-12 w-[4.5rem] rounded-md" : "h-12 w-12 rounded-full"}`}>
