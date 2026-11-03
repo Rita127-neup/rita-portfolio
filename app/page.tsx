@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HomePhotoGallery } from "@/app/_components/home-photo-gallery";
 import { HomeGalleryWall } from "@/app/_components/home-gallery-wall";
+import { WorkMark } from "@/app/_components/work-mark";
 import {
   getAboutContent,
   getHomeContent,
@@ -102,7 +103,7 @@ export default async function Home() {
                   <span className="font-display text-xl text-[#a5a397]">{String(index + 1).padStart(2, "0")}</span>
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#9a742d]">{project.category} · {project.status}</p>
-                    <h3 className="mt-2 font-display text-2xl leading-tight">{project.title}</h3>
+                    <div className="mt-2 flex items-center gap-3"><WorkMark kind={project.id === "dengue-lens-nepal" ? "web" : "data"} /><h3 className="font-display text-2xl leading-tight">{project.title}</h3></div>
                     <p className="mt-2 max-w-3xl text-sm leading-6 text-[#62676f]">{project.description}</p>
                   </div>
                   <div className="flex flex-col gap-2 border-t border-[#e3dac8] pt-3 md:border-l md:border-t-0 md:pl-5 md:pt-1">
@@ -129,7 +130,7 @@ export default async function Home() {
                   <span className="font-display text-xl text-[#a5a397]">{String(index + 1).padStart(2, "0")}</span>
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#777b86]">{publication.category} · {publication.byline}</p>
-                    <h3 className="mt-2 max-w-3xl font-display text-xl leading-snug">{publication.links.find((link) => link.url)?.url ? <a href={publication.links.find((link) => link.url)!.url} target="_blank" rel="noreferrer" className="hover:text-[#9a742d]">{publication.title} ↗</a> : publication.title}</h3>
+                    <div className="mt-2 flex items-center gap-3"><WorkMark kind={publication.id.includes("amr") ? "genomics" : publication.id.includes("dengue") ? "epidemiology" : "survey"} /><h3 className="max-w-3xl font-display text-xl leading-snug">{publication.links.find((link) => link.url)?.url ? <a href={publication.links.find((link) => link.url)!.url} target="_blank" rel="noreferrer" className="hover:text-[#9a742d]">{publication.title} ↗</a> : publication.title}</h3></div>
                     <p className="mt-2 max-w-3xl text-sm leading-6 text-[#62676f]">{publication.summary}</p>
                   </div>
                   <div className="flex flex-col gap-3 border-t border-[#d1c6af] pt-3 md:border-l md:border-t-0 md:pl-5 md:pt-1">
