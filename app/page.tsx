@@ -90,33 +90,6 @@ export default async function Home() {
 
       <HomeGalleryWall photos={gallery} />
 
-      {featuredProjects.length > 0 && (
-        <section className="border-t border-[#d8cfbb] px-6 py-12 md:py-14">
-          <div className="mx-auto max-w-6xl">
-            <div className="flex items-end justify-between gap-6">
-              <div><p className="section-label">Selected projects</p><h2 className="section-title">Tools built to be used.</h2></div>
-              <Link href="/projects" className="hidden text-sm font-semibold text-[#9a742d] md:block">View all →</Link>
-            </div>
-            <div className="mt-8 divide-y divide-[#d7cdb9] border-y border-[#d7cdb9]">
-              {featuredProjects.map((project, index) => (
-                <article key={project.id} className="grid gap-4 py-6 md:grid-cols-[3rem_minmax(0,1fr)_12rem]">
-                  <span className="font-display text-xl text-[#a5a397]">{String(index + 1).padStart(2, "0")}</span>
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#9a742d]">{project.category} · {project.status}</p>
-                    <div className="mt-2 flex items-center gap-3"><WorkMark kind={project.id === "dengue-lens-nepal" ? "web" : "data"} /><h3 className="font-display text-2xl leading-tight">{project.title}</h3></div>
-                    <p className="mt-2 max-w-3xl text-sm leading-6 text-[#62676f]">{project.description}</p>
-                  </div>
-                  <div className="flex flex-col gap-2 border-t border-[#e3dac8] pt-3 md:border-l md:border-t-0 md:pl-5 md:pt-1">
-                    {project.linkUrl && <a href={project.linkUrl} target="_blank" rel="noreferrer" className="text-xs font-semibold text-[#9a742d]">Open live project ↗</a>}
-                    {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-xs font-semibold text-[#454a55]">Source code ↗</a>}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {featuredPublications.length > 0 && (
         <section className="border-t border-[#d8cfbb] bg-[#eee7d4] px-6 py-12 md:py-14">
           <div className="mx-auto max-w-6xl">
@@ -136,6 +109,33 @@ export default async function Home() {
                   <div className="flex flex-col gap-3 border-t border-[#d1c6af] pt-3 md:border-l md:border-t-0 md:pl-5 md:pt-1">
                     <p className="text-xs leading-5 text-[#777b86]">{publication.status}</p>
                     {publication.links.filter((link) => link.url).slice(0, 2).map((link) => <a key={link.label} href={link.url} target="_blank" rel="noreferrer" className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a742d]">{link.label} ↗</a>)}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {featuredProjects.length > 0 && (
+        <section className="border-t border-[#d8cfbb] px-6 py-12 md:py-14">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex items-end justify-between gap-6">
+              <div><p className="section-label">Selected projects</p><h2 className="section-title">Tools built to be used.</h2></div>
+              <Link href="/projects" className="hidden text-sm font-semibold text-[#9a742d] md:block">View all →</Link>
+            </div>
+            <div className="mt-8 divide-y divide-[#d7cdb9] border-y border-[#d7cdb9]">
+              {featuredProjects.map((project, index) => (
+                <article key={project.id} className="grid gap-4 py-6 md:grid-cols-[3rem_minmax(0,1fr)_12rem]">
+                  <span className="font-display text-xl text-[#a5a397]">{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#9a742d]">{project.category} · {project.status}</p>
+                    <div className="mt-2 flex items-center gap-3"><WorkMark kind={project.id === "dengue-lens-nepal" ? "web" : "data"} /><h3 className="font-display text-2xl leading-tight">{project.title}</h3></div>
+                    <p className="mt-2 max-w-3xl text-sm leading-6 text-[#62676f]">{project.description}</p>
+                  </div>
+                  <div className="flex flex-col gap-2 border-t border-[#e3dac8] pt-3 md:border-l md:border-t-0 md:pl-5 md:pt-1">
+                    {project.linkUrl && <a href={project.linkUrl} target="_blank" rel="noreferrer" className="text-xs font-semibold text-[#9a742d]">Open live project ↗</a>}
+                    {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-xs font-semibold text-[#454a55]">Source code ↗</a>}
                   </div>
                 </article>
               ))}
