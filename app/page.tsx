@@ -160,13 +160,13 @@ export default async function Home() {
             {orderedOrganizations.length > 0 && (
               <div>
                 <p className="section-label">Organizations & communities</p>
-                <div className="mt-5 flex flex-wrap items-center gap-x-7 gap-y-5">
+                <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-6">
                   {orderedOrganizations.map((organization) => (
                     <div key={organization.id} className="flex items-center gap-2.5">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#c9bea8] bg-[#fbf6e8]">
-                        {organization.logoId ? <Image src={`/media/organization/${organization.id}?v=${organization.logoId}`} alt={organization.name} width={44} height={44} unoptimized className="h-full w-full object-contain p-1.5" /> : <span className="text-xs font-bold text-[#806020]">{organization.name.slice(0, 2).toUpperCase()}</span>}
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#c9bea8] bg-[#fbf6e8]">
+                        {organization.logoId ? <Image src={`/media/organization/${organization.id}?v=${organization.logoId}`} alt={organization.name} width={56} height={56} unoptimized className="h-full w-full object-contain p-2" /> : <span className="text-xs font-bold text-[#806020]">{organization.name.slice(0, 2).toUpperCase()}</span>}
                       </div>
-                      <span className="text-sm font-semibold text-[#30342f]">{organization.name}</span>
+                      <span className="text-base font-bold text-[#30342f]">{organization.name}</span>
                     </div>
                   ))}
                 </div>
