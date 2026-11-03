@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ProjectVisual } from "@/app/_components/project-visual";
 import { HomePhotoGallery } from "@/app/_components/home-photo-gallery";
 import { HomeGalleryWall } from "@/app/_components/home-gallery-wall";
 import {
@@ -26,7 +25,7 @@ export default async function Home() {
     getHomeGallery(),
   ]);
 
-  const featuredProjects = projects.items.slice(0, 3);
+  const featuredProjects = projects.items.filter((project) => ["dengue-lens-nepal", "nepal-education-data-engine"].includes(project.id)).slice(0, 3);
   const featuredPublications = publications.items.slice(0, 3);
   const socialLinks = site.socialLinks.filter((link) => link.url);
 
@@ -94,32 +93,21 @@ export default async function Home() {
         <section className="border-t border-[#d8cfbb] px-6 py-12 md:py-14">
           <div className="mx-auto max-w-6xl">
             <div className="flex items-end justify-between gap-6">
-              <div><p className="section-label">Selected work</p><h2 className="section-title">Built and investigated.</h2></div>
+              <div><p className="section-label">Selected projects</p><h2 className="section-title">Tools built to be used.</h2></div>
               <Link href="/projects" className="hidden text-sm font-semibold text-[#9a742d] md:block">View all →</Link>
             </div>
-            <div className="mt-7 grid gap-6 md:grid-cols-3">
-              {featuredProjects.map((project) => (
-                <article key={project.id} className="group overflow-hidden rounded-2xl border border-[#d8cfbb] bg-[#fbf6e8] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(50,43,30,0.10)]">
-                  <ProjectVisual
-                    id={project.id}
-                    imageId={project.imageId}
-                    title={project.title}
-                    category={project.category}
-                    href={project.linkUrl || project.githubUrl || ("/projects#" + project.id)}
-                    compact
-                  />
-                  <div className="p-5">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9a742d]">{project.category}</p>
-                    <h3 className="mt-2 text-xl font-semibold tracking-tight group-hover:text-[#9a742d]">
-                      <Link href={"/projects#" + project.id} className="hover:text-[#9a742d]">{project.title}</Link>
-                    </h3>
-                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#666c78]">{project.description}</p>
-                    {(project.githubUrl || project.linkUrl) && (
-                      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-[#e3dac8] pt-3">
-                        {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#9a742d]">GitHub ↗</a>}
-                        {project.linkUrl && <a href={project.linkUrl} target="_blank" rel="noreferrer" className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#454a55]">Live dashboard ↗</a>}
-                      </div>
-                    )}
+            <div className="mt-8 divide-y divide-[#d7cdb9] border-y border-[#d7cdb9]">
+              {featuredProjects.map((project, index) => (
+                <article key={project.id} className="grid gap-4 py-6 md:grid-cols-[3rem_minmax(0,1fr)_12rem]">
+                  <span className="font-display text-xl text-[#a5a397]">{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#9a742d]">{project.category} · {project.status}</p>
+                    <h3 className="mt-2 font-display text-2xl leading-tight">{project.title}</h3>
+                    <p className="mt-2 max-w-3xl text-sm leading-6 text-[#62676f]">{project.description}</p>
+                  </div>
+                  <div className="flex flex-col gap-2 border-t border-[#e3dac8] pt-3 md:border-l md:border-t-0 md:pl-5 md:pt-1">
+                    {project.linkUrl && <a href={project.linkUrl} target="_blank" rel="noreferrer" className="text-xs font-semibold text-[#9a742d]">Open live project ↗</a>}
+                    {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-xs font-semibold text-[#454a55]">Source code ↗</a>}
                   </div>
                 </article>
               ))}
@@ -132,17 +120,21 @@ export default async function Home() {
         <section className="border-t border-[#d8cfbb] bg-[#eee7d4] px-6 py-12 md:py-14">
           <div className="mx-auto max-w-6xl">
             <div className="flex items-end justify-between gap-6">
-              <div><p className="section-label">My research</p><h2 className="section-title">Research I have conducted.</h2></div>
-              <Link href="/publications" className="hidden text-sm font-semibold text-[#9a742d] md:block">All →</Link>
+              <div><p className="section-label">Research</p><h2 className="section-title">Studies, data, and questions.</h2></div>
+              <Link href="/research" className="hidden text-sm font-semibold text-[#9a742d] md:block">View research →</Link>
             </div>
-            <div className="mt-6 grid gap-x-8 md:grid-cols-3">
-              {featuredPublications.map((publication) => (
-                <article key={publication.id} className="border-t border-[#d8cfbb] py-5">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#777b86]">{publication.category}</p>
-                  <h3 className="mt-2 text-lg font-semibold leading-snug">{publication.links.find((link) => link.url)?.url ? <a href={publication.links.find((link) => link.url)!.url} target="_blank" rel="noreferrer" className="transition-colors hover:text-[#9a742d]">{publication.title} <span className="text-sm text-[#9a742d]">↗</span></a> : publication.title}</h3>
-                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#666c78]">{publication.byline}</p>
-                  <div className="mt-3 flex flex-wrap gap-3">
-                    {publication.links.filter((link) => link.url).slice(0, 2).map((link) => <a key={link.label} href={link.url} target="_blank" rel="noreferrer" className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#9a742d]">{link.label} ↗</a>)}
+            <div className="mt-8 divide-y divide-[#d1c6af] border-y border-[#d1c6af]">
+              {featuredPublications.map((publication, index) => (
+                <article key={publication.id} className="grid gap-4 py-6 md:grid-cols-[3rem_minmax(0,1fr)_14rem]">
+                  <span className="font-display text-xl text-[#a5a397]">{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#777b86]">{publication.category} · {publication.byline}</p>
+                    <h3 className="mt-2 max-w-3xl font-display text-xl leading-snug">{publication.links.find((link) => link.url)?.url ? <a href={publication.links.find((link) => link.url)!.url} target="_blank" rel="noreferrer" className="hover:text-[#9a742d]">{publication.title} ↗</a> : publication.title}</h3>
+                    <p className="mt-2 max-w-3xl text-sm leading-6 text-[#62676f]">{publication.summary}</p>
+                  </div>
+                  <div className="flex flex-col gap-3 border-t border-[#d1c6af] pt-3 md:border-l md:border-t-0 md:pl-5 md:pt-1">
+                    <p className="text-xs leading-5 text-[#777b86]">{publication.status}</p>
+                    {publication.links.filter((link) => link.url).slice(0, 2).map((link) => <a key={link.label} href={link.url} target="_blank" rel="noreferrer" className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a742d]">{link.label} ↗</a>)}
                   </div>
                 </article>
               ))}
