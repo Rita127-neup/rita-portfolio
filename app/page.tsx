@@ -163,7 +163,7 @@ export default async function Home() {
                 <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-6">
                   {orderedOrganizations.map((organization) => (
                     <div key={organization.id} className="flex items-center gap-2.5">
-                      <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#c9bea8] bg-[#fbf6e8]">
+                      <div className={`flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden border border-[#c9bea8] bg-[#fbf6e8] ${/lsdt|icad|innovation/i.test(organization.name) ? "rounded-md" : "rounded-full"}`}>
                         {organization.logoId ? <Image src={`/media/organization/${organization.id}?v=${organization.logoId}`} alt={organization.name} width={56} height={56} unoptimized className="h-full w-full object-contain p-2" /> : <span className="text-xs font-bold text-[#806020]">{organization.name.slice(0, 2).toUpperCase()}</span>}
                       </div>
                       <span className="text-base font-bold text-[#30342f]">{organization.name}</span>
