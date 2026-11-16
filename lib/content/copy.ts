@@ -34,7 +34,7 @@ export const pageCopy = {
   about: { title: "About" },
   research: {
     title: "Research",
-    intro: "Studies in antimicrobial resistance and public health, and what each one found.",
+    intro: "Studies in antimicrobial resistance, public health and algorithmic fairness, and what each one found.",
   },
   publications: {
     title: "Publications",
@@ -81,6 +81,7 @@ export const publicationStatus: Record<string, string> = {
   "genomic-amr-ciprofloxacin-calibration": "Preprint posted 19 October 2026 · transferred to Access Microbiology (Microbiology Society) for review",
   "dengue-fever-nepal": "Under peer review at Discover Public Health · open-access record on Zenodo",
   "caffeine-consumption-siddharthanagar": "Open-access record on Zenodo",
+  "group-fairness-recourse-fairness": "Preprint on Preprints.org · not peer reviewed",
 };
 
 /** Keyed by the slug of the row in `publications`. */
@@ -118,6 +119,16 @@ export const researchCopy: Record<string, EntryCopy> = {
     ],
     contribution:
       "My part: study design, questionnaire, analysis and the manuscript, written with my co-author.",
+  },
+  "group-fairness-recourse-fairness": {
+    kicker: "Algorithmic fairness",
+    byline: "Third author, with two co-authors",
+    paragraphs: [
+      "Methods that make a machine-learning model fairer are usually judged by whether they give different groups equal outcomes. This preprint asks something different: when a model denies someone, is the distance they would have to move to be approved the same for every group? Two standard methods, Reweighing and a covariance-penalized logistic regression, were tested on two public datasets, the Adult income data (audited by sex) and the COMPAS criminal-justice data (audited by race), over 30 random train/test splits.",
+      "On the Adult data both methods reached near-identical fairness scores, yet denied women and denied men sat at different distances from approval, and the difference held among the same people denied by both models. On COMPAS the results are inconclusive. The paper is also clear about its limits: distance to a decision boundary does not prove that a person could actually make that change.",
+    ],
+    contribution:
+      "My part, as the paper's author-contributions statement lists it: formal analysis, interpreting the results, the visualizations, and reviewing and editing the manuscript. My co-authors led the conceptualization, methodology, software and first draft, and handled validation and reproducibility checks.",
   },
 };
 
