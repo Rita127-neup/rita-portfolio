@@ -1,7 +1,69 @@
 import { displayNumber, getPublicationsContent } from "@/lib/content";
-const links={primary:"text-sm font-medium text-[#b83a74] hover:text-[#8f2a5a]",secondary:"text-sm font-medium text-[#74455b] hover:text-[#5b2c43]"};
-export default async function Publications(){const {page,profile,items}=await getPublicationsContent();return <main className="site-shell bg-dot-paper"><div className="page-wrap">
-<p className="editorial-kicker">{page.eyebrow}</p><h1 className="editorial-title">{page.title}{page.titleMuted&&<><br/><span className="editorial-title-muted">{page.titleMuted}</span></>}</h1><p className="mt-8 max-w-2xl text-lg leading-8 text-[#74455b]">{page.intro}</p>
-<div className="mt-16 divide-y divide-[#f2c3d5] border-y border-[#f2c3d5]">{items.map((p,i)=><article key={p.id} className="py-9"><div className="grid gap-6 md:grid-cols-[5rem_1fr_auto]"><span className="font-display text-2xl text-[#dd9db9]">{displayNumber(i)}</span><div><p className="editorial-kicker">{p.category}</p><h2 className="mt-2 font-display text-2xl leading-tight md:text-3xl">{p.links[0]?.url ? <a href={p.links[0].url} target="_blank" rel="noreferrer" className="transition-colors hover:text-[#b83a74]">{p.title} <span className="text-base text-[#b83a74]">↗</span></a> : p.title}</h2><p className="mt-3 text-sm text-[#8a5a72]">{p.byline}</p><p className="mt-5 max-w-3xl leading-7 text-[#74455b]">{p.summary}</p><div className="mt-5 flex flex-wrap gap-2">{p.tags.map(t=><span key={t} className="rounded-full border border-[#f2c3d5] px-3 py-1.5 text-xs text-[#74455b]">{t}</span>)}</div></div><span className="text-xs text-[#8a5a72]">{p.status}</span></div>{p.links.length>0&&<div className="mt-7 flex gap-5 border-t border-[#f2c3d5] pt-5">{p.links.map(l=><a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className={links[l.variant]}>{l.label} ↗</a>)}</div>}</article>)}</div>
-<div className="mt-12 border-l-2 border-[#b83a74] bg-[#fde6ee]/75 p-7"><p className="editorial-kicker">{profile.heading}</p><p className="mt-3 max-w-3xl leading-7 text-[#74455b]">{profile.text}</p></div>
-</div></main>}
+import { InnerShell } from "@/app/_components/inner-shell";
+
+const links = {
+  primary: "text-sm font-medium text-[#b83a74] hover:text-[#8f2a5a]",
+  secondary: "text-sm font-medium text-[#74455b] hover:text-[#5b2c43]",
+};
+
+export default async function Publications() {
+  const { page, profile, items } = await getPublicationsContent();
+
+  return (
+    <InnerShell>
+      <p className="editorial-kicker">{page.eyebrow}</p>
+      <h1 className="editorial-title">
+        {page.title}
+        {page.titleMuted && (
+          <>
+            <br />
+            <span className="editorial-title-muted">{page.titleMuted}</span>
+          </>
+        )}
+      </h1>
+      <p className="mt-6 max-w-2xl text-lg leading-8 text-[#74455b]">{page.intro}</p>
+
+      <div className="mt-10 divide-y divide-[#f2c3d5] border-y border-[#f2c3d5]">
+        {items.map((p, i) => (
+          <article key={p.id} className="py-9">
+            <div className="grid gap-6 xl:grid-cols-[5rem_1fr_auto]">
+              <span className="font-display text-2xl text-[#dd9db9]">{displayNumber(i)}</span>
+              <div>
+                <p className="editorial-kicker">{p.category}</p>
+                <h2 className="mt-2 font-display text-2xl leading-tight md:text-3xl">
+                  {p.links[0]?.url ? (
+                    <a href={p.links[0].url} target="_blank" rel="noreferrer" className="transition-colors hover:text-[#b83a74]">
+                      {p.title} <span className="text-base text-[#b83a74]">↗</span>
+                    </a>
+                  ) : (
+                    p.title
+                  )}
+                </h2>
+                <p className="mt-3 text-sm text-[#8a5a72]">{p.byline}</p>
+                <p className="mt-5 max-w-3xl leading-7 text-[#74455b]">{p.summary}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {p.tags.map((t) => (
+                    <span key={t} className="rounded-full border border-[#f2c3d5] px-3 py-1.5 text-xs text-[#74455b]">{t}</span>
+                  ))}
+                </div>
+              </div>
+              <span className="text-xs text-[#8a5a72]">{p.status}</span>
+            </div>
+            {p.links.length > 0 && (
+              <div className="mt-7 flex gap-5 border-t border-[#f2c3d5] pt-5">
+                {p.links.map((l) => (
+                  <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className={links[l.variant]}>{l.label} ↗</a>
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-12 border-l-2 border-[#b83a74] bg-[#fde6ee]/75 p-7">
+        <p className="editorial-kicker">{profile.heading}</p>
+        <p className="mt-3 max-w-3xl leading-7 text-[#74455b]">{profile.text}</p>
+      </div>
+    </InnerShell>
+  );
+}

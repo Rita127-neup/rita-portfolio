@@ -1,5 +1,6 @@
 import { getProjectsContent, displayNumber } from "@/lib/content";
 import { WorkMark } from "@/app/_components/work-mark";
+import { InnerShell } from "@/app/_components/inner-shell";
 
 export default async function Projects() {
   const { page, items } = await getProjectsContent();
@@ -8,18 +9,17 @@ export default async function Projects() {
   );
 
   return (
-    <main className="site-shell bg-dot-paper">
-      <div className="page-wrap">
+    <InnerShell>
         <p className="editorial-kicker">{page.eyebrow}</p>
         <h1 className="editorial-title projects-page-title">
           {page.title}
           {page.titleMuted && <><br /><span className="editorial-title-muted">{page.titleMuted}</span></>}
         </h1>
-        <p className="mt-8 max-w-2xl text-lg leading-8 text-[#74455b]">{page.intro}</p>
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-[#74455b]">{page.intro}</p>
 
-        <div className="mt-16 border-y border-[#f2c3d5]">
+        <div className="mt-10 border-y border-[#f2c3d5]">
           {projects.map((project, index) => (
-            <article key={project.id} id={project.id} className="grid gap-6 border-b border-[#f2c3d5] py-9 last:border-b-0 md:grid-cols-[4rem_minmax(0,1fr)_13rem]">
+            <article key={project.id} id={project.id} className="grid gap-6 border-b border-[#f2c3d5] py-9 last:border-b-0 xl:grid-cols-[4rem_minmax(0,1fr)_13rem]">
               <span className="font-display text-2xl text-[#dd9db9]">{displayNumber(index)}</span>
               <div>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
@@ -32,7 +32,7 @@ export default async function Projects() {
                   {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
               </div>
-              <aside className="flex flex-col gap-3 border-t border-[#f6d3e1] pt-4 md:border-l md:border-t-0 md:pl-5 md:pt-1">
+              <aside className="flex flex-col gap-3 border-t border-[#f6d3e1] pt-4 xl:border-l xl:border-t-0 xl:pl-5 xl:pt-1">
                 {project.linkUrl && <a href={project.linkUrl} target="_blank" rel="noreferrer" className="text-sm font-semibold text-[#b83a74] hover:text-[#8f2a5a]">Open live project ↗</a>}
                 {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-sm font-semibold text-[#5b2c43] hover:text-[#b83a74]">Source code ↗</a>}
               </aside>
@@ -42,7 +42,6 @@ export default async function Projects() {
         <p className="mt-8 max-w-2xl text-sm leading-6 text-[#8a5a72]">
           Research studies are listed separately, with their datasets, methods, and publication status.
         </p>
-      </div>
-    </main>
+    </InnerShell>
   );
 }

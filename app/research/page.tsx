@@ -1,5 +1,6 @@
 import { getProjectsContent, getPublicationsContent, getResearchContent, displayNumber } from "@/lib/content";
 import { WorkMark } from "@/app/_components/work-mark";
+import { InnerShell } from "@/app/_components/inner-shell";
 
 const studyDetails: Record<string, { material: string; method: string; question: string; publicationId?: string }> = {
   "ecoli-amr-generalization": {
@@ -57,16 +58,15 @@ export default async function Research() {
   const publicationById = new Map(publications.map((item) => [item.id, item] as const));
 
   return (
-    <main className="site-shell bg-dot-paper">
-      <div className="page-wrap">
+    <InnerShell>
         <p className="editorial-kicker">{page.eyebrow}</p>
         <h1 className="editorial-title">
           {page.title}
           {page.titleMuted && <><br /><span className="editorial-title-muted">{page.titleMuted}</span></>}
         </h1>
-        <p className="mt-8 max-w-2xl text-lg leading-8 text-[#74455b]">{page.intro}</p>
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-[#74455b]">{page.intro}</p>
 
-        <div className="mt-16 border-y border-[#e6a9c2]">
+        <div className="mt-10 border-y border-[#e6a9c2]">
           {orderedItems.map((item, index) => {
             const details = studyDetails[item.id];
             const publication = details?.publicationId
@@ -90,7 +90,7 @@ export default async function Research() {
                   <p className="mt-4 max-w-4xl text-[0.98rem] leading-7 text-[#74455b]">{item.summary}</p>
 
                   {details && (
-                    <dl className="mt-7 grid gap-5 border-y border-[#f2c3d5] py-5 sm:grid-cols-3">
+                    <dl className="mt-7 grid gap-5 border-y border-[#f2c3d5] py-5 xl:grid-cols-3">
                       <div>
                         <dt className="text-[0.62rem] font-bold uppercase tracking-[0.16em] text-[#b83a74]">Study material</dt>
                         <dd className="mt-2 text-sm leading-6 text-[#5b2c43]">{details.material}</dd>
@@ -126,7 +126,6 @@ export default async function Research() {
         <p className="mt-8 max-w-2xl text-sm leading-6 text-[#8a5a72]">
           Publication records and links are shown with each study. “Under review” describes the current editorial process, not an acceptance decision.
         </p>
-      </div>
-    </main>
+    </InnerShell>
   );
 }

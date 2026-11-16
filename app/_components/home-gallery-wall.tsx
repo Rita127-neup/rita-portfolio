@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { SectionShell } from "@/app/_components/section-shell";
 
 type Photo = { id: string; src: string; alt: string };
 
-export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
+export function HomeGalleryWall({ photos, number }: { photos: Photo[]; number: string }) {
   const [selected, setSelected] = useState<number | null>(null);
 
   useEffect(() => {
@@ -29,13 +30,9 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
 
   return (
     <>
-      <section className="border-t border-[#f2c3d5] px-6 py-12 md:py-14">
-        <div className="mx-auto max-w-6xl">
-          <div>
-            <p className="section-label">Photo journal</p>
-            <h2 className="section-title">A few moments along the way.</h2>
-          </div>
-          <div className="mt-7 grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-5">
+      <SectionShell id="journal" number={number} title="Photo journal">
+        <p className="font-display text-xl text-[#74455b]">A few moments along the way.</p>
+          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
             {photos.map((photo, index) => (
               <article key={photo.id} className="min-w-0">
                 <button
@@ -60,8 +57,7 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
               </article>
             ))}
           </div>
-        </div>
-      </section>
+      </SectionShell>
 
       {current && (
         <div
