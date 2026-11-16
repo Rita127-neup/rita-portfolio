@@ -28,7 +28,7 @@ export default async function Home() {
   });
 
   return (
-    <InnerShell>
+    <InnerShell fullProfileOnMobile>
       <h1 className="sr-only">{displayName(home.firstName, home.lastName)}</h1>
 
       <p className="max-w-xl pt-1 font-display text-xl leading-8 text-[#4a3440]">{home.intro}</p>
