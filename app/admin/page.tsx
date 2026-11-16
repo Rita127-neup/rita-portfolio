@@ -69,6 +69,13 @@ const sections: Section[] = [
     liveColumn: "is_visible",
   },
   {
+    title: "Testimonials",
+    text: "Add what people wrote about you, with their photo. Entries with no text stay hidden.",
+    href: "/admin/testimonials",
+    table: "testimonials",
+    liveColumn: "is_visible",
+  },
+  {
     title: "Photo",
     text: "Upload, replace, or remove the home page photo.",
     href: "/admin/photo",

@@ -22,6 +22,7 @@ import type {
   ProfileInfo,
   Organization,
   SiteSettings,
+  Testimonial,
 } from "./types";
 
 export type * from "./types";
@@ -237,8 +238,30 @@ export async function getHomeContent(): Promise<HomeContent> {
     secondaryCta: pageLink(page, "secondary"),
     photoPlaceholderInitials: photo.heading ?? "",
     photoPlaceholderText: photo.body ?? "",
+    // Optional: the home page works without it.
+    pronunciation:
+      page.sections.find((section) => section.section_key === "name_pronunciation")?.body?.trim() || undefined,
   };
 }
+
+/** Visible testimonials that have text, in display order. Entries still waiting for words stay hidden. */
+export const getTestimonials = cache(async (): Promise<Testimonial[]> => {
+  const { data, error } = await getPublicSupabaseClient()
+    .from("testimonials")
+    .select("id, name, role, quote, image_id, sort_order")
+    .eq("is_visible", true)
+    .order("sort_order", { ascending: true });
+  if (error) fail("testimonials", error.message);
+  return (data ?? [])
+    .filter((row) => row.quote.trim())
+    .map((row) => ({
+      id: row.id,
+      name: row.name,
+      role: row.role,
+      quote: row.quote.trim(),
+      photoUrl: row.image_id ? `/media/testimonial/${row.id}?v=${row.image_id}` : undefined,
+    }));
+});
 
 export async function getAboutContent(): Promise<AboutContent> {
   const page = await getPage("about");

@@ -3,6 +3,8 @@ import { pageCopy, projectCopy, researchProjectSlugs } from "@/lib/content/copy"
 import { InnerShell } from "@/app/_components/inner-shell";
 import { WorkEntry, type EntryLink } from "@/app/_components/work-entry";
 
+export const metadata = { title: "Projects" };
+
 export default async function Projects() {
   const { items } = await getProjectsContent();
   // Research studies are described once, on the Research page.

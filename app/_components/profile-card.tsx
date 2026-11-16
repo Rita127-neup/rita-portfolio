@@ -1,6 +1,5 @@
 import Image from "next/image";
 import type { SocialLink } from "@/lib/content";
-import { formatBirthday } from "@/lib/display";
 
 export function ProfileCard({
   name,
@@ -11,7 +10,7 @@ export function ProfileCard({
   socialLinks,
   email,
   location,
-  birthday,
+  pronunciation,
   cv,
 }: {
   name: string;
@@ -22,14 +21,18 @@ export function ProfileCard({
   socialLinks: SocialLink[];
   email: string;
   location: string;
-  birthday: string;
+  pronunciation?: string;
   cv?: { label: string; href: string };
 }) {
-  const links = socialLinks.filter((link) => link.url);
+  // ORCID, GitHub, LinkedIn and the rest in the order set in the admin, then email.
+  const contacts: { label: string; href: string; external: boolean }[] = [
+    ...socialLinks.flatMap((link) => (link.url ? [{ label: link.label, href: link.url, external: true }] : [])),
+    ...(email ? [{ label: "Email", href: `mailto:${email}`, external: false }] : []),
+  ];
 
   return (
     <div className="text-center">
-      <div className="mx-auto w-36 overflow-hidden rounded-lg bg-[#e8e1e3]">
+      <div className="mx-auto w-36 overflow-hidden rounded-2xl bg-[#e8e1e3] shadow-[0_8px_20px_-10px_rgba(150,80,111,0.45)] ring-4 ring-[#f1e3e9]">
         {photoUrl ? (
           <Image
             src={photoUrl}
@@ -46,40 +49,34 @@ export function ProfileCard({
       </div>
 
       <h2 className="mt-6 font-display text-[1.75rem] font-medium leading-tight tracking-[-0.01em] text-[#4a3440]">{name}</h2>
+      {pronunciation && <p className="mt-1.5 text-sm italic text-[#7b6670]">{pronunciation}</p>}
       <p className="mt-3 font-display text-[0.8rem] font-light uppercase leading-5 tracking-[0.1em] text-[#4a3440]">{role}</p>
 
-      {links.length > 0 && (
-        <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm">
-          {links.map((link) => (
-            <a
-              key={link.label}
-              href={link.url}
-              target="_blank"
-              rel="noreferrer"
-              className="py-1 text-[#96506f] underline-offset-4 transition-colors hover:text-[#6f3a52] hover:underline"
-            >
-              {link.label}
-            </a>
+      {contacts.length > 0 && (
+        <ul className="mt-5 space-y-1 text-sm">
+          {contacts.map((contact) => (
+            <li key={contact.label} className="flex items-center justify-center gap-2">
+              <span aria-hidden="true" className="text-[0.65rem] text-[#d3a1b8]">
+                ✿
+              </span>
+              <a
+                href={contact.href}
+                {...(contact.external ? { target: "_blank", rel: "noreferrer" } : {})}
+                className="py-1 text-[#96506f] underline-offset-4 transition-colors hover:text-[#6f3a52] hover:underline"
+              >
+                {contact.label}
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
 
-      {(birthday || location || email) && (
-        <div className="mt-5 space-y-1 text-xs leading-5 text-[#7b6670]">
-          {birthday && <p>Born {formatBirthday(birthday)}</p>}
-          {location && <p>{location}</p>}
-          {email && (
-            <a href={`mailto:${email}`} className="inline-block break-all py-1 text-[#96506f] transition-colors hover:text-[#6f3a52]">
-              {email}
-            </a>
-          )}
-        </div>
-      )}
+      {location && <p className="mt-4 text-xs leading-5 text-[#7b6670]">{location}</p>}
 
       {cv && (
         <a
           href={cv.href}
-          className="mt-5 inline-block border border-[#96506f]/50 px-4 py-1.5 text-sm text-[#96506f] transition-colors hover:bg-[#96506f]/10"
+          className="mt-5 inline-block rounded-full border border-[#96506f]/50 px-5 py-1.5 text-sm text-[#96506f] transition-colors hover:bg-[#96506f]/10"
         >
           {cv.label}
         </a>

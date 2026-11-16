@@ -31,6 +31,9 @@ html {
 body {
   margin: 0;
   background-color: var(--paper);
+  /* A very faint dotted-notebook grid, just enough to feel warm. */
+  background-image: radial-gradient(rgba(150, 80, 111, 0.09) 1px, transparent 1px);
+  background-size: 24px 24px;
   color: var(--ink);
 }
 
@@ -67,6 +70,9 @@ body {
     letter-spacing: -0.01em;
     font-weight: 500;
     color: var(--heading);
+    /* A soft highlighter stroke under the page title. */
+    width: fit-content;
+    background-image: linear-gradient(transparent 62%, #f1d9e3 62%, #f1d9e3 90%, transparent 90%);
   }
 
   .editorial-title-muted {

@@ -45,7 +45,15 @@ export function WorkEntry({
 
       {contribution && <p className="mt-5 max-w-[38rem] text-sm leading-6 text-[#7b6670]">{contribution}</p>}
 
-      {tags.length > 0 && <p className="mt-4 max-w-[38rem] text-xs leading-5 text-[#7b6670]">{tags.join(" · ")}</p>}
+      {tags.length > 0 && (
+        <ul className="mt-4 flex max-w-[38rem] flex-wrap gap-2">
+          {tags.map((tag) => (
+            <li key={tag} className="rounded-full bg-[#f3e8ed] px-3 py-0.5 text-xs text-[#7b4a60]">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )}
 
       {links.length > 0 && (
         <p className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">

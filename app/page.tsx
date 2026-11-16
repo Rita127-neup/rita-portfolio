@@ -4,8 +4,7 @@ import { HomeGalleryWall } from "@/app/_components/home-gallery-wall";
 import { InnerShell } from "@/app/_components/inner-shell";
 import { SectionShell } from "@/app/_components/section-shell";
 import { Testimonials } from "@/app/_components/testimonials";
-import { getHomeContent, getHomeGallery, getOrganizations } from "@/lib/content";
-import { testimonials } from "@/lib/content/testimonials";
+import { getHomeContent, getHomeGallery, getOrganizations, getTestimonials } from "@/lib/content";
 import { displayName } from "@/lib/display";
 
 const textLink = "inline-block py-1 text-[#96506f] underline underline-offset-4 transition-colors hover:text-[#6f3a52]";
@@ -15,7 +14,12 @@ const textLink = "inline-block py-1 text-[#96506f] underline underline-offset-4 
  * on Research and Projects; the biography once, on About.
  */
 export default async function Home() {
-  const [home, organizations, gallery] = await Promise.all([getHomeContent(), getOrganizations(), getHomeGallery()]);
+  const [home, organizations, gallery, testimonials] = await Promise.all([
+    getHomeContent(),
+    getOrganizations(),
+    getHomeGallery(),
+    getTestimonials(),
+  ]);
 
   const organizationPriority = ["National Innovation Center", "ICAD", "Rotaract Club of Central Lumbini", "LSDT"];
   const orderedOrganizations = [...organizations].sort((a, b) => {

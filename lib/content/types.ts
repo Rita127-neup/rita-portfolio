@@ -12,7 +12,10 @@ export type LinkButton = { label: string; href: string };
 export type HomeContent = {
   eyebrow: string; firstName: string; lastName: string; intro: string; primaryCta: LinkButton; secondaryCta: LinkButton;
   photoUrl?: string; photoAlt: string; cv?: LinkButton; photoPlaceholderInitials: string; photoPlaceholderText: string;
+  /** How the name is said, shown under it, for example "REE-tah NYOW-pah-neh". */
+  pronunciation?: string;
 };
+export type Testimonial = { id: string; name: string; role: string; quote: string; photoUrl?: string };
 export type PageHeader = { eyebrow: string; title: string; titleMuted?: string; intro: string };
 export type EducationItem = { school: string; detail: string; years: string };
 export type AboutContent = PageHeader & { body: string; education: EducationItem[] };

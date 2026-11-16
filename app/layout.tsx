@@ -3,14 +3,13 @@ import { Commissioner, Fraunces } from "next/font/google";
 import Link from "next/link";
 import { getSiteSettings } from "@/lib/content";
 import { NavLinks } from "@/app/_components/nav-links";
-import OwnerLoginButton from "@/app/_components/owner-login-button";
 import "./globals.css";
 
 const commissioner = Commissioner({ variable: "--font-commissioner", subsets: ["latin"] });
 const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Rita Neupane",
+  title: { default: "Rita Neupane | Researcher in computational biology", template: "%s | Rita Neupane" },
   description: "Research, computational biology, public health, and data-driven work by Rita Neupane.",
 };
 
@@ -43,12 +42,16 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         {children}
 
         <footer className="mx-auto w-full max-w-5xl px-6 pb-10 pt-4">
-          <div className="border-t border-[#ddd5d6] pt-6 text-xs text-[#7b6670]">
-            <span>© {new Date().getFullYear()} Rita Neupane</span>
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-[#ddd5d6] pt-6 text-xs text-[#7b6670]">
+            <span>
+              © {new Date().getFullYear()} Rita Neupane <span aria-hidden="true" className="text-[#d3a1b8]">✿</span> Made in Nepal
+            </span>
+            <Link href="/admin/login" className="text-[#a8979f] transition-colors hover:text-[#6f3a52]">
+              Owner login
+            </Link>
           </div>
         </footer>
 
-        <OwnerLoginButton />
       </body>
     </html>
   );

@@ -20,6 +20,7 @@ export function SectionShell({
   return (
     <section id={id} className="scroll-mt-6 pt-10 first:pt-0">
       <h2 className="border-t border-[#ddd5d6] py-4 font-display text-[0.95rem] font-semibold uppercase tracking-[0.1em] text-[#96506f]">
+        <span aria-hidden="true" className="mr-2 text-[0.7rem] text-[#d3a1b8]">✿</span>
         {href ? (
           <Link href={href} className="transition-opacity hover:opacity-70">
             {title}

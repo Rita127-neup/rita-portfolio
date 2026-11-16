@@ -3,6 +3,8 @@ import { pageCopy, researchCopy } from "@/lib/content/copy";
 import { InnerShell } from "@/app/_components/inner-shell";
 import { WorkEntry } from "@/app/_components/work-entry";
 
+export const metadata = { title: "Research" };
+
 /**
  * Every study appears here once, with its status and links. This page also
  * covers what used to be a separate Publications page.

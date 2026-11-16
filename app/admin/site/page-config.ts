@@ -33,6 +33,10 @@ export const PAGE_CONFIG: Record<string, PageConfig> = {
         name: "Photo placeholder",
         fields: { heading: "Initials", body: "Placeholder text" },
       },
+      name_pronunciation: {
+        name: "Name pronunciation",
+        fields: { body: "How your name is said, shown under it (e.g. REE-tah NYOW-pah-neh)" },
+      },
     },
     links: true,
   },

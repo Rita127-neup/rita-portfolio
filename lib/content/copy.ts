@@ -44,12 +44,11 @@ export const pageCopy = {
 };
 
 export const aboutCopy = {
-  /** The first paragraph is set larger, as the lead. */
   paragraphs: [
     "I'm an independent researcher in Kathmandu. My main project asks one question: when a model that predicts antibiotic resistance from bacterial genomes is used on isolates from another country, can you still trust the probabilities it gives?",
     "I finished the Science stream in 2025 and taught myself Python, statistics and epidemiology. I don't have a lab, so my work runs on public data and Google Colab, and the code is on GitHub for anyone to rerun.",
     "Reliable data has been the hardest part of this work. It made me curious about how governments publish data at all, and that curiosity is behind my projects.",
-    "Alongside research, I volunteer with LSDT, a registered NGO that runs free weekly sessions in Nepal, about three hours a week. Each session welcomes a guest, such as a government official, a business leader or a professional from any field, who shares their experience with the children and adults who attend. I co-founded LSDT's youth cohort, hosted many of the sessions and attended meetings with the guests. I also taught sessions on CRISPR, first aid and mental health, and on other scientific topics many participants had never heard of, and ran quizzes, debates and competitions for the children.",
+    "Alongside research, I volunteer with LSDT, a registered NGO that runs free weekly sessions in Nepal. I co-founded its youth cohort; what that involved is under Projects.",
     "Next I want to study biology, computer science and statistics together at a US college.",
   ],
 };
@@ -118,7 +117,34 @@ export const projectCopy: Record<string, EntryCopy> = {
       "The idea came out of the data-access problem I ran into on the dengue study. I took it to the Ministry of Science, Technology and Innovation in July 2026 and met Minister Mahabir Pun. His ministry had the same problem and was already working on it, and on his advice I visited the National Examination Board in October. I also proposed two legal reforms to the ministry, in writing and at a meeting, and proposed a hackathon.",
     ],
     contribution:
-      "My part: the ministry and National Examination Board conversations, the policy proposals and, in November, an extractor for the sector-plan indicators table plus a dashboard fix. Most of the extraction and dashboard code was written by teammates.",
+      "My part: the ministry and National Examination Board conversations (with teammates), the policy proposals and, in November, an extractor for the sector-plan indicators table plus a dashboard fix. Most of the extraction and dashboard code was written by teammates.",
     sourceUrl: "https://github.com/Bishalneupa/nepal-education-data-engine",
+  },
+  "neb-notes": {
+    kicker: "Education technology",
+    role: "Creator",
+    status: "Live site",
+    paragraphs: [
+      "NEB Notes, which runs as NoteVault, is a free website where NEB +2 students share and read notes, cheatsheets and past papers, ask questions in a doubts section and keep notes of their own.",
+      "More than 610 students use it. What students share is checked by a moderator before it goes up.",
+    ],
+  },
+  "lsdt-youth": {
+    kicker: "Community & education",
+    role: "Co-founder and former president",
+    status: "Ongoing",
+    paragraphs: [
+      "LSDT (Leadership Skills and Development Training) is a registered NGO that runs free weekly sessions in Nepal, about three hours each week. Each session hosts a guest, such as a government official, a business leader or a professional from any field, who talks with the children and adults who attend about what they have learned in their work. LSDT Youth is the cohort for young people, which I co-founded.",
+      "I hosted many of the sessions, attended meetings with the guests, and taught sessions on CRISPR, first aid and mental health. I also ran quizzes, debates and competitions for the children. I stepped down as president when I moved to Kathmandu and still help in an administrative role.",
+    ],
+  },
+  "lsdt-website": {
+    kicker: "Web development",
+    role: "Builder",
+    status: "Built for LSDT",
+    paragraphs: [
+      "The website for LSDT and its youth cohort, with pages for the team, events, a photo gallery and a contact and join form.",
+      "Team members sign in to edit the text, events and photos themselves, so the site does not depend on one person.",
+    ],
   },
 };

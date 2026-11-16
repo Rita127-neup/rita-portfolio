@@ -14,6 +14,8 @@ const navItems = [
   { label: "Achievements", href: "/admin/achievements" },
   { label: "Site & pages", href: "/admin/site" },
   { label: "CV", href: "/admin/cv" },
+  { label: "Organizations", href: "/admin/organizations" },
+  { label: "Testimonials", href: "/admin/testimonials" },
   { label: "Photo", href: "/admin/photo" },
   { label: "Home gallery", href: "/admin/gallery" },
 ];

@@ -1,6 +1,8 @@
 import { getContactContent, getSiteSettings } from "@/lib/content";
 import { InnerShell } from "@/app/_components/inner-shell";
 
+export const metadata = { title: "Contact" };
+
 /** Social links are on the profile card beside every page, so they are not repeated here. */
 export default async function Contact() {
   const [c, s] = await Promise.all([getContactContent(), getSiteSettings()]);

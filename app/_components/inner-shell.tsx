@@ -30,7 +30,7 @@ export async function InnerShell({
             socialLinks={site.socialLinks}
             email={profile.email}
             location={profile.location}
-            birthday={profile.birthday}
+            pronunciation={home.pronunciation}
             cv={home.cv}
           />
         </aside>

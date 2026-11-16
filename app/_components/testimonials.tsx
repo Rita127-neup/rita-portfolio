@@ -1,5 +1,7 @@
+import Image from "next/image";
 import { SectionShell } from "@/app/_components/section-shell";
-import type { Testimonial } from "@/lib/content/testimonials";
+import { TestimonialQuote } from "@/app/_components/testimonial-quote";
+import type { Testimonial } from "@/lib/content";
 
 function initialsOf(name: string) {
   return name
@@ -10,32 +12,34 @@ function initialsOf(name: string) {
     .join("");
 }
 
+/** Kind words from people I have worked with, in their own words. Hidden until there is at least one. */
 export function Testimonials({ items }: { items: Testimonial[] }) {
   if (items.length === 0) return null;
 
   return (
-    <SectionShell id="testimonials" title="Testimonials">
-      {items.map((item) => (
-        <article key={item.id} className="pb-3">
-          <h3 className="mb-2 mt-4 font-display text-xl font-medium leading-tight text-[#4a3440]">{item.name}</h3>
-          <div className="flex items-start gap-4">
-            <div
-              aria-hidden="true"
-              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg border border-[#ddd5d6] bg-[#ebe8e2] font-display text-lg text-[#96506f]"
-            >
-              {initialsOf(item.name)}
+    <SectionShell id="testimonials" title="Kind words">
+      <div className="space-y-5 pb-2 pt-4">
+        {items.map((item) => (
+          <article key={item.id} className="rounded-2xl border border-[#eadfe3] bg-[#f8f1f4]/70 p-5 sm:p-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#e3d3da] bg-[#f1e4ea] font-display text-lg text-[#96506f]">
+                {item.photoUrl ? (
+                  <Image src={item.photoUrl} alt={item.name} width={112} height={112} unoptimized className="h-full w-full object-cover" />
+                ) : (
+                  <span aria-hidden="true">{initialsOf(item.name)}</span>
+                )}
+              </div>
+              <div className="min-w-0">
+                <h3 className="font-display text-lg font-medium leading-tight text-[#4a3440]">{item.name}</h3>
+                {item.role && <p className="mt-0.5 text-xs uppercase tracking-[0.08em] text-[#7b6670]">{item.role}</p>}
+              </div>
             </div>
-            <div className="min-w-0">
-              {item.role && <p className="text-xs uppercase tracking-[0.1em] text-[#7b6670]">{item.role}</p>}
-              {item.quote ? (
-                <blockquote className="mt-2 leading-7 text-[#2b2026]">“{item.quote}”</blockquote>
-              ) : (
-                <p className="mt-2 italic leading-7 text-[#7b6670]">Testimonial to be added.</p>
-              )}
+            <div className="mt-4">
+              <TestimonialQuote text={item.quote} />
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        ))}
+      </div>
     </SectionShell>
   );
 }

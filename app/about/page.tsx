@@ -2,21 +2,19 @@ import { getAboutContent } from "@/lib/content";
 import { aboutCopy, pageCopy } from "@/lib/content/copy";
 import { InnerShell } from "@/app/_components/inner-shell";
 
+export const metadata = { title: "About" };
+
 export default async function About() {
   const { education } = await getAboutContent();
-  const [lead, ...rest] = aboutCopy.paragraphs;
 
   return (
     <InnerShell>
       <h1 className="editorial-title">{pageCopy.about.title}</h1>
 
-      <div className="mt-8 max-w-[38rem]">
-        <p className="font-display text-xl leading-9 text-[#4a3440]">{lead}</p>
-        <div className="mt-6 space-y-5 leading-[1.8] text-[#55454d]">
-          {rest.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </div>
+      <div className="mt-8 max-w-[38rem] space-y-5 leading-[1.8] text-[#55454d]">
+        {aboutCopy.paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
       </div>
 
       {education.length > 0 && (
