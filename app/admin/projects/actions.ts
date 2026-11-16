@@ -73,8 +73,7 @@ export async function registerProjectImage(formData: FormData): Promise<{ error?
     if (oldMedia?.object_path) await discardFiles(supabase, [oldMedia.object_path]);
   }
 
-  revalidatePath("/");
-  revalidatePath("/projects");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/projects");
   return {};
 }
@@ -90,8 +89,7 @@ export async function removeProjectImage(formData: FormData): Promise<void> {
   await supabase.from("projects").update({ image_id: null, updated_at: new Date().toISOString() }).eq("id", id);
   await supabase.from("media_assets").delete().eq("id", old.image_id);
   if (media?.object_path) await discardFiles(supabase, [media.object_path]);
-  revalidatePath("/");
-  revalidatePath("/projects");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/projects");
 }
 
@@ -139,7 +137,7 @@ export async function updateProject(
   }
 
   revalidatePath("/admin/projects");
-  revalidatePath("/projects");
+  revalidatePath("/", "layout");
 
   redirect("/admin/projects?saved=1");
 }
@@ -179,7 +177,7 @@ export async function createProject(
   }
 
   revalidatePath("/admin/projects");
-  revalidatePath("/projects");
+  revalidatePath("/", "layout");
 
   redirect("/admin/projects?saved=1");
 }
@@ -192,5 +190,5 @@ export async function deleteProject(id: string): Promise<void> {
   const { error } = await supabase.from("projects").delete().eq("id", id);
   if (error) throw new Error("The project could not be deleted.");
   revalidatePath("/admin/projects");
-  revalidatePath("/projects");
+  revalidatePath("/", "layout");
 }

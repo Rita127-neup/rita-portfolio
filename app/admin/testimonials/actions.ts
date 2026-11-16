@@ -24,7 +24,7 @@ function readFields(formData: FormData): Fields | null {
 }
 
 function refresh() {
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/testimonials");
 }
 

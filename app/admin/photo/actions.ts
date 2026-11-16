@@ -15,7 +15,7 @@ import {
 export type UploadResult = { error: string };
 
 function revalidatePhoto() {
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   revalidatePath("/admin");
   revalidatePath("/admin/photo");
 }

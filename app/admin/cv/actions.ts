@@ -11,7 +11,7 @@ import { CV_MAX_BYTES, CV_PATH_PATTERN } from "@/lib/storage";
 export type UploadResult = { error: string };
 
 function revalidateCv() {
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   revalidatePath("/admin");
   revalidatePath("/admin/cv");
 }

@@ -58,7 +58,7 @@ export async function updateResearchItem(
   }
 
   revalidatePath("/admin/research");
-  revalidatePath("/research");
+  revalidatePath("/", "layout");
   redirect("/admin/research?saved=1");
 }
 
@@ -108,7 +108,7 @@ export async function createResearchItem(
     .single();
   if (error || !data) return { error: "The research item could not be created. Please try again.", fieldErrors: {}, values };
   revalidatePath("/admin/research");
-  revalidatePath("/research");
+  revalidatePath("/", "layout");
   redirect("/admin/research?saved=1");
 }
 
@@ -119,5 +119,5 @@ export async function deleteResearchItem(id: string): Promise<void> {
   const { error } = await supabase.from("research_items").delete().eq("id", id);
   if (error) throw new Error("The research item could not be deleted.");
   revalidatePath("/admin/research");
-  revalidatePath("/research");
+  revalidatePath("/", "layout");
 }

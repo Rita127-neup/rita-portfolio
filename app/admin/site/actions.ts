@@ -169,7 +169,7 @@ export async function updatePage(
       .eq("page_id", id)
       .select("id");
     if (error || data?.length !== 1) {
-      revalidatePath(config.path);
+      revalidatePath("/", "layout");
       return partial;
     }
   }
@@ -182,11 +182,11 @@ export async function updatePage(
       .eq("page_id", id)
       .select("id");
     if (error || data?.length !== 1) {
-      revalidatePath(config.path);
+      revalidatePath("/", "layout");
       return partial;
     }
   }
 
-  revalidatePath(config.path);
+  revalidatePath("/", "layout");
   redirect("/admin/site?saved=page");
 }

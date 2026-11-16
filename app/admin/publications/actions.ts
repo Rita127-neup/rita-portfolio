@@ -68,7 +68,7 @@ export async function updatePublication(
 
     if (linkError || linkData?.length !== 1) {
       revalidatePath("/admin/publications");
-      revalidatePath("/publications");
+      revalidatePath("/", "layout");
       return {
         error:
           "The publication details were saved, but a link could not be saved. Please check the links and save again.",
@@ -79,7 +79,7 @@ export async function updatePublication(
   }
 
   revalidatePath("/admin/publications");
-  revalidatePath("/publications");
+  revalidatePath("/", "layout");
   redirect("/admin/publications?saved=1");
 }
 
@@ -96,7 +96,7 @@ export async function createPublication(
   const { data, error } = await supabase.from("publications").insert(result.data.publication).select("id").single();
   if (error || !data) return { error: "The publication could not be created. Please try again.", fieldErrors: {}, values };
   revalidatePath("/admin/publications");
-  revalidatePath("/publications");
+  revalidatePath("/", "layout");
   redirect("/admin/publications?saved=1");
 }
 
@@ -109,5 +109,5 @@ export async function deletePublication(id: string): Promise<void> {
   const { error } = await supabase.from("publications").delete().eq("id", id);
   if (error) throw new Error("The publication could not be deleted.");
   revalidatePath("/admin/publications");
-  revalidatePath("/publications");
+  revalidatePath("/", "layout");
 }

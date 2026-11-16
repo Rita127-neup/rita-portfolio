@@ -116,7 +116,7 @@ export async function registerGalleryPhotos(uploads: GalleryUpload[]) {
     };
   }
 
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/gallery");
   redirect("/admin/gallery?saved=1");
 }
@@ -144,7 +144,7 @@ export async function removeGalleryPhoto(id: string) {
 
   await supabase.from("media_assets").delete().eq("id", media.id);
   await discardFiles(supabase, [media.object_path]);
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/gallery");
   redirect("/admin/gallery?removed=1");
 }

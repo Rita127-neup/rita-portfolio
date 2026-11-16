@@ -18,7 +18,7 @@ export async function createOrganization(formData: FormData): Promise<void> {
   const supabase = await createClient();
   const { error } = await supabase.from("organizations").insert({ name, sort_order: sortOrder, is_visible: true });
   if (error) return;
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/organizations");
 }
 
@@ -34,7 +34,7 @@ export async function deleteOrganization(formData: FormData): Promise<void> {
     if (media?.object_path) await discardFiles(supabase, [media.object_path]);
   }
   await supabase.from("organizations").delete().eq("id", id);
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/organizations");
 }
 
@@ -49,7 +49,7 @@ export async function updateOrganization(formData: FormData): Promise<void> {
   const supabase = await createClient();
   const { error } = await supabase.from("organizations").update({ name, sort_order: sortOrder, is_visible: isVisible, updated_at: new Date().toISOString() }).eq("id", id);
   if (error) return;
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/organizations");
 }
 
@@ -98,7 +98,7 @@ export async function registerOrganizationLogo(formData: FormData): Promise<{ er
     if (oldMedia?.object_path) await discardFiles(supabase, [oldMedia.object_path]);
   }
 
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/organizations");
   redirect("/admin/organizations?saved=1");
 }
@@ -114,6 +114,6 @@ export async function removeOrganizationLogo(formData: FormData): Promise<void> 
   if (error) throw new Error("The logo could not be removed.");
   await supabase.from("media_assets").delete().eq("id", old.image_id);
   if (oldMedia?.object_path) await discardFiles(supabase, [oldMedia.object_path]);
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/organizations");
 }
