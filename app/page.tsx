@@ -3,21 +3,22 @@ import Link from "next/link";
 import { InnerShell } from "@/app/_components/inner-shell";
 import { SectionShell } from "@/app/_components/section-shell";
 import { Testimonials } from "@/app/_components/testimonials";
-import { getAboutContent, getHomeContent, getOrganizations, getTestimonials } from "@/lib/content";
-import { aboutCopy, aboutExtras } from "@/lib/content/copy";
+import { getAboutContent, getAboutExtras, getHomeContent, getOrganizations, getTestimonials } from "@/lib/content";
+import { AboutCard } from "@/app/_components/about-card";
 import { displayName } from "@/lib/display";
 
 const textLink = "inline-block py-1 text-[#96506f] underline underline-offset-4 transition-colors hover:text-[#6f3a52]";
 
 /**
- * One page, top to bottom: who I am, the languages and hobbies, kind words, and
+ * One page, top to bottom: who I am with the languages and hobbies beside it, kind words, and
  * the organizations at the end. The work itself is described once, on Research,
  * Publications and Projects.
  */
 export default async function Home() {
-  const [home, about, organizations, testimonials] = await Promise.all([
+  const [home, about, extras, organizations, testimonials] = await Promise.all([
     getHomeContent(),
     getAboutContent(),
+    getAboutExtras(),
     getOrganizations(),
     getTestimonials(),
   ]);
@@ -43,48 +44,35 @@ export default async function Home() {
       </div>
 
       <SectionShell id="about" title="About">
-        <div className="max-w-[38rem] space-y-5 pt-2 leading-[1.8] text-[#55454d]">
-          {aboutCopy.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </div>
+        <div className="@container pt-2">
+          <div className="grid gap-8 @3xl:grid-cols-[minmax(0,1fr)_14.5rem] @3xl:gap-10">
+            <div>
+              <div className="max-w-[46rem] space-y-5 leading-[1.8] text-[#55454d]">
+                {extras.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
 
-        {about.education.length > 0 && (
-          <div className="mt-8 max-w-[38rem]">
-            <h3 className="editorial-kicker">Education</h3>
-            <ol className="mt-4 space-y-4">
-              {about.education.map((item) => (
-                <li key={`${item.school}-${item.years}`}>
-                  <p className="font-display text-lg font-medium leading-snug text-[#4a3440]">{item.school}</p>
-                  <p className="mt-0.5 text-sm leading-6 text-[#7b6670]">
-                    {[item.detail, item.years].filter(Boolean).join(" · ")}
-                  </p>
-                </li>
-              ))}
-            </ol>
+              {about.education.length > 0 && (
+                <div className="mt-8 max-w-[46rem]">
+                  <h3 className="editorial-kicker">Education</h3>
+                  <ol className="mt-4 space-y-4">
+                    {about.education.map((item) => (
+                      <li key={`${item.school}-${item.years}`}>
+                        <p className="font-display text-lg font-medium leading-snug text-[#4a3440]">{item.school}</p>
+                        <p className="mt-0.5 text-sm leading-6 text-[#7b6670]">
+                          {[item.detail, item.years].filter(Boolean).join(" · ")}
+                        </p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+            </div>
+
+            <AboutCard languages={extras.languages} hobbies={extras.hobbies} />
           </div>
-        )}
-      </SectionShell>
-
-      <SectionShell id="languages" title="Languages">
-        <ul className="flex flex-wrap gap-x-8 gap-y-2 pt-2 text-[#55454d]">
-          {aboutExtras.languages.map((language) => (
-            <li key={language.name}>
-              <span className="font-display text-lg text-[#4a3440]">{language.name}</span>
-              {language.level && <span className="ml-2 text-sm text-[#7b6670]">{language.level}</span>}
-            </li>
-          ))}
-        </ul>
-      </SectionShell>
-
-      <SectionShell id="hobbies" title="Hobbies">
-        <ul className="flex max-w-[38rem] flex-wrap gap-2 pt-3">
-          {aboutExtras.hobbies.map((hobby) => (
-            <li key={hobby} className="rounded-full bg-[#e6efe8] px-3.5 py-1 text-sm text-[#3f6450]">
-              {hobby}
-            </li>
-          ))}
-        </ul>
+        </div>
       </SectionShell>
 
       <Testimonials items={testimonials} />

@@ -12,78 +12,132 @@ type Section = {
   /** Column that marks a row as live on the public site. */
   liveColumn?: "is_published" | "is_visible";
   unavailable?: string;
+  /** Label of the button. */
+  action?: string;
 };
 
-const sections: Section[] = [
+type Group = { heading: string; blurb: string; sections: Section[] };
+
+// Grouped by what you are trying to do, with plain names.
+const groups: Group[] = [
   {
-    title: "Projects",
-    text: "Edit, reorder, and publish or hide projects.",
-    href: "/admin/projects",
-    table: "projects",
-    liveColumn: "is_published",
+    heading: "My home page",
+    blurb: "What visitors see first.",
+    sections: [
+      {
+        title: "About me",
+        text: "Biography, languages, hobbies, and the voice note for your name.",
+        href: "/admin/about",
+        action: "Edit about me",
+      },
+      {
+        title: "Testimonials",
+        text: "What people wrote about you, with their photo. Empty ones show a soft placeholder.",
+        href: "/admin/testimonials",
+        table: "testimonials",
+        liveColumn: "is_visible",
+        action: "Edit testimonials",
+      },
+      {
+        title: "Photo",
+        text: "Your picture next to your name.",
+        href: "/admin/photo",
+        action: "Change photo",
+      },
+      {
+        title: "Photo gallery",
+        text: "The scattered photo journal page.",
+        href: "/admin/gallery",
+        action: "Edit gallery",
+      },
+      {
+        title: "Organizations",
+        text: "Logos at the bottom of the home page.",
+        href: "/admin/organizations",
+        table: "organizations",
+        liveColumn: "is_visible",
+        action: "Edit organizations",
+      },
+      {
+        title: "CV",
+        text: "The PDF visitors download.",
+        href: "/admin/cv",
+        action: "Change CV",
+      },
+    ],
   },
   {
-    title: "Publications",
-    text: "Edit publications, their links, order, and visibility.",
-    href: "/admin/publications",
-    table: "publications",
-    liveColumn: "is_published",
+    heading: "My work",
+    blurb: "Research, papers and projects.",
+    sections: [
+      {
+        title: "Publications",
+        text: "Each paper, where it stands, and its links.",
+        href: "/admin/publications",
+        table: "publications",
+        liveColumn: "is_published",
+        action: "Edit publications",
+      },
+      {
+        title: "Research",
+        text: "The research write-ups.",
+        href: "/admin/research",
+        table: "research_items",
+        liveColumn: "is_published",
+        action: "Edit research",
+      },
+      {
+        title: "Projects",
+        text: "Things you have built, in order.",
+        href: "/admin/projects",
+        table: "projects",
+        liveColumn: "is_published",
+        action: "Edit projects",
+      },
+    ],
   },
   {
-    title: "Research",
-    text: "Edit research items, order, and visibility.",
-    href: "/admin/research",
-    table: "research_items",
-    liveColumn: "is_published",
-  },
-  {
-    title: "Experiences",
-    text: "Edit experience entries. Not shown on a public page yet.",
-    href: "/admin/experiences",
-    table: "experiences",
-    liveColumn: "is_published",
-  },
-  {
-    title: "Achievements",
-    text: "Edit achievements. Not shown on a public page yet.",
-    href: "/admin/achievements",
-    table: "achievements",
-    liveColumn: "is_published",
-  },
-  {
-    title: "Site & pages",
-    text: "Page text, contact email, social links, and site title.",
-    href: "/admin/site",
-    table: "pages",
-  },
-  {
-    title: "CV",
-    text: "Upload, replace, or remove the CV visitors can download.",
-    href: "/admin/cv",
-  },
-  {
-    title: "Organizations",
-    text: "Manage organizations, logos, order, and visibility.",
-    href: "/admin/organizations",
-    table: "organizations",
-    liveColumn: "is_visible",
-  },
-  {
-    title: "Testimonials",
-    text: "Add what people wrote about you, with their photo. Entries with no text yet show a placeholder.",
-    href: "/admin/testimonials",
-    table: "testimonials",
-    liveColumn: "is_visible",
-  },
-  {
-    title: "Photo",
-    text: "Upload, replace, or remove the home page photo.",
-    href: "/admin/photo",
-  },
-  {
-    title: "Home photo gallery",
-    text: "Add multiple photos to the home page and manage the clickable gallery.",
-    href: "/admin/gallery",
+    heading: "Links, contact and later",
+    blurb: "Social links, site text, and things that are ready but not public yet.",
+    sections: [
+      {
+        title: "Social links (ORCID, GitHub...)",
+        text: "Add your ORCID link here whenever you have it; it appears on the home page as soon as it is filled in.",
+        href: "/admin/site",
+        action: "Edit links",
+      },
+      {
+        title: "Blog",
+        text: "Write posts any time. The blog stays hidden from visitors until you switch it on.",
+        href: "/admin/blog",
+        table: "blog_posts",
+        liveColumn: "is_published",
+        action: "Open blog",
+      },
+      {
+        title: "Site & pages",
+        text: "Contact email, location, site title and page text.",
+        href: "/admin/site",
+        table: "pages",
+        action: "Edit site text",
+      },
+      {
+        title: "Experiences",
+        text: "Not shown on a public page yet.",
+        href: "/admin/experiences",
+        table: "experiences",
+        liveColumn: "is_published",
+        action: "Edit experiences",
+      },
+      {
+        title: "Achievements",
+        text: "Not shown on a public page yet.",
+        href: "/admin/achievements",
+        table: "achievements",
+        liveColumn: "is_published",
+        action: "Edit achievements",
+      },
+    ],
   },
 ];
 
@@ -112,40 +166,43 @@ async function getSummary(section: Section): Promise<string | null> {
 export default async function AdminDashboard() {
   const admin = await requireAdmin();
 
-  const summaries = await Promise.all(sections.map(getSummary));
+  const flat = groups.flatMap((group) => group.sections);
+  const summaries = new Map<Section, string | null>(
+    await Promise.all(flat.map(async (section) => [section, await getSummary(section)] as const)),
+  );
 
   return (
     <>
       <AdminNav />
       <AdminHeader
         title="Dashboard"
-        text={`Signed in as ${admin.email ?? "admin"}`}
+        text={`Signed in as ${admin.email ?? "admin"}. Pick what you want to change; every page here saves straight to the website.`}
       />
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
-        {sections.map((section, index) => (
-          <div
-            key={section.title}
-            className="rounded-3xl border border-white/10 bg-[#0c1a2d] p-8"
-          >
-            <h2 className="text-2xl font-semibold">{section.title}</h2>
-            <p className="mt-4 text-slate-400">{section.text}</p>
-            {summaries[index] && (
-              <p className="mt-3 text-sm text-slate-500">{summaries[index]}</p>
-            )}
-            {section.href ? (
-              <Link
-                href={section.href}
-                className="mt-6 inline-block text-sm text-cyan-300 transition hover:text-cyan-200"
-              >
-                Manage {section.title.toLowerCase()} →
-              </Link>
-            ) : (
-              <p className="mt-6 text-sm text-slate-500">
-                {section.unavailable}
-              </p>
-            )}
-          </div>
+      <div className="mt-12 space-y-14">
+        {groups.map((group) => (
+          <section key={group.heading}>
+            <h2 className="text-2xl font-semibold">{group.heading}</h2>
+            <p className="mt-1 text-slate-400">{group.blurb}</p>
+            <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {group.sections.map((section) => (
+                <Link
+                  key={section.title}
+                  href={section.href ?? "/admin"}
+                  className="group flex flex-col rounded-2xl border border-white/10 bg-[#0c1a2d] p-6 transition hover:border-cyan-400/40"
+                >
+                  <h3 className="text-lg font-semibold">{section.title}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-slate-400">{section.text}</p>
+                  {summaries.get(section) && (
+                    <p className="mt-3 text-xs text-slate-500">{summaries.get(section)}</p>
+                  )}
+                  <span className="mt-4 text-sm text-cyan-300 transition group-hover:text-cyan-200">
+                    {section.action ?? "Open"} →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </section>
         ))}
       </div>
     </>

@@ -7,17 +7,17 @@ import { DeleteButton } from "./delete-button";
 
 const navItems = [
   { label: "Dashboard", href: "/admin" },
-  { label: "Projects", href: "/admin/projects" },
+  { label: "About me", href: "/admin/about" },
+  { label: "Testimonials", href: "/admin/testimonials" },
   { label: "Publications", href: "/admin/publications" },
   { label: "Research", href: "/admin/research" },
-  { label: "Experiences", href: "/admin/experiences" },
-  { label: "Achievements", href: "/admin/achievements" },
-  { label: "Site & pages", href: "/admin/site" },
-  { label: "CV", href: "/admin/cv" },
-  { label: "Organizations", href: "/admin/organizations" },
-  { label: "Testimonials", href: "/admin/testimonials" },
+  { label: "Projects", href: "/admin/projects" },
+  { label: "Blog", href: "/admin/blog" },
   { label: "Photo", href: "/admin/photo" },
-  { label: "Home gallery", href: "/admin/gallery" },
+  { label: "Gallery", href: "/admin/gallery" },
+  { label: "Organizations", href: "/admin/organizations" },
+  { label: "CV", href: "/admin/cv" },
+  { label: "Site & links", href: "/admin/site" },
 ];
 
 export function AdminNav() {

@@ -10,6 +10,7 @@
 
 import { cache } from "react";
 import { getPublicSupabaseClient } from "@/lib/supabase/public-client";
+import { aboutCopy, aboutExtras as builtInExtras } from "./copy";
 import type {
   AboutContent,
   ContactContent,
@@ -21,6 +22,9 @@ import type {
   ResearchItem,
   ProfileInfo,
   Organization,
+  AboutExtras,
+  BlogPost,
+  NoteItem,
   SiteSettings,
   Testimonial,
 } from "./types";
@@ -424,4 +428,71 @@ export async function getContactContent(): Promise<ContactContent> {
 /** Formats a zero-based list position as a display label, e.g. 0 -> "01". */
 export function displayNumber(index: number) {
   return String(index + 1).padStart(2, "0");
+}
+
+/** "Title | a few words" per line, as saved in the admin. Blank lines are ignored. */
+export function parseNoteLines(text: string | null | undefined): NoteItem[] {
+  return (text ?? "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [title = "", ...rest] = line.split("|");
+      return { title: title.trim(), note: rest.join("|").trim() };
+    })
+    .filter((item) => item.title);
+}
+
+/** Blank-line separated paragraphs. */
+export function parseParagraphs(text: string | null | undefined): string[] {
+  return (text ?? "")
+    .replace(/\r\n/g, "\n")
+    .split(/\n{2,}/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+/** About text, languages, hobbies and the voice note. Built-in text is used for anything not yet saved in the admin. */
+export const getAboutExtras = cache(async (): Promise<AboutExtras> => {
+  const { data, error } = await getPublicSupabaseClient()
+    .from("site_settings")
+    .select("about_paragraphs, languages, hobbies, pronunciation_audio_id, blog_enabled")
+    .eq("id", 1)
+    .maybeSingle();
+  if (error) fail("about details", error.message);
+
+  const paragraphs = parseParagraphs(data?.about_paragraphs);
+  const languages = parseNoteLines(data?.languages);
+  const hobbies = parseNoteLines(data?.hobbies);
+
+  return {
+    paragraphs: paragraphs.length > 0 ? paragraphs : aboutCopy.paragraphs,
+    languages: languages.length > 0 ? languages : builtInExtras.languages.map((l) => ({ title: l.name, note: l.level })),
+    hobbies: hobbies.length > 0 ? hobbies : builtInExtras.hobbies.map((title) => ({ title, note: "" })),
+    pronunciationAudioUrl: data?.pronunciation_audio_id ? `/media/pronunciation?v=${data.pronunciation_audio_id}` : undefined,
+    blogEnabled: Boolean(data?.blog_enabled),
+  };
+});
+
+/** Published posts, newest first. Empty while the blog is switched off: the database refuses to return them. */
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  const { data, error } = await getPublicSupabaseClient()
+    .from("blog_posts")
+    .select("id, slug, title, excerpt, body, published_at")
+    .eq("is_published", true)
+    .order("published_at", { ascending: false, nullsFirst: false });
+  if (error) fail("blog posts", error.message);
+  return (data ?? []).map((row) => ({
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    excerpt: row.excerpt,
+    body: row.body,
+    publishedAt: row.published_at,
+  }));
+}
+
+export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+  const posts = await getBlogPosts();
+  return posts.find((post) => post.slug === slug) ?? null;
 }

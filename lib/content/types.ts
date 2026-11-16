@@ -27,3 +27,16 @@ export type Project = {
 export type PublicationLink = { label: string; url: string; variant: "primary" | "secondary" };
 export type Publication = { id: string; category: string; title: string; byline: string; summary: string; tags: string[]; status: string; links: PublicationLink[] };
 export type ContactContent = { eyebrow: string; title: string; intro: string; emailCardTitle: string; emailCardText: string; emailButtonLabel: string; socialCardTitle: string };
+
+/** One line of the languages or hobbies list: a title and a few friendly words. */
+export type NoteItem = { title: string; note: string };
+/** Editable from /admin/about; each part falls back to the built-in text while it is empty. */
+export type AboutExtras = {
+  paragraphs: string[];
+  languages: NoteItem[];
+  hobbies: NoteItem[];
+  /** Recording of how the name is said, when one has been uploaded. */
+  pronunciationAudioUrl?: string;
+  blogEnabled: boolean;
+};
+export type BlogPost = { id: string; slug: string; title: string; excerpt: string; body: string; publishedAt: string | null };

@@ -78,7 +78,7 @@ export const aboutExtras = {
 
 /** Status shown in the publication list, keyed by the slug of the row in `publications`. */
 export const publicationStatus: Record<string, string> = {
-  "genomic-amr-ciprofloxacin-calibration": "Preprint posted 19 October 2026 · under review at Microbial Genomics",
+  "genomic-amr-ciprofloxacin-calibration": "Preprint posted 19 October 2026 · transferred to Access Microbiology (Microbiology Society) for review",
   "dengue-fever-nepal": "Under peer review at Discover Public Health · open-access record on Zenodo",
   "caffeine-consumption-siddharthanagar": "Open-access record on Zenodo",
 };

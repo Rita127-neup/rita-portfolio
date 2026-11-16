@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { PronunciationPlayer } from "@/app/_components/pronunciation-player";
 import { SocialIcon } from "@/app/_components/social-icon";
 import type { SocialLink } from "@/lib/content";
 
@@ -12,6 +13,7 @@ export function ProfileCard({
   email,
   location,
   pronunciation,
+  pronunciationAudioUrl,
   cv,
 }: {
   name: string;
@@ -23,6 +25,7 @@ export function ProfileCard({
   email: string;
   location: string;
   pronunciation?: string;
+  pronunciationAudioUrl?: string;
   cv?: { label: string; href: string };
 }) {
   // ORCID, GitHub, LinkedIn and the rest in the order set in the admin, then email.
@@ -51,21 +54,22 @@ export function ProfileCard({
 
       <h2 className="mt-6 font-display text-[1.75rem] font-medium leading-tight tracking-[-0.01em] text-[#4a3440]">{name}</h2>
       {pronunciation && <p className="mt-1.5 text-sm italic text-[#7b6670]">{pronunciation}</p>}
+      {pronunciationAudioUrl && <PronunciationPlayer src={pronunciationAudioUrl} />}
       <p className="mt-3 font-display text-[0.8rem] font-light uppercase leading-5 tracking-[0.1em] text-[#4a3440]">{role}</p>
 
       {contacts.length > 0 && (
-        <ul className="mx-auto mt-5 w-fit space-y-0.5 text-left text-sm">
+        <ul className="mx-auto mt-5 flex flex-wrap justify-center gap-x-1.5 gap-y-3">
           {contacts.map((contact) => (
             <li key={contact.label}>
               <a
                 href={contact.href}
                 {...(contact.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                className="group flex items-center gap-2.5 py-1 text-[#96506f] transition-colors hover:text-[#6f3a52]"
+                className="group flex w-[3.9rem] flex-col items-center gap-1 text-[#96506f] transition-colors hover:text-[#6f3a52]"
               >
-                <span className="text-[#6f8f78] transition-colors group-hover:text-[#4f7459]">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d9e3dc] bg-white/60 text-[#6f8f78] transition-colors group-hover:border-[#8fb09a] group-hover:bg-[#e6efe8] group-hover:text-[#4f7459]">
                   <SocialIcon label={contact.label} />
                 </span>
-                <span className="underline-offset-4 group-hover:underline">{contact.label}</span>
+                <span className="text-[0.7rem] leading-4 underline-offset-4 group-hover:underline">{contact.label}</span>
               </a>
             </li>
           ))}

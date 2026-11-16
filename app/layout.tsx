@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Commissioner, Fraunces } from "next/font/google";
 import Link from "next/link";
-import { getSiteSettings } from "@/lib/content";
+import { getAboutExtras, getSiteSettings } from "@/lib/content";
 import { DnaMark } from "@/app/_components/dna-mark";
 import { NavLinks } from "@/app/_components/nav-links";
 import "./globals.css";
@@ -15,11 +15,13 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const site = await getSiteSettings();
+  const [site, extras] = await Promise.all([getSiteSettings(), getAboutExtras()]);
 
   // About now lives on the home page, so the menu goes straight to the other pages.
-  const visible = site.navigation.filter((item) => item.href !== "/about");
-  const menuOrder = ["/research", "/publications", "/projects", "/gallery", "/contact"];
+  // The blog link appears only once the blog has been switched on in the admin.
+  const base = site.navigation.filter((item) => item.href !== "/about" && item.href !== "/blog");
+  const visible = extras.blogEnabled ? [...base, { label: "Blog", href: "/blog" }] : base;
+  const menuOrder = ["/research", "/publications", "/projects", "/gallery", "/blog", "/contact"];
   const rank = (href: string) => (menuOrder.indexOf(href) === -1 ? menuOrder.length : menuOrder.indexOf(href));
   const menu = [...visible].sort((a, b) => rank(a.href) - rank(b.href));
 
@@ -30,7 +32,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="en" className={`${commissioner.variable} ${fraunces.variable} antialiased`}>
       <body>
-        <header className="mx-auto flex w-full max-w-5xl flex-col items-center gap-3 px-6 pb-2 pt-8 md:flex-row md:justify-between">
+        <header className="mx-auto flex w-full max-w-[84rem] flex-col items-center gap-3 px-6 pb-2 pt-8 md:flex-row md:justify-between">
           <Link href="/" aria-label="Rita Neupane, home" title="Rita Neupane" className="transition-opacity hover:opacity-75">
             <DnaMark />
           </Link>
@@ -41,7 +43,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
         {children}
 
-        <footer className="mx-auto w-full max-w-5xl px-6 pb-10 pt-4">
+        <footer className="mx-auto w-full max-w-[84rem] px-6 pb-10 pt-4">
           <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-[#ddd5d6] pt-6 text-xs text-[#7b6670]">
             <span>
               © {new Date().getFullYear()} Rita Neupane <span aria-hidden="true" className="text-[#d3a1b8]">✿</span> Made in Nepal

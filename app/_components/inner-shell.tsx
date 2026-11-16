@@ -1,4 +1,4 @@
-import { getHomeContent, getProfileInfo, getSiteSettings } from "@/lib/content";
+import { getAboutExtras, getHomeContent, getProfileInfo, getSiteSettings } from "@/lib/content";
 import { ProfileCard } from "@/app/_components/profile-card";
 import { displayName } from "@/lib/display";
 
@@ -15,11 +15,16 @@ export async function InnerShell({
   children: React.ReactNode;
   fullProfileOnMobile?: boolean;
 }) {
-  const [home, profile, site] = await Promise.all([getHomeContent(), getProfileInfo(), getSiteSettings()]);
+  const [home, profile, site, extras] = await Promise.all([
+    getHomeContent(),
+    getProfileInfo(),
+    getSiteSettings(),
+    getAboutExtras(),
+  ]);
 
   return (
     <main className="site-shell">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 pb-16 pt-6 lg:flex-row lg:items-start lg:gap-16 lg:pt-10">
+      <div className="mx-auto flex w-full max-w-[84rem] flex-col gap-10 px-6 pb-16 pt-6 lg:flex-row lg:items-start lg:gap-16 lg:pt-10">
         <aside className={`w-full shrink-0 lg:sticky lg:top-8 lg:block lg:w-[17rem] ${fullProfileOnMobile ? "" : "hidden"}`}>
           <ProfileCard
             name={displayName(home.firstName, home.lastName)}
@@ -31,6 +36,7 @@ export async function InnerShell({
             email={profile.email}
             location={profile.location}
             pronunciation={home.pronunciation}
+            pronunciationAudioUrl={extras.pronunciationAudioUrl}
             cv={home.cv}
           />
         </aside>
