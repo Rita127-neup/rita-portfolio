@@ -2,8 +2,8 @@ import { displayNumber, getPublicationsContent } from "@/lib/content";
 import { InnerShell } from "@/app/_components/inner-shell";
 
 const links = {
-  primary: "text-sm font-medium text-[#b83a74] hover:text-[#8f2a5a]",
-  secondary: "text-sm font-medium text-[#74455b] hover:text-[#5b2c43]",
+  primary: "text-sm font-medium text-[#96506f] hover:text-[#6f3a52]",
+  secondary: "text-sm font-medium text-[#55454d] hover:text-[#34262d]",
 };
 
 export default async function Publications() {
@@ -21,36 +21,36 @@ export default async function Publications() {
           </>
         )}
       </h1>
-      <p className="mt-6 max-w-2xl text-lg leading-8 text-[#74455b]">{page.intro}</p>
+      <p className="mt-6 max-w-2xl text-lg leading-8 text-[#55454d]">{page.intro}</p>
 
-      <div className="mt-10 divide-y divide-[#f2c3d5] border-y border-[#f2c3d5]">
+      <div className="mt-10 divide-y divide-[#ddd5d6] border-y border-[#ddd5d6]">
         {items.map((p, i) => (
           <article key={p.id} className="py-9">
             <div className="grid gap-6 xl:grid-cols-[5rem_1fr_auto]">
-              <span className="font-display text-2xl text-[#dd9db9]">{displayNumber(i)}</span>
+              <span className="font-display text-xl text-[#cdbfc5]">{displayNumber(i)}</span>
               <div>
                 <p className="editorial-kicker">{p.category}</p>
-                <h2 className="mt-2 font-display text-2xl leading-tight md:text-3xl">
+                <h2 className="mt-2 font-display text-xl font-medium leading-tight text-[#4a3440] md:text-2xl">
                   {p.links[0]?.url ? (
-                    <a href={p.links[0].url} target="_blank" rel="noreferrer" className="transition-colors hover:text-[#b83a74]">
-                      {p.title} <span className="text-base text-[#b83a74]">↗</span>
+                    <a href={p.links[0].url} target="_blank" rel="noreferrer" className="transition-colors hover:text-[#96506f]">
+                      {p.title} <span className="text-base text-[#96506f]">↗</span>
                     </a>
                   ) : (
                     p.title
                   )}
                 </h2>
-                <p className="mt-3 text-sm text-[#8a5a72]">{p.byline}</p>
-                <p className="mt-5 max-w-3xl leading-7 text-[#74455b]">{p.summary}</p>
+                <p className="mt-3 text-sm text-[#7b6670]">{p.byline}</p>
+                <p className="mt-5 max-w-3xl leading-7 text-[#55454d]">{p.summary}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {p.tags.map((t) => (
-                    <span key={t} className="rounded-full border border-[#f2c3d5] px-3 py-1.5 text-xs text-[#74455b]">{t}</span>
+                    <span key={t} className="rounded-sm border border-[#ddd5d6] px-3 py-1.5 text-xs text-[#55454d]">{t}</span>
                   ))}
                 </div>
               </div>
-              <span className="text-xs text-[#8a5a72]">{p.status}</span>
+              <span className="text-xs text-[#7b6670]">{p.status}</span>
             </div>
             {p.links.length > 0 && (
-              <div className="mt-7 flex gap-5 border-t border-[#f2c3d5] pt-5">
+              <div className="mt-7 flex gap-5 border-t border-[#ddd5d6] pt-5">
                 {p.links.map((l) => (
                   <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className={links[l.variant]}>{l.label} ↗</a>
                 ))}
@@ -60,9 +60,9 @@ export default async function Publications() {
         ))}
       </div>
 
-      <div className="mt-12 border-l-2 border-[#b83a74] bg-[#fde6ee]/75 p-7">
+      <div className="mt-12 border-l-2 border-[#96506f] bg-[#ece8e6]/75 p-7">
         <p className="editorial-kicker">{profile.heading}</p>
-        <p className="mt-3 max-w-3xl leading-7 text-[#74455b]">{profile.text}</p>
+        <p className="mt-3 max-w-3xl leading-7 text-[#55454d]">{profile.text}</p>
       </div>
     </InnerShell>
   );

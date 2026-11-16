@@ -15,7 +15,7 @@ export default function OwnerLoginButton() {
       href="/admin/login"
       aria-label="Owner login"
       title="Owner login"
-      className="fixed bottom-4 right-4 z-40 flex h-8 w-8 items-center justify-center rounded-full border border-[#f2c3d5] bg-[#fff8fb]/80 text-xs text-[#b83a74] backdrop-blur-md transition hover:border-[#b83a74]/50 hover:text-[#8f2a5a]"
+      className="fixed bottom-4 right-4 z-40 flex h-8 w-8 items-center justify-center rounded-full border border-[#ddd5d6] bg-[#f8f7f2]/80 text-xs text-[#96506f] backdrop-blur-md transition hover:border-[#96506f]/50 hover:text-[#6f3a52]"
     >
       <span aria-hidden="true">⌕</span>
     </Link>

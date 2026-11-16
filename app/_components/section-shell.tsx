@@ -1,34 +1,41 @@
 import Link from "next/link";
 
+/**
+ * One block of a page: a small uppercase label with a hairline above it,
+ * the content, and an optional "See all" link on the right.
+ */
 export function SectionShell({
   id,
-  number,
   title,
   href,
-  linkLabel,
+  linkLabel = "See all →",
   children,
 }: {
   id: string;
-  number: string;
   title: string;
   href?: string;
   linkLabel?: string;
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-20 border-t border-[#f2c3d5] py-12 md:py-16">
-      <div className="mx-auto grid max-w-6xl gap-8 px-6 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-12">
-        <header className="md:sticky md:top-24 md:self-start">
-          <p className="font-display text-5xl font-light leading-none text-[#e8a3bf] md:text-6xl">{number}</p>
-          <h2 className="mt-3 font-display text-3xl font-semibold leading-tight tracking-[-0.02em] text-[#5b2c43]">{title}</h2>
-          {href && linkLabel && (
-            <Link href={href} className="mt-4 inline-block text-sm font-semibold text-[#b83a74] transition hover:text-[#8f2a5a]">
-              {linkLabel}
-            </Link>
-          )}
-        </header>
-        <div className="min-w-0">{children}</div>
-      </div>
+    <section id={id} className="scroll-mt-6 pt-10 first:pt-0">
+      <h2 className="border-t border-[#ddd5d6] py-4 font-display text-[0.95rem] font-semibold uppercase tracking-[0.1em] text-[#96506f]">
+        {href ? (
+          <Link href={href} className="transition-opacity hover:opacity-70">
+            {title}
+          </Link>
+        ) : (
+          title
+        )}
+      </h2>
+      <div>{children}</div>
+      {href && (
+        <p className="pt-4 text-right text-[0.8rem] uppercase tracking-[0.1em]">
+          <Link href={href} className="text-[#96506f] transition-opacity hover:opacity-70">
+            {linkLabel}
+          </Link>
+        </p>
+      )}
     </section>
   );
 }

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces, Nunito } from "next/font/google";
+import { Commissioner, Fraunces } from "next/font/google";
 import Link from "next/link";
 import { getSiteSettings } from "@/lib/content";
 import { NavLinks } from "@/app/_components/nav-links";
 import OwnerLoginButton from "@/app/_components/owner-login-button";
 import "./globals.css";
 
-const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
+const commissioner = Commissioner({ variable: "--font-commissioner", subsets: ["latin"] });
 const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,40 +17,26 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const site = await getSiteSettings();
 
+  // The call-to-action link from site settings is shown as one more nav item, unless the menu already has it.
+  const cta = site.navCta?.href && site.navCta?.label ? site.navCta : null;
+  const navItems = cta && !site.navigation.some((item) => item.href === cta.href) ? [...site.navigation, cta] : site.navigation;
+
   return (
-    <html lang="en" className={`${nunito.variable} ${fraunces.variable} antialiased`}>
+    <html lang="en" className={`${commissioner.variable} ${fraunces.variable} antialiased`}>
       <body>
-        <nav className="sticky top-0 z-50 border-b border-[#f2c3d5] bg-[#fff8fb]/90 text-[#5b2c43] backdrop-blur-md">
-          <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-3.5">
-            <Link href="/" className="font-display text-[1.45rem] font-semibold tracking-[-0.02em]">
-              {site.brandMark}<span className="text-[#e0679a]">.</span>
-            </Link>
-
-            <div className="flex items-center gap-8">
-              <div className="hidden items-center gap-7 text-[0.74rem] font-semibold uppercase tracking-[0.14em] md:flex">
-                <NavLinks items={site.navigation} />
-              </div>
-
-              {site.navCta?.href && site.navCta?.label && (
-                <Link
-                  href={site.navCta.href}
-                  className="hidden rounded-full border border-[#b83a74]/40 px-4 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#b83a74] transition hover:bg-[#fde6ee] sm:inline-block"
-                >
-                  {site.navCta.label} ↗
-                </Link>
-              )}
-            </div>
-          </div>
-
-          <div className="flex items-center gap-6 overflow-x-auto border-t border-[#f6d3e1] px-6 py-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.14em] md:hidden">
-            <NavLinks items={site.navigation} />
-          </div>
-        </nav>
+        <header className="mx-auto flex w-full max-w-5xl flex-col items-center gap-3 px-6 pb-2 pt-8 md:flex-row md:justify-between">
+          <Link href="/" className="font-display text-[1.35rem] font-medium tracking-[-0.01em] text-[#4a3440]">
+            {site.brandMark}
+          </Link>
+          <nav aria-label="Main" className="flex flex-wrap items-center justify-center text-[0.8rem] uppercase tracking-[0.1em] md:justify-end">
+            <NavLinks items={navItems} />
+          </nav>
+        </header>
 
         {children}
 
-        <footer className="border-t border-[#f2c3d5] bg-[#fbdde8]/80 px-6 py-8">
-          <div className="mx-auto flex max-w-6xl flex-col gap-2 text-xs text-[#8a5a72] md:flex-row md:items-center md:justify-between">
+        <footer className="mx-auto w-full max-w-5xl px-6 pb-10 pt-4">
+          <div className="flex flex-col gap-1 border-t border-[#ddd5d6] pt-6 text-xs text-[#7b6670] md:flex-row md:items-center md:justify-between">
             <span>© {new Date().getFullYear()} Rita Neupane</span>
             <span>Research · Computational Biology · Data</span>
           </div>

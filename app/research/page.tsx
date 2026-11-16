@@ -64,9 +64,9 @@ export default async function Research() {
           {page.title}
           {page.titleMuted && <><br /><span className="editorial-title-muted">{page.titleMuted}</span></>}
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-[#74455b]">{page.intro}</p>
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-[#55454d]">{page.intro}</p>
 
-        <div className="mt-10 border-y border-[#e6a9c2]">
+        <div className="mt-10 border-y border-[#cfc3c7]">
           {orderedItems.map((item, index) => {
             const details = studyDetails[item.id];
             const publication = details?.publicationId
@@ -74,47 +74,47 @@ export default async function Research() {
               : undefined;
 
             return (
-              <article key={item.id} className="grid gap-6 border-b border-[#f2c3d5] py-10 last:border-b-0 md:grid-cols-[4rem_minmax(0,1fr)]">
-                <span className="font-display text-2xl text-[#dd9db9]">{displayNumber(index)}</span>
+              <article key={item.id} className="grid gap-6 border-b border-[#ddd5d6] py-10 last:border-b-0 md:grid-cols-[4rem_minmax(0,1fr)]">
+                <span className="font-display text-xl text-[#cdbfc5]">{displayNumber(index)}</span>
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <p className="editorial-kicker">{item.category} · Research study</p>
                     {(publication?.status || item.id === "dengue-ewars") && (
-                      <span className="border border-[#efbcd0] px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.1em] text-[#8a5a72]">
+                      <span className="border border-[#d9ced2] px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.1em] text-[#7b6670]">
                         {publication?.status ?? "Independent research initiative"}
                       </span>
                     )}
                   </div>
 
-                  <div className="mt-3 flex items-center gap-3"><WorkMark kind={item.id === "ecoli-amr-generalization" ? "genomics" : item.id === "dengue-nepal" ? "epidemiology" : item.id === "dengue-ewars" ? "signal" : "survey"} /><h2 className="max-w-4xl font-display text-2xl leading-tight md:text-3xl">{item.title}</h2></div>
-                  <p className="mt-4 max-w-4xl text-[0.98rem] leading-7 text-[#74455b]">{item.summary}</p>
+                  <div className="mt-3 flex items-center gap-3"><WorkMark kind={item.id === "ecoli-amr-generalization" ? "genomics" : item.id === "dengue-nepal" ? "epidemiology" : item.id === "dengue-ewars" ? "signal" : "survey"} /><h2 className="max-w-4xl font-display text-xl font-medium leading-tight text-[#4a3440] md:text-2xl">{item.title}</h2></div>
+                  <p className="mt-4 max-w-4xl text-[0.98rem] leading-7 text-[#55454d]">{item.summary}</p>
 
                   {details && (
-                    <dl className="mt-7 grid gap-5 border-y border-[#f2c3d5] py-5 xl:grid-cols-3">
+                    <dl className="mt-7 grid gap-5 border-y border-[#ddd5d6] py-5 xl:grid-cols-3">
                       <div>
-                        <dt className="text-[0.62rem] font-bold uppercase tracking-[0.16em] text-[#b83a74]">Study material</dt>
-                        <dd className="mt-2 text-sm leading-6 text-[#5b2c43]">{details.material}</dd>
+                        <dt className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#96506f]">Study material</dt>
+                        <dd className="mt-2 text-sm leading-6 text-[#34262d]">{details.material}</dd>
                       </div>
                       <div>
-                        <dt className="text-[0.62rem] font-bold uppercase tracking-[0.16em] text-[#b83a74]">Approach</dt>
-                        <dd className="mt-2 text-sm leading-6 text-[#5b2c43]">{details.method}</dd>
+                        <dt className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#96506f]">Approach</dt>
+                        <dd className="mt-2 text-sm leading-6 text-[#34262d]">{details.method}</dd>
                       </div>
                       <div>
-                        <dt className="text-[0.62rem] font-bold uppercase tracking-[0.16em] text-[#b83a74]">Research question</dt>
-                        <dd className="mt-2 text-sm leading-6 text-[#5b2c43]">{details.question}</dd>
+                        <dt className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#96506f]">Research question</dt>
+                        <dd className="mt-2 text-sm leading-6 text-[#34262d]">{details.question}</dd>
                       </div>
                     </dl>
                   )}
 
                   <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
                     {publication?.links.filter((link) => link.url).map((link) => (
-                      <a key={link.label} href={link.url} target="_blank" rel="noreferrer" className="text-xs font-semibold uppercase tracking-[0.1em] text-[#b83a74] hover:text-[#8f2a5a]">
+                      <a key={link.label} href={link.url} target="_blank" rel="noreferrer" className="text-xs font-medium uppercase tracking-[0.1em] text-[#96506f] hover:text-[#6f3a52]">
                         {link.label} ↗
                       </a>
                     ))}
                   </div>
 
-                  <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-[0.65rem] uppercase tracking-[0.12em] text-[#9a6a80]">
+                  <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-[0.65rem] uppercase tracking-[0.12em] text-[#7b6670]">
                     {item.tags.map((tag) => <span key={tag}>{tag}</span>)}
                   </div>
                 </div>
@@ -123,7 +123,7 @@ export default async function Research() {
           })}
         </div>
 
-        <p className="mt-8 max-w-2xl text-sm leading-6 text-[#8a5a72]">
+        <p className="mt-8 max-w-2xl text-sm leading-6 text-[#7b6670]">
           Publication records and links are shown with each study. “Under review” describes the current editorial process, not an acceptance decision.
         </p>
     </InnerShell>

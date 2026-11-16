@@ -6,7 +6,25 @@ import { SectionShell } from "@/app/_components/section-shell";
 
 type Photo = { id: string; src: string; alt: string };
 
-export function HomeGalleryWall({ photos, number }: { photos: Photo[]; number: string }) {
+/*
+  Sizes, tilts and drops, reused in order. Rows alternate between two and three
+  photos so the wall looks casually scattered, and because nothing is random the
+  server and the browser always render the same layout.
+*/
+const SCATTER = [
+  { size: "w-[54%] sm:w-[44%]", ratio: "aspect-[4/5]", tilt: "rotate-[-2.5deg]", drop: "mt-0" },
+  { size: "w-[38%] sm:w-[38%]", ratio: "aspect-square", tilt: "rotate-[3deg]", drop: "mt-8" },
+  { size: "w-[44%] sm:w-[28%]", ratio: "aspect-[5/4]", tilt: "rotate-[-1.5deg]", drop: "mt-3" },
+  { size: "w-[48%] sm:w-[30%]", ratio: "aspect-[4/5]", tilt: "rotate-[2deg]", drop: "mt-10" },
+  { size: "w-[40%] sm:w-[32%]", ratio: "aspect-square", tilt: "rotate-[-3deg]", drop: "mt-1" },
+  { size: "w-[50%] sm:w-[36%]", ratio: "aspect-[5/4]", tilt: "rotate-[1.5deg]", drop: "mt-6" },
+  { size: "w-[42%] sm:w-[46%]", ratio: "aspect-[4/5]", tilt: "rotate-[-2deg]", drop: "mt-12" },
+  { size: "w-[52%] sm:w-[30%]", ratio: "aspect-square", tilt: "rotate-[2.5deg]", drop: "mt-2" },
+  { size: "w-[36%] sm:w-[26%]", ratio: "aspect-[5/4]", tilt: "rotate-[-1deg]", drop: "mt-9" },
+  { size: "w-[46%] sm:w-[34%]", ratio: "aspect-[4/5]", tilt: "rotate-[1deg]", drop: "mt-4" },
+];
+
+export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
   const [selected, setSelected] = useState<number | null>(null);
 
   useEffect(() => {
@@ -30,33 +48,38 @@ export function HomeGalleryWall({ photos, number }: { photos: Photo[]; number: s
 
   return (
     <>
-      <SectionShell id="journal" number={number} title="Photo journal">
-        <p className="font-display text-xl text-[#74455b]">A few moments along the way.</p>
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {photos.map((photo, index) => (
-              <article key={photo.id} className="min-w-0">
+      <SectionShell id="journal" title="Photo journal">
+        <p className="pt-1 text-sm text-[#7b6670]">A few moments along the way.</p>
+        <div className="flex flex-wrap items-start justify-around gap-x-3 gap-y-6 pb-4 pt-6">
+          {photos.map((photo, index) => {
+            const look = SCATTER[index % SCATTER.length];
+            return (
+              <article
+                key={photo.id}
+                className={`${look.size} ${look.drop} ${look.tilt} transition-transform duration-300 hover:z-10 hover:rotate-0`}
+              >
                 <button
                   type="button"
                   onClick={() => setSelected(index)}
                   aria-label={`Open photo ${index + 1} larger`}
-                  className="group relative block aspect-[4/5] w-full overflow-hidden rounded-xl border border-[#f2c3d5] bg-[#f9d3e1] text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b83a74]"
+                  className="block w-full cursor-zoom-in bg-white p-1.5 pb-2 text-left shadow-[0_2px_10px_rgba(43,32,38,0.12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#96506f]"
                 >
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    unoptimized
-                    sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 20vw"
-                    className="object-cover transition duration-500 group-hover:scale-[1.04]"
-                  />
-                  <span className="absolute bottom-2 right-2 rounded-full bg-black/55 px-2.5 py-1 text-[10px] font-medium text-white opacity-0 transition group-hover:opacity-100">
-                    Enlarge ↗
+                  <span className={`relative block w-full overflow-hidden bg-[#e8e1e3] ${look.ratio}`}>
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 640px) 50vw, 300px"
+                      className="object-cover"
+                    />
                   </span>
+                  {photo.alt && <span className="mt-2 line-clamp-2 block px-0.5 text-xs leading-4 text-[#7b6670]">{photo.alt}</span>}
                 </button>
-                <p className="mt-3 text-sm leading-6 text-[#74455b]">{photo.alt}</p>
               </article>
-            ))}
-          </div>
+            );
+          })}
+        </div>
       </SectionShell>
 
       {current && (
@@ -64,7 +87,7 @@ export function HomeGalleryWall({ photos, number }: { photos: Photo[]; number: s
           role="dialog"
           aria-modal="true"
           aria-label="Expanded photo"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#3a1727]/95 p-4 sm:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2a1b22]/95 p-4 sm:p-8"
           onClick={() => setSelected(null)}
         >
           <button
