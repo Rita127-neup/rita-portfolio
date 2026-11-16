@@ -1,5 +1,5 @@
 import { getPublicationsContent } from "@/lib/content";
-import { pageCopy, researchCopy } from "@/lib/content/copy";
+import { pageCopy, publicationStatus, researchCopy } from "@/lib/content/copy";
 import { InnerShell } from "@/app/_components/inner-shell";
 import { WorkEntry } from "@/app/_components/work-entry";
 
@@ -31,7 +31,7 @@ export default async function Research() {
               id={item.id}
               kicker={copy?.kicker ?? item.category}
               title={copy?.title ?? item.title}
-              lines={[copy?.byline ?? item.byline, copy?.status ?? item.status].filter(Boolean)}
+              lines={[copy?.byline ?? item.byline, copy?.status ?? publicationStatus[item.id] ?? item.status].filter(Boolean)}
               contribution={copy?.contribution}
               links={links}
             >

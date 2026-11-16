@@ -25,7 +25,7 @@ const SCATTER = [
   { size: "w-[46%] sm:w-[34%]", tilt: "rotate-[1deg]", drop: "mt-4" },
 ];
 
-export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
+export function HomeGalleryWall({ photos, standalone = false }: { photos: Photo[]; standalone?: boolean }) {
   const [selected, setSelected] = useState<number | null>(null);
 
   useEffect(() => {
@@ -49,7 +49,8 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
 
   return (
     <>
-      <SectionShell id="journal" title="Photo journal">
+      {standalone ? (
+        <div id="journal">
         <p className="pt-1 text-sm text-[#7b6670]">A few moments along the way.</p>
         <div className="flex flex-wrap items-start justify-around gap-x-3 gap-y-6 pb-4 pt-6">
           {photos.map((photo, index) => {
@@ -80,7 +81,41 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
             );
           })}
         </div>
-      </SectionShell>
+</div>
+      ) : (
+        <SectionShell id="journal" title="Photo journal">
+        <p className="pt-1 text-sm text-[#7b6670]">A few moments along the way.</p>
+        <div className="flex flex-wrap items-start justify-around gap-x-3 gap-y-6 pb-4 pt-6">
+          {photos.map((photo, index) => {
+            const look = SCATTER[index % SCATTER.length];
+            return (
+              <article
+                key={photo.id}
+                className={`${look.size} ${look.drop} ${look.tilt} transition-transform duration-300 hover:z-10 hover:rotate-0`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setSelected(index)}
+                  aria-label={`Open photo ${index + 1} larger`}
+                  title={photo.alt || undefined}
+                  className="block w-full cursor-zoom-in bg-white p-1.5 text-left shadow-[0_2px_10px_rgba(43,32,38,0.12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#96506f]"
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={1200}
+                    height={800}
+                    unoptimized
+                    sizes="(max-width: 640px) 50vw, 300px"
+                    className="block h-auto w-full bg-[#e8e1e3]"
+                  />
+                </button>
+              </article>
+            );
+          })}
+        </div>
+</SectionShell>
+      )}
 
       {current && (
         <div

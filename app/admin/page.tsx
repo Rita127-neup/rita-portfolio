@@ -70,7 +70,7 @@ const sections: Section[] = [
   },
   {
     title: "Testimonials",
-    text: "Add what people wrote about you, with their photo. Entries with no text stay hidden.",
+    text: "Add what people wrote about you, with their photo. Entries with no text yet show a placeholder.",
     href: "/admin/testimonials",
     table: "testimonials",
     liveColumn: "is_visible",

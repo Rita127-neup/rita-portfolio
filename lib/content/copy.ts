@@ -34,9 +34,13 @@ export const pageCopy = {
   about: { title: "About" },
   research: {
     title: "Research",
-    intro:
-      "Studies in antimicrobial resistance and public health, with their current status and where to read them.",
+    intro: "Studies in antimicrobial resistance and public health, and what each one found.",
   },
+  publications: {
+    title: "Publications",
+    intro: "Where each study stands today. A preprint or a repository record is not a peer-reviewed paper, and the status says which it is.",
+  },
+  gallery: { title: "Photo journal", intro: "A few moments along the way." },
   projects: {
     title: "Things I've built",
     intro: "Tools that make public data in Nepal easier to use. My research studies are on the Research page.",
@@ -51,6 +55,32 @@ export const aboutCopy = {
     "Alongside research, I volunteer with LSDT, a registered NGO that runs free weekly sessions in Nepal. I co-founded its youth cohort; what that involved is under Projects.",
     "Next I want to study biology, computer science and statistics together at a US college.",
   ],
+};
+
+/** The beyond-research part of the home page. */
+export const aboutExtras = {
+  languages: [
+    { name: "Nepali", level: "native" },
+    { name: "English", level: "" },
+    { name: "Hindi", level: "" },
+    { name: "Japanese", level: "a little" },
+  ],
+  hobbies: [
+    "Makeup",
+    "Doing hairstyles",
+    "Sewing",
+    "Watching Friends",
+    "Planting flowers",
+    "Writing a diary",
+    "Researching random things on my laptop",
+  ],
+};
+
+/** Status shown in the publication list, keyed by the slug of the row in `publications`. */
+export const publicationStatus: Record<string, string> = {
+  "genomic-amr-ciprofloxacin-calibration": "Preprint posted 19 October 2026 · under review at Microbial Genomics",
+  "dengue-fever-nepal": "Under peer review at Discover Public Health · open-access record on Zenodo",
+  "caffeine-consumption-siddharthanagar": "Open-access record on Zenodo",
 };
 
 /** Keyed by the slug of the row in `publications`. */
@@ -122,7 +152,7 @@ export const projectCopy: Record<string, EntryCopy> = {
   },
   "neb-notes": {
     kicker: "Education technology",
-    role: "Creator",
+    role: "Co-creator",
     status: "Live site",
     paragraphs: [
       "NEB Notes, which runs as NoteVault, is a free website where NEB +2 students share and read notes, cheatsheets and past papers, ask questions in a doubts section and keep notes of their own.",

@@ -48,7 +48,7 @@ export function WorkEntry({
       {tags.length > 0 && (
         <ul className="mt-4 flex max-w-[38rem] flex-wrap gap-2">
           {tags.map((tag) => (
-            <li key={tag} className="rounded-full bg-[#f3e8ed] px-3 py-0.5 text-xs text-[#7b4a60]">
+            <li key={tag} className="rounded-full bg-[#e6efe8] px-3 py-0.5 text-xs text-[#3f6450]">
               {tag}
             </li>
           ))}

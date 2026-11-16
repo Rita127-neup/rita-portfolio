@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SocialIcon } from "@/app/_components/social-icon";
 import type { SocialLink } from "@/lib/content";
 
 export function ProfileCard({
@@ -53,18 +54,18 @@ export function ProfileCard({
       <p className="mt-3 font-display text-[0.8rem] font-light uppercase leading-5 tracking-[0.1em] text-[#4a3440]">{role}</p>
 
       {contacts.length > 0 && (
-        <ul className="mt-5 space-y-1 text-sm">
+        <ul className="mx-auto mt-5 w-fit space-y-0.5 text-left text-sm">
           {contacts.map((contact) => (
-            <li key={contact.label} className="flex items-center justify-center gap-2">
-              <span aria-hidden="true" className="text-[0.65rem] text-[#d3a1b8]">
-                ✿
-              </span>
+            <li key={contact.label}>
               <a
                 href={contact.href}
                 {...(contact.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                className="py-1 text-[#96506f] underline-offset-4 transition-colors hover:text-[#6f3a52] hover:underline"
+                className="group flex items-center gap-2.5 py-1 text-[#96506f] transition-colors hover:text-[#6f3a52]"
               >
-                {contact.label}
+                <span className="text-[#6f8f78] transition-colors group-hover:text-[#4f7459]">
+                  <SocialIcon label={contact.label} />
+                </span>
+                <span className="underline-offset-4 group-hover:underline">{contact.label}</span>
               </a>
             </li>
           ))}

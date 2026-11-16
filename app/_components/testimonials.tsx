@@ -12,7 +12,7 @@ function initialsOf(name: string) {
     .join("");
 }
 
-/** Kind words from people I have worked with, in their own words. Hidden until there is at least one. */
+/** Kind words from people I have worked with, in their own words. An entry still waiting for its text shows a soft placeholder line. */
 export function Testimonials({ items }: { items: Testimonial[] }) {
   if (items.length === 0) return null;
 
@@ -35,7 +35,11 @@ export function Testimonials({ items }: { items: Testimonial[] }) {
               </div>
             </div>
             <div className="mt-4">
-              <TestimonialQuote text={item.quote} />
+              {item.quote ? (
+                <TestimonialQuote text={item.quote} />
+              ) : (
+                <p className="text-sm italic leading-7 text-[#8b7a82]">Their words will appear here.</p>
+              )}
             </div>
           </article>
         ))}

@@ -18,6 +18,9 @@
   --line: #ddd5d6;
   --accent: #96506f;
   --accent-hover: #6f3a52;
+  --sage: #6f8f78;
+  --sage-soft: #e6efe8;
+  --sage-ink: #3f6450;
 }
 
 * {
@@ -72,7 +75,7 @@ body {
     color: var(--heading);
     /* A soft highlighter stroke under the page title. */
     width: fit-content;
-    background-image: linear-gradient(transparent 62%, #f1d9e3 62%, #f1d9e3 90%, transparent 90%);
+    background-image: linear-gradient(transparent 62%, #d9e8dd 62%, #d9e8dd 90%, transparent 90%);
   }
 
   .editorial-title-muted {

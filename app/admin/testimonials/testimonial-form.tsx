@@ -47,7 +47,7 @@ export function TestimonialForm({ testimonial }: { testimonial: Testimonial }) {
         </label>
         <textarea id={`quote-${testimonial.id}`} name="quote" rows={9} maxLength={8000} defaultValue={testimonial.quote} className={`${input} leading-7`} />
         <p className="mt-2 text-xs text-slate-500">
-          Leave this empty and the entry stays hidden on the site. A line break starts a new paragraph. Long text is folded behind a &ldquo;Read the full note&rdquo; button.
+          Leave this empty and the site shows a soft placeholder under their name and photo. A line break starts a new paragraph. Long text is folded behind a &ldquo;Read the full note&rdquo; button.
         </p>
       </div>
       <div className="grid gap-5 sm:grid-cols-2">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Commissioner, Fraunces } from "next/font/google";
 import Link from "next/link";
 import { getSiteSettings } from "@/lib/content";
+import { DnaMark } from "@/app/_components/dna-mark";
 import { NavLinks } from "@/app/_components/nav-links";
 import "./globals.css";
 
@@ -16,12 +17,11 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const site = await getSiteSettings();
 
-  // Publications and Research are one page now (/research), so a stored "Publications" entry points there.
-  const merged = site.navigation.map((item) => (item.href === "/publications" ? { label: "Research", href: "/research" } : item));
-  const unique = merged.filter((item, index) => merged.findIndex((other) => other.href === item.href) === index);
-  const menuOrder = ["/about", "/research", "/projects", "/contact"];
+  // About now lives on the home page, so the menu goes straight to the other pages.
+  const visible = site.navigation.filter((item) => item.href !== "/about");
+  const menuOrder = ["/research", "/publications", "/projects", "/gallery", "/contact"];
   const rank = (href: string) => (menuOrder.indexOf(href) === -1 ? menuOrder.length : menuOrder.indexOf(href));
-  const menu = [...unique].sort((a, b) => rank(a.href) - rank(b.href));
+  const menu = [...visible].sort((a, b) => rank(a.href) - rank(b.href));
 
   // The call-to-action link from site settings is shown as one more nav item, unless the menu already has it.
   const cta = site.navCta?.href && site.navCta?.label ? site.navCta : null;
@@ -31,8 +31,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang="en" className={`${commissioner.variable} ${fraunces.variable} antialiased`}>
       <body>
         <header className="mx-auto flex w-full max-w-5xl flex-col items-center gap-3 px-6 pb-2 pt-8 md:flex-row md:justify-between">
-          <Link href="/" className="font-display text-[1.35rem] font-medium tracking-[-0.01em] text-[#4a3440]">
-            {site.brandMark}
+          <Link href="/" aria-label="Rita Neupane, home" title="Rita Neupane" className="transition-opacity hover:opacity-75">
+            <DnaMark />
           </Link>
           <nav aria-label="Main" className="flex flex-wrap items-center justify-center text-[0.75rem] uppercase tracking-[0.06em] md:justify-end md:text-[0.8rem] md:tracking-[0.1em]">
             <NavLinks items={navItems} />

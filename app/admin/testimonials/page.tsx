@@ -31,7 +31,7 @@ export default async function AdminTestimonials() {
       <AdminNav />
       <AdminHeader
         title="Testimonials"
-        text="Add the words people sent you, with their photo, like a short recommendation letter. Entries with no text stay hidden on the site."
+        text="Add the words people sent you, with their photo, like a short recommendation letter. An entry with no text yet shows a soft placeholder on the site. Untick Visible to hide it."
         backHref="/admin"
         backLabel="Back to dashboard"
       />
