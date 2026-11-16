@@ -11,7 +11,6 @@ export default async function Gallery() {
   return (
     <InnerShell>
       <h1 className="editorial-title">{pageCopy.gallery.title}</h1>
-      <p className="mt-5 max-w-[38rem] text-lg leading-8 text-[#55454d]">{pageCopy.gallery.intro}</p>
       <div className="mt-4">
         <HomeGalleryWall photos={photos} standalone />
       </div>
