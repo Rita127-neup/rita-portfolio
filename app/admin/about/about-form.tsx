@@ -104,9 +104,11 @@ export function VoiceUpload({ hasAudio }: { hasAudio: boolean }) {
     setDone(false);
     startTransition(async () => {
       const path = `audio/${crypto.randomUUID()}.${extension}`;
+      // Storage takes the type from the file itself, so give it one even if the browser left it blank.
+      const typed = new File([file], file.name, { type });
       const { error: uploadError } = await createClient().storage
         .from("portfolio-files")
-        .upload(path, file, { contentType: type, upsert: false });
+        .upload(path, typed, { contentType: type, upsert: false });
       if (uploadError) return setError("The recording could not be uploaded.");
       const result = await registerPronunciationAudio(path);
       if (result?.error) setError(result.error);

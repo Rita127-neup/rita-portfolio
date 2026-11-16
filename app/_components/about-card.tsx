@@ -8,7 +8,7 @@ export function AboutCard({ languages, hobbies }: { languages: NoteItem[]; hobbi
   if (languages.length === 0 && hobbies.length === 0) return null;
 
   return (
-    <aside className="h-fit rounded-3xl border border-dashed border-[#a9c4b1] bg-[#eef4ef]/80 p-5 @3xl:mt-2">
+    <aside className="grid h-fit gap-x-8 gap-y-7 rounded-3xl border border-dashed border-[#a9c4b1] bg-[#eef4ef]/80 p-5 sm:grid-cols-2 sm:p-6 @3xl:mt-2 @3xl:grid-cols-1 @3xl:gap-y-6 @3xl:p-5">
       {languages.length > 0 && (
         <div id="languages" className="scroll-mt-6">
           <h3 className="flex items-center gap-1.5 font-display text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-[#3f6450]">
@@ -26,7 +26,7 @@ export function AboutCard({ languages, hobbies }: { languages: NoteItem[]; hobbi
       )}
 
       {hobbies.length > 0 && (
-        <div id="hobbies" className={`scroll-mt-6 ${languages.length > 0 ? "mt-6 border-t border-dashed border-[#a9c4b1] pt-5" : ""}`}>
+        <div id="hobbies" className="scroll-mt-6">
           <h3 className="flex items-center gap-1.5 font-display text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-[#3f6450]">
             <span aria-hidden="true" className="text-[0.65rem] text-[#8fb09a]">✿</span> Hobbies
           </h3>
