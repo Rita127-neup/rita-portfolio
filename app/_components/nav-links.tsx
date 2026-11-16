@@ -5,6 +5,10 @@ import { usePathname } from "next/navigation";
 
 type NavItem = { label: string; href: string };
 
+/**
+ * The menu links: medium-weight sentence case, each a rounded pill.
+ * The page you are on is filled with a soft sage; the others fill on hover.
+ */
 export function NavLinks({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
 
@@ -18,8 +22,8 @@ export function NavLinks({ items }: { items: NavItem[] }) {
             key={`${item.href}-${item.label}`}
             href={item.href}
             aria-current={active ? "page" : undefined}
-            className={`whitespace-nowrap px-1.5 py-1 transition-colors hover:text-[#6f3a52] md:px-2 ${
-              active ? "text-[#6f3a52] underline decoration-[#96506f]/40 underline-offset-[6px]" : "text-[#96506f]"
+            className={`whitespace-nowrap rounded-full px-3 py-1.5 text-[0.9rem] font-medium leading-5 tracking-[0.01em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6f8f78] md:px-4 md:text-[0.95rem] ${
+              active ? "bg-[#e6efe8] text-[#3f6450]" : "text-[#55454d] hover:bg-[#eef3ef] hover:text-[#3f6450]"
             }`}
           >
             {item.label}

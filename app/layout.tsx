@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Commissioner, Fraunces } from "next/font/google";
-import Link from "next/link";
-import { getAboutExtras, getSiteSettings } from "@/lib/content";
-import { DnaMark } from "@/app/_components/dna-mark";
-import { NavLinks } from "@/app/_components/nav-links";
+import { getAboutExtras, getProfileInfo, getSiteSettings } from "@/lib/content";
+import { SiteFooter } from "@/app/_components/site-footer";
+import { SiteHeader } from "@/app/_components/site-header";
 import "./globals.css";
 
 const commissioner = Commissioner({ variable: "--font-commissioner", subsets: ["latin"] });
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const [site, extras] = await Promise.all([getSiteSettings(), getAboutExtras()]);
+  const [site, extras, profile] = await Promise.all([getSiteSettings(), getAboutExtras(), getProfileInfo()]);
 
   // About now lives on the home page, so the menu goes straight to the other pages.
   // The blog link appears only once the blog has been switched on in the admin.
@@ -32,28 +31,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="en" className={`${commissioner.variable} ${fraunces.variable} antialiased`}>
       <body>
-        <header className="mx-auto flex w-full max-w-[84rem] flex-col items-center gap-3 px-6 pb-2 pt-8 md:flex-row md:justify-between">
-          <Link href="/" aria-label="Rita Neupane, home" title="Rita Neupane" className="transition-opacity hover:opacity-75">
-            <DnaMark />
-          </Link>
-          <nav aria-label="Main" className="flex flex-wrap items-center justify-center text-[0.75rem] uppercase tracking-[0.06em] md:justify-end md:text-[0.8rem] md:tracking-[0.1em]">
-            <NavLinks items={navItems} />
-          </nav>
-        </header>
+        <SiteHeader items={navItems} />
 
         {children}
 
-        <footer className="mx-auto w-full max-w-[84rem] px-6 pb-10 pt-4">
-          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-[#ddd5d6] pt-6 text-xs text-[#7b6670]">
-            <span>
-              © {new Date().getFullYear()} Rita Neupane <span aria-hidden="true" className="text-[#d3a1b8]">✿</span> Made in Nepal
-            </span>
-            <Link href="/admin/login" className="text-[#a8979f] transition-colors hover:text-[#6f3a52]">
-              Owner login
-            </Link>
-          </div>
-        </footer>
-
+        <SiteFooter links={navItems} email={profile.email} location={profile.location} />
       </body>
     </html>
   );
