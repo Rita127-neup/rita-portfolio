@@ -25,13 +25,13 @@ export function SiteFooter({ links, email, location }: { links: FooterLink[]; em
           <p className="mt-4 font-display text-[1.65rem] font-medium leading-tight tracking-[-0.01em] text-[#4a3440]">
             Rita Neupane
           </p>
-          <p className="mt-2 text-[0.72rem] font-medium uppercase leading-5 tracking-[0.14em] text-[#4f7459] sm:text-[0.75rem] sm:tracking-[0.2em]">
+          <p className="mt-2 flex flex-col items-center text-[0.72rem] font-medium uppercase leading-5 tracking-[0.14em] text-[#4f7459] md:block md:text-[0.75rem] md:tracking-[0.2em]">
             {topics.map((topic, index) => (
               <span key={topic}>
                 <span className="whitespace-nowrap">
                   {topic}
                   {index < topics.length - 1 && (
-                    <span aria-hidden="true" className="pl-1.5 text-[#d3a1b8]">
+                    <span aria-hidden="true" className="hidden pl-1.5 text-[#d3a1b8] md:inline">
                       ·
                     </span>
                   )}
