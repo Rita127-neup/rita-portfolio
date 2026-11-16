@@ -1,5 +1,6 @@
 import { getHomeContent, getProfileInfo, getSiteSettings } from "@/lib/content";
 import { ProfileCard } from "@/app/_components/profile-card";
+import { displayName } from "@/lib/display";
 
 /** Every public page: profile on the left, the page's own content on the right. */
 export async function InnerShell({ children }: { children: React.ReactNode }) {
@@ -10,7 +11,7 @@ export async function InnerShell({ children }: { children: React.ReactNode }) {
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 pb-16 pt-6 lg:flex-row lg:items-start lg:gap-16 lg:pt-10">
         <aside className="w-full shrink-0 lg:sticky lg:top-8 lg:w-[17rem]">
           <ProfileCard
-            name={[home.firstName, home.lastName].filter(Boolean).join(" ")}
+            name={displayName(home.firstName, home.lastName)}
             role={home.eyebrow}
             photoUrl={home.photoUrl}
             photoAlt={home.photoAlt}

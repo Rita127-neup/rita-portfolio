@@ -17,6 +17,7 @@ import {
   getSiteSettings,
 } from "@/lib/content";
 import { testimonials } from "@/lib/content/testimonials";
+import { displayName, plainLabel } from "@/lib/display";
 
 const textLink = "text-[#96506f] underline underline-offset-4 transition-colors hover:text-[#6f3a52]";
 const cardTitle = "mb-2 mt-4 font-display text-xl font-medium leading-tight text-[#4a3440]";
@@ -51,7 +52,7 @@ export default async function Home() {
 
   return (
     <InnerShell>
-      <h1 className="sr-only">{[home.firstName, home.lastName].filter(Boolean).join(" ")}</h1>
+      <h1 className="sr-only">{displayName(home.firstName, home.lastName)}</h1>
 
       <p className="max-w-xl pt-1 font-display text-xl leading-8 text-[#4a3440]">{home.intro}</p>
       <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 pb-10 text-sm">
@@ -80,7 +81,7 @@ export default async function Home() {
                     <p className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
                       <Link href="/research" className={textLink}>Read more</Link>
                       {firstLink && (
-                        <a href={firstLink.url} target="_blank" rel="noreferrer" className={textLink}>{firstLink.label} ↗</a>
+                        <a href={firstLink.url} target="_blank" rel="noreferrer" className={textLink}>{plainLabel(firstLink.label)} ↗</a>
                       )}
                     </p>
                   </div>

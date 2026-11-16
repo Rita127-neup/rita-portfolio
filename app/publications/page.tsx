@@ -1,5 +1,6 @@
 import { displayNumber, getPublicationsContent } from "@/lib/content";
 import { InnerShell } from "@/app/_components/inner-shell";
+import { plainLabel } from "@/lib/display";
 
 const links = {
   primary: "text-sm font-medium text-[#96506f] hover:text-[#6f3a52]",
@@ -52,7 +53,7 @@ export default async function Publications() {
             {p.links.length > 0 && (
               <div className="mt-7 flex gap-5 border-t border-[#ddd5d6] pt-5">
                 {p.links.map((l) => (
-                  <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className={links[l.variant]}>{l.label} ↗</a>
+                  <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className={links[l.variant]}>{plainLabel(l.label)} ↗</a>
                 ))}
               </div>
             )}

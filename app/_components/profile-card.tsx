@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { SocialLink } from "@/lib/content";
+import { formatBirthday } from "@/lib/display";
 
 export function ProfileCard({
   name,
@@ -65,7 +66,7 @@ export function ProfileCard({
 
       {(birthday || location || email) && (
         <div className="mt-5 space-y-1 text-xs leading-5 text-[#7b6670]">
-          {birthday && <p>Born {birthday}</p>}
+          {birthday && <p>Born {formatBirthday(birthday)}</p>}
           {location && <p>{location}</p>}
           {email && (
             <a href={`mailto:${email}`} className="inline-block break-all text-[#96506f] transition-colors hover:text-[#6f3a52]">

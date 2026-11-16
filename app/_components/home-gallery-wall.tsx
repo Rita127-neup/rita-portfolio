@@ -62,7 +62,8 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
                   type="button"
                   onClick={() => setSelected(index)}
                   aria-label={`Open photo ${index + 1} larger`}
-                  className="block w-full cursor-zoom-in bg-white p-1.5 pb-2 text-left shadow-[0_2px_10px_rgba(43,32,38,0.12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#96506f]"
+                  title={photo.alt || undefined}
+                  className="block w-full cursor-zoom-in bg-white p-1.5 text-left shadow-[0_2px_10px_rgba(43,32,38,0.12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#96506f]"
                 >
                   <span className={`relative block w-full overflow-hidden bg-[#e8e1e3] ${look.ratio}`}>
                     <Image
@@ -74,7 +75,6 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
                       className="object-cover"
                     />
                   </span>
-                  {photo.alt && <span className="mt-2 line-clamp-2 block px-0.5 text-xs leading-4 text-[#7b6670]">{photo.alt}</span>}
                 </button>
               </article>
             );

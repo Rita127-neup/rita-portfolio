@@ -1,6 +1,7 @@
 import { getProjectsContent, getPublicationsContent, getResearchContent, displayNumber } from "@/lib/content";
 import { WorkMark } from "@/app/_components/work-mark";
 import { InnerShell } from "@/app/_components/inner-shell";
+import { plainLabel } from "@/lib/display";
 
 const studyDetails: Record<string, { material: string; method: string; question: string; publicationId?: string }> = {
   "ecoli-amr-generalization": {
@@ -109,7 +110,7 @@ export default async function Research() {
                   <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
                     {publication?.links.filter((link) => link.url).map((link) => (
                       <a key={link.label} href={link.url} target="_blank" rel="noreferrer" className="text-xs font-medium uppercase tracking-[0.1em] text-[#96506f] hover:text-[#6f3a52]">
-                        {link.label} ↗
+                        {plainLabel(link.label)} ↗
                       </a>
                     ))}
                   </div>
