@@ -14,6 +14,6 @@ export type Testimonial = {
 };
 
 export const testimonials: Testimonial[] = [
-  { id: "bijay-pandey", name: "Bijay Pandey", role: "Founder, LSDT", quote: "" },
+  { id: "bijay-pandey", name: "Bijay Pandey", role: "", quote: "" },
   { id: "mahabir-pun", name: "Mahabir Pun", role: "Minister for Science, Technology and Innovation", quote: "" },
 ];

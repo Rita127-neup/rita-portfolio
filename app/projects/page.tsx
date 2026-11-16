@@ -16,9 +16,10 @@ export default async function Projects() {
       <div className="mt-8">
         {projects.map((project) => {
           const copy = projectCopy[project.id];
+          const sourceUrl = copy?.sourceUrl ?? project.githubUrl;
           const links: EntryLink[] = [];
           if (project.linkUrl) links.push({ label: "Live project", url: project.linkUrl });
-          if (project.githubUrl) links.push({ label: "Source code", url: project.githubUrl });
+          if (sourceUrl) links.push({ label: "Source code", url: sourceUrl });
 
           return (
             <WorkEntry
@@ -27,6 +28,7 @@ export default async function Projects() {
               kicker={copy?.kicker ?? project.category}
               title={copy?.title ?? project.title}
               lines={[copy?.role ? `Role: ${copy.role}` : "", copy?.status ?? project.status].filter(Boolean)}
+              contribution={copy?.contribution}
               tags={project.tags}
               links={links}
             >

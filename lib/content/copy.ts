@@ -26,6 +26,8 @@ export type EntryCopy = {
   contribution?: string;
   /** Links added to the ones stored in the database. */
   extraLinks?: { label: string; url: string }[];
+  /** Replaces the stored source-code link, for a project whose main repository is not the stored one. */
+  sourceUrl?: string;
 };
 
 export const pageCopy = {
@@ -37,8 +39,7 @@ export const pageCopy = {
   },
   projects: {
     title: "Things I've built",
-    intro:
-      "Open tools that make public data in Nepal easier to use. My research studies are on the Research page.",
+    intro: "Tools that make public data in Nepal easier to use. My research studies are on the Research page.",
   },
 };
 
@@ -49,7 +50,7 @@ export const aboutCopy = {
     "I finished the Science stream in 2025 and taught myself Python, statistics and epidemiology. I don't have a lab, so my work runs on public data and Google Colab, and the code is on GitHub for anyone to rerun.",
     "Reliable data has been the hardest part of this work. It made me curious about how governments publish data at all, and that curiosity is behind my projects.",
     "Alongside research, I volunteer with LSDT, a registered NGO that runs free weekly sessions in Nepal, about three hours a week. Each session welcomes a guest, such as a government official, a business leader or a professional from any field, who shares their experience with the children and adults who attend. I co-founded LSDT's youth cohort, hosted many of the sessions and attended meetings with the guests. I also taught sessions on CRISPR, first aid and mental health, and on other scientific topics many participants had never heard of, and ran quizzes, debates and competitions for the children.",
-    "Next I want to study biology, computer science and statistics together at a US college. The part of modelling I most want to get better at is the unglamorous part: finding the data, cleaning it, and testing it in places it wasn't built for.",
+    "Next I want to study biology, computer science and statistics together at a US college.",
   ],
 };
 
@@ -57,10 +58,10 @@ export const aboutCopy = {
 export const researchCopy: Record<string, EntryCopy> = {
   "genomic-amr-ciprofloxacin-calibration": {
     kicker: "Antimicrobial resistance",
-    byline: "First and corresponding author, with co-authors",
+    byline: "First author, with co-authors",
     paragraphs: [
       "Genomic models of antibiotic resistance are usually judged on how well they separate resistant from susceptible isolates. Whether their probabilities stay trustworthy in a different population is not routinely checked. I trained an elastic-net logistic regression on 2,574 UK isolates of E. coli, then tested it on 3,153 from Norway and 238 from South Asia, all taken from the public BV-BRC database.",
-      "Its ranking held up everywhere (AUROC 0.968 to 0.992). Its probabilities did not: in Norway the model became overconfident. South Asia's sample is too small to settle the question either way, and the paper reports it as inconclusive. The study also tests how much local data recalibration needs, and documents two errors in the analysis pipeline that were found and fixed before submission.",
+      "Its ranking held up in all three populations (AUROC 0.968 to 0.992). Its probabilities were less reliable: in Norway the model became overconfident, and South Asia's sample is too small to say either way, so the paper reports that result as inconclusive. The study also tests how much local data recalibration needs. Two errors in the analysis pipeline were found and fixed before submission.",
     ],
     contribution:
       "My part: study design, modelling and the manuscript. Co-authors handled data engineering and validation code.",
@@ -74,8 +75,8 @@ export const researchCopy: Record<string, EntryCopy> = {
       "Monthly interest in “dengue fever” moved closely with reported cases (Pearson r = 0.78). A one-month lead was weaker (r ≈ 0.56 for “fever”). Media-driven search spikes and uneven internet access limit what search data can show, so the paper treats it as a complement to official surveillance, not a replacement.",
     ],
     contribution:
-      "My part: study design, interpretation and the manuscript. Co-authors built the data-extraction pipelines and ran the correlation models.",
-    extraLinks: [{ label: "Code", url: "https://github.com/Rita127-neup/google-trends-dengue-nepal" }],
+      "My part: conceiving the study, the literature review, interpreting the findings and leading the manuscript. Co-authors built the data-extraction pipelines, curated the time series and ran the correlation models.",
+    extraLinks: [{ label: "Code", url: "https://github.com/Aryan-infinite/google-trends-dengue-nepal" }],
   },
   "caffeine-consumption-siddharthanagar": {
     kicker: "Public health",
@@ -83,7 +84,7 @@ export const researchCopy: Record<string, EntryCopy> = {
     byline: "First author, with one co-author",
     status: "Open-access record on Zenodo",
     paragraphs: [
-      "Most of the caffeine research I could find came from other countries, so I surveyed adults in my own community with a 27-item bilingual questionnaire. Of 218 responses, 204 had usable data. Tea, our everyday chiya, was the most common source (78.4%), and 71.1% drank caffeine every day.",
+      "The studies of caffeine use that I could find were mostly from other countries, so I surveyed adults in my own community with a 27-item bilingual questionnaire. Of 218 responses, 204 had usable data. Tea (chiya) was the most common source (78.4%), and 71.1% drank caffeine every day.",
       "The analysis used chi-square tests. The sample comes from one town, Siddharthanagar-09 in Bhairahawa, so the study describes patterns there rather than Nepal as a whole.",
     ],
     contribution:
@@ -103,17 +104,21 @@ export const projectCopy: Record<string, EntryCopy> = {
     role: "Co-founder",
     status: "Live site",
     paragraphs: [
-      "Nepal's dengue figures are spread across reports that do not always agree. Dengue Lens Nepal is a public site that brings the national surveillance numbers together in one place and calculates the statistics automatically, so anyone can follow the situation without digging through the source documents.",
+      "Dengue Lens Nepal is a public website that presents Nepal's national dengue surveillance data and calculates the statistics automatically, so people can follow dengue in Nepal without digging through source reports.",
       "The aim is to make dengue data understandable to the public, not only to people who already work with it.",
     ],
   },
   "nepal-education-data-engine": {
-    role: "Initiator, researcher and developer, with a three-person team",
+    role: "Contributor and ministry outreach",
     status: "Open source",
+    // The repository's own README describes the tool, so the numbers below follow it.
     paragraphs: [
-      "Nepal's school statistics are published as PDF flash reports. The figures are public, but they are hard to extract, compare across years or reuse. The project grew out of a conversation in July 2026 with Mahabir Pun, Minister for Science, Technology and Innovation. His ministry had the same data problem I had run into and was already working on it, and on his advice I visited the National Examination Board in October.",
-      "We then built the pipeline ourselves: a Python tool that extracts the tables from the flash-report PDFs, standardizes them into machine-readable datasets, and feeds a public dashboard of enrollment, gender parity and teacher-student ratios. The code is open source.",
-      "Alongside the code, I proposed two legal reforms to the ministry, in writing and at a meeting, and proposed a hackathon.",
+      "Every year Nepal's Centre for Education and Human Resource Development publishes its Flash Report, the headline school census, as a PDF of more than 60 pages. The numbers are public, but the tables are hard to extract, compare or reuse.",
+      "This open-source project rebuilds the report's tables as machine-readable files and serves them in a public dashboard. The current version extracts 71 tables from the 2025/26 report, checks every extracted number against the PDF, and lists the places where the report disagrees with itself.",
+      "The idea came out of the data-access problem I ran into on the dengue study. I took it to the Ministry of Science, Technology and Innovation in July 2026 and met Minister Mahabir Pun. His ministry had the same problem and was already working on it, and on his advice I visited the National Examination Board in October. I also proposed two legal reforms to the ministry, in writing and at a meeting, and proposed a hackathon.",
     ],
+    contribution:
+      "My part: the ministry and National Examination Board conversations, the policy proposals and, in November, an extractor for the sector-plan indicators table plus a dashboard fix. Most of the extraction and dashboard code was written by teammates.",
+    sourceUrl: "https://github.com/Bishalneupa/nepal-education-data-engine",
   },
 };

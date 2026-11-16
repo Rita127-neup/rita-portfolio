@@ -43,9 +43,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         {children}
 
         <footer className="mx-auto w-full max-w-5xl px-6 pb-10 pt-4">
-          <div className="flex flex-col gap-1 border-t border-[#ddd5d6] pt-6 text-xs text-[#7b6670] md:flex-row md:items-center md:justify-between">
+          <div className="border-t border-[#ddd5d6] pt-6 text-xs text-[#7b6670]">
             <span>© {new Date().getFullYear()} Rita Neupane</span>
-            <span>Research · Computational Biology · Data</span>
           </div>
         </footer>
 
