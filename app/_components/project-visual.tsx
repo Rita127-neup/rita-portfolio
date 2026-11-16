@@ -29,7 +29,7 @@ export function ProjectVisual({
   const artwork = projectArtwork[id] ?? (imageId ? `/media/project/${id}?v=${imageId}` : undefined);
 
   const visual = (
-    <div className={`grain group relative overflow-hidden bg-[#dcd4c2] ${compact ? "aspect-[16/7]" : "aspect-[16/9]"}`}>
+    <div className={`grain group relative overflow-hidden bg-[#fbd9e6] ${compact ? "aspect-[16/7]" : "aspect-[16/9]"}`}>
       {artwork ? (
         <Image
           src={artwork}
@@ -40,14 +40,14 @@ export function ProjectVisual({
           className="object-cover transition duration-700 group-hover:scale-[1.02]"
         />
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#ddd3bd] via-[#f1eadb] to-[#cfc3a8]">
-          <span className="font-display text-4xl text-[#9a742d]/30">{title.slice(0, 1)}</span>
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#fbd3e2] via-[#fff1f6] to-[#f4bfd3]">
+          <span className="font-display text-4xl text-[#b83a74]/30">{title.slice(0, 1)}</span>
         </div>
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#171822]/80 via-[#171822]/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#4a1f33]/80 via-[#4a1f33]/10 to-transparent" />
       <div className={`absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-3 ${compact ? "p-3" : "p-4"}`}>
         <div>
-          <p className="text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#e5c77e]">{category}</p>
+          <p className="text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#ffd1e3]">{category}</p>
           <p className="mt-1 max-w-xl font-display text-base leading-tight text-white md:text-lg">{title}</p>
         </div>
         <span className="shrink-0 text-[10px] text-white/75">Explore ↗</span>

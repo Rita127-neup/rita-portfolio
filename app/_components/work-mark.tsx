@@ -13,7 +13,7 @@ const paths: Record<MarkKind, React.ReactNode> = {
 
 export function WorkMark({ kind }: { kind: MarkKind }) {
   return (
-    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#d8cfbb] bg-[#fbf6e8] text-[#8c6c32]">
+    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#f2c3d5] bg-[#fff8fb] text-[#a8336b]">
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.55" strokeLinecap="round" strokeLinejoin="round" className="h-[17px] w-[17px]">
         {paths[kind]}
       </svg>

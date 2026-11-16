@@ -27,7 +27,7 @@ export function HomePhotoGallery({
 
   return (
     <div>
-      <div className="relative overflow-hidden rounded-[1.5rem] bg-[#dedbd2]">
+      <div className="relative overflow-hidden rounded-[2rem] border-4 border-white bg-[#fbd9e6] shadow-[0_14px_34px_rgba(184,58,116,0.2)]">
         {current ? (
           <Image
             key={current.src}
@@ -37,15 +37,15 @@ export function HomePhotoGallery({
             height={1000}
             unoptimized
             priority
-            className="aspect-[4/5] w-full object-cover transition-opacity duration-300"
+            className="aspect-[4/5] w-full scale-[1.08] object-cover object-[50%_30%] transition-opacity duration-300"
           />
         ) : (
           <div className="flex aspect-[4/5] items-center justify-center">
-            <span className="font-display text-5xl text-[#9a742d]">{placeholderInitials}</span>
+            <span className="font-display text-5xl text-[#b83a74]">{placeholderInitials}</span>
           </div>
         )}
         {birthday && (
-          <div className="absolute bottom-4 left-4 rounded-full border border-white/50 bg-[#fbf6e8]/90 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#454a55] backdrop-blur-sm">
+          <div className="absolute bottom-4 left-4 rounded-full border border-white/50 bg-[#fff8fb]/90 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#5b2c43] backdrop-blur-sm">
             Born {birthday}
           </div>
         )}
@@ -64,7 +64,7 @@ export function HomePhotoGallery({
               onClick={() => setActive(index)}
               aria-label={`Show photo ${index + 1}`}
               aria-pressed={active === index}
-              className={`relative aspect-square overflow-hidden rounded-xl border-2 transition ${active === index ? "border-[#9a742d] opacity-100" : "border-transparent opacity-65 hover:opacity-100"}`}
+              className={`relative aspect-square overflow-hidden rounded-xl border-2 transition ${active === index ? "border-[#b83a74] opacity-100" : "border-transparent opacity-65 hover:opacity-100"}`}
             >
               <Image src={photo.src} alt="" fill unoptimized sizes="5rem" className="object-cover" />
             </button>

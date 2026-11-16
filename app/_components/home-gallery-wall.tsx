@@ -29,7 +29,7 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
 
   return (
     <>
-      <section className="border-t border-[#d8cfbb] px-6 py-12 md:py-14">
+      <section className="border-t border-[#f2c3d5] px-6 py-12 md:py-14">
         <div className="mx-auto max-w-6xl">
           <div>
             <p className="section-label">Photo journal</p>
@@ -42,7 +42,7 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
                   type="button"
                   onClick={() => setSelected(index)}
                   aria-label={`Open photo ${index + 1} larger`}
-                  className="group relative block aspect-[4/5] w-full overflow-hidden rounded-xl border border-[#d8cfbb] bg-[#e5dcc9] text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9a742d]"
+                  className="group relative block aspect-[4/5] w-full overflow-hidden rounded-xl border border-[#f2c3d5] bg-[#f9d3e1] text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b83a74]"
                 >
                   <Image
                     src={photo.src}
@@ -56,7 +56,7 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
                     Enlarge ↗
                   </span>
                 </button>
-                <p className="mt-3 text-sm leading-6 text-[#555b55]">{photo.alt}</p>
+                <p className="mt-3 text-sm leading-6 text-[#74455b]">{photo.alt}</p>
               </article>
             ))}
           </div>
@@ -68,7 +68,7 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
           role="dialog"
           aria-modal="true"
           aria-label="Expanded photo"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#111111]/95 p-4 sm:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#3a1727]/95 p-4 sm:p-8"
           onClick={() => setSelected(null)}
         >
           <button
