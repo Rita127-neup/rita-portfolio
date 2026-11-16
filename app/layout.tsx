@@ -17,9 +17,16 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const site = await getSiteSettings();
 
+  // Publications and Research are one page now (/research), so a stored "Publications" entry points there.
+  const merged = site.navigation.map((item) => (item.href === "/publications" ? { label: "Research", href: "/research" } : item));
+  const unique = merged.filter((item, index) => merged.findIndex((other) => other.href === item.href) === index);
+  const menuOrder = ["/about", "/research", "/projects", "/contact"];
+  const rank = (href: string) => (menuOrder.indexOf(href) === -1 ? menuOrder.length : menuOrder.indexOf(href));
+  const menu = [...unique].sort((a, b) => rank(a.href) - rank(b.href));
+
   // The call-to-action link from site settings is shown as one more nav item, unless the menu already has it.
   const cta = site.navCta?.href && site.navCta?.label ? site.navCta : null;
-  const navItems = cta && !site.navigation.some((item) => item.href === cta.href) ? [...site.navigation, cta] : site.navigation;
+  const navItems = cta && !menu.some((item) => item.href === cta.href) ? [...menu, cta] : menu;
 
   return (
     <html lang="en" className={`${commissioner.variable} ${fraunces.variable} antialiased`}>
