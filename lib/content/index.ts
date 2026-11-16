@@ -253,7 +253,6 @@ export const getTestimonials = cache(async (): Promise<Testimonial[]> => {
     .order("sort_order", { ascending: true });
   if (error) fail("testimonials", error.message);
   return (data ?? [])
-    .filter((row) => row.quote.trim())
     .map((row) => ({
       id: row.id,
       name: row.name,
