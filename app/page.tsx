@@ -19,7 +19,7 @@ import {
 import { testimonials } from "@/lib/content/testimonials";
 import { displayName, plainLabel } from "@/lib/display";
 
-const textLink = "text-[#96506f] underline underline-offset-4 transition-colors hover:text-[#6f3a52]";
+const textLink = "inline-block py-1 text-[#96506f] underline underline-offset-4 transition-colors hover:text-[#6f3a52]";
 const cardTitle = "mb-2 mt-4 font-display text-xl font-medium leading-tight text-[#4a3440]";
 const cardMeta = "text-xs uppercase tracking-[0.1em] text-[#7b6670]";
 

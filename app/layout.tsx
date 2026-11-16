@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <Link href="/" className="font-display text-[1.35rem] font-medium tracking-[-0.01em] text-[#4a3440]">
             {site.brandMark}
           </Link>
-          <nav aria-label="Main" className="flex flex-wrap items-center justify-center text-[0.8rem] uppercase tracking-[0.1em] md:justify-end">
+          <nav aria-label="Main" className="flex flex-wrap items-center justify-center text-[0.75rem] uppercase tracking-[0.06em] md:justify-end md:text-[0.8rem] md:tracking-[0.1em]">
             <NavLinks items={navItems} />
           </nav>
         </header>

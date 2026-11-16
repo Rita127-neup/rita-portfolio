@@ -18,7 +18,7 @@ export function NavLinks({ items }: { items: NavItem[] }) {
             key={`${item.href}-${item.label}`}
             href={item.href}
             aria-current={active ? "page" : undefined}
-            className={`whitespace-nowrap px-2 py-1 transition-colors hover:text-[#6f3a52] ${
+            className={`whitespace-nowrap px-1.5 py-1 transition-colors hover:text-[#6f3a52] md:px-2 ${
               active ? "text-[#6f3a52] underline decoration-[#96506f]/40 underline-offset-[6px]" : "text-[#96506f]"
             }`}
           >

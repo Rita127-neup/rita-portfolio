@@ -38,7 +38,7 @@ export function ProfileCard({
             height={550}
             unoptimized
             priority
-            className="aspect-[4/5] w-full scale-[1.08] object-cover object-[50%_30%]"
+            className="aspect-[4/5] w-full origin-[50%_75%] scale-[1.3] object-cover object-[50%_50%]"
           />
         ) : (
           <div className="flex aspect-[4/5] items-center justify-center font-display text-3xl text-[#96506f]">{initials}</div>
@@ -56,7 +56,7 @@ export function ProfileCard({
               href={link.url}
               target="_blank"
               rel="noreferrer"
-              className="text-[#96506f] underline-offset-4 transition-colors hover:text-[#6f3a52] hover:underline"
+              className="py-1 text-[#96506f] underline-offset-4 transition-colors hover:text-[#6f3a52] hover:underline"
             >
               {link.label}
             </a>
@@ -69,7 +69,7 @@ export function ProfileCard({
           {birthday && <p>Born {formatBirthday(birthday)}</p>}
           {location && <p>{location}</p>}
           {email && (
-            <a href={`mailto:${email}`} className="inline-block break-all text-[#96506f] transition-colors hover:text-[#6f3a52]">
+            <a href={`mailto:${email}`} className="inline-block break-all py-1 text-[#96506f] transition-colors hover:text-[#6f3a52]">
               {email}
             </a>
           )}

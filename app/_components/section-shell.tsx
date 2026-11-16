@@ -31,7 +31,7 @@ export function SectionShell({
       <div>{children}</div>
       {href && (
         <p className="pt-4 text-right text-[0.8rem] uppercase tracking-[0.1em]">
-          <Link href={href} className="text-[#96506f] transition-opacity hover:opacity-70">
+          <Link href={href} className="inline-block py-1.5 text-[#96506f] transition-opacity hover:opacity-70">
             {linkLabel}
           </Link>
         </p>

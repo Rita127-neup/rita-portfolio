@@ -7,21 +7,22 @@ import { SectionShell } from "@/app/_components/section-shell";
 type Photo = { id: string; src: string; alt: string };
 
 /*
-  Sizes, tilts and drops, reused in order. Rows alternate between two and three
-  photos so the wall looks casually scattered, and because nothing is random the
-  server and the browser always render the same layout.
+  Widths, tilts and drops, reused in order. Each photo keeps its own shape (nothing
+  is cropped, so people at the edge of a group photo stay in the frame). Widths and
+  drops differ so the rows look casually scattered, and because nothing is random
+  the server and the browser always render the same layout.
 */
 const SCATTER = [
-  { size: "w-[54%] sm:w-[44%]", ratio: "aspect-[4/5]", tilt: "rotate-[-2.5deg]", drop: "mt-0" },
-  { size: "w-[38%] sm:w-[38%]", ratio: "aspect-square", tilt: "rotate-[3deg]", drop: "mt-8" },
-  { size: "w-[44%] sm:w-[28%]", ratio: "aspect-[5/4]", tilt: "rotate-[-1.5deg]", drop: "mt-3" },
-  { size: "w-[48%] sm:w-[30%]", ratio: "aspect-[4/5]", tilt: "rotate-[2deg]", drop: "mt-10" },
-  { size: "w-[40%] sm:w-[32%]", ratio: "aspect-square", tilt: "rotate-[-3deg]", drop: "mt-1" },
-  { size: "w-[50%] sm:w-[36%]", ratio: "aspect-[5/4]", tilt: "rotate-[1.5deg]", drop: "mt-6" },
-  { size: "w-[42%] sm:w-[46%]", ratio: "aspect-[4/5]", tilt: "rotate-[-2deg]", drop: "mt-12" },
-  { size: "w-[52%] sm:w-[30%]", ratio: "aspect-square", tilt: "rotate-[2.5deg]", drop: "mt-2" },
-  { size: "w-[36%] sm:w-[26%]", ratio: "aspect-[5/4]", tilt: "rotate-[-1deg]", drop: "mt-9" },
-  { size: "w-[46%] sm:w-[34%]", ratio: "aspect-[4/5]", tilt: "rotate-[1deg]", drop: "mt-4" },
+  { size: "w-[54%] sm:w-[44%]", tilt: "rotate-[-2.5deg]", drop: "mt-0" },
+  { size: "w-[38%] sm:w-[38%]", tilt: "rotate-[3deg]", drop: "mt-8" },
+  { size: "w-[44%] sm:w-[28%]", tilt: "rotate-[-1.5deg]", drop: "mt-3" },
+  { size: "w-[48%] sm:w-[30%]", tilt: "rotate-[2deg]", drop: "mt-10" },
+  { size: "w-[40%] sm:w-[32%]", tilt: "rotate-[-3deg]", drop: "mt-1" },
+  { size: "w-[50%] sm:w-[36%]", tilt: "rotate-[1.5deg]", drop: "mt-6" },
+  { size: "w-[42%] sm:w-[46%]", tilt: "rotate-[-2deg]", drop: "mt-12" },
+  { size: "w-[52%] sm:w-[30%]", tilt: "rotate-[2.5deg]", drop: "mt-2" },
+  { size: "w-[36%] sm:w-[26%]", tilt: "rotate-[-1deg]", drop: "mt-9" },
+  { size: "w-[46%] sm:w-[34%]", tilt: "rotate-[1deg]", drop: "mt-4" },
 ];
 
 export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
@@ -65,16 +66,15 @@ export function HomeGalleryWall({ photos }: { photos: Photo[] }) {
                   title={photo.alt || undefined}
                   className="block w-full cursor-zoom-in bg-white p-1.5 text-left shadow-[0_2px_10px_rgba(43,32,38,0.12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#96506f]"
                 >
-                  <span className={`relative block w-full overflow-hidden bg-[#e8e1e3] ${look.ratio}`}>
-                    <Image
-                      src={photo.src}
-                      alt={photo.alt}
-                      fill
-                      unoptimized
-                      sizes="(max-width: 640px) 50vw, 300px"
-                      className="object-cover"
-                    />
-                  </span>
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={1200}
+                    height={800}
+                    unoptimized
+                    sizes="(max-width: 640px) 50vw, 300px"
+                    className="block h-auto w-full bg-[#e8e1e3]"
+                  />
                 </button>
               </article>
             );
