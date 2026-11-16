@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { isUuid } from "@/lib/admin/form";
@@ -36,16 +37,19 @@ export async function setBlogEnabled(formData: FormData): Promise<void> {
   await requireAdmin();
   const enabled = formData.get("enabled") === "on";
   const supabase = await createClient();
-  await supabase.from("site_settings").update({ blog_enabled: enabled, updated_at: new Date().toISOString() }).eq("id", 1);
+  // updated_at is filled in by the database itself; the admin role may not write it.
+  const { data, error } = await supabase.from("site_settings").update({ blog_enabled: enabled }).eq("id", 1).select("id");
+  if (error || data?.length !== 1) redirect("/admin/blog?problem=1");
   refresh();
 }
 
 export async function createPost(formData: FormData): Promise<void> {
   await requireAdmin();
   const fields = readFields(formData);
-  if (!fields) return;
+  if (!fields) redirect("/admin/blog?problem=1");
   const supabase = await createClient();
-  await supabase.from("blog_posts").insert({ ...fields, is_published: false });
+  const { error } = await supabase.from("blog_posts").insert({ ...fields, is_published: false });
+  if (error) redirect(`/admin/blog?problem=${error.code === "23505" ? "address" : "1"}`);
   refresh();
 }
 
@@ -81,6 +85,7 @@ export async function deletePost(formData: FormData): Promise<void> {
   const id = String(formData.get("id") ?? "");
   if (!isUuid(id)) return;
   const supabase = await createClient();
-  await supabase.from("blog_posts").delete().eq("id", id);
+  const { error } = await supabase.from("blog_posts").delete().eq("id", id);
+  if (error) redirect("/admin/blog?problem=1");
   refresh();
 }

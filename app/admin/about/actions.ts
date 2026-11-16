@@ -37,11 +37,13 @@ export async function saveAbout(formData: FormData): Promise<{ error?: string }>
     return { error: "One of the boxes is too long. Shorten it and try again." };
 
   const supabase = await createClient();
-  const { error } = await supabase
+  // updated_at is filled in by the database itself; the admin role may not write it.
+  const { data: saved, error } = await supabase
     .from("site_settings")
-    .update({ about_paragraphs: paragraphs, languages, hobbies, updated_at: new Date().toISOString() })
-    .eq("id", 1);
-  if (error) return { error: "Could not save. Please try again." };
+    .update({ about_paragraphs: paragraphs, languages, hobbies })
+    .eq("id", 1)
+    .select("id");
+  if (error || saved?.length !== 1) return { error: "Could not save. Please try again." };
 
   const { data: section } = await supabase
     .from("page_sections")
@@ -108,11 +110,12 @@ export async function registerPronunciationAudio(path: string): Promise<{ error?
     return { error: "The recording could not be saved." };
   }
 
-  const { error } = await supabase
+  const { data: linked, error } = await supabase
     .from("site_settings")
-    .update({ pronunciation_audio_id: media.id, updated_at: new Date().toISOString() })
-    .eq("id", 1);
-  if (error) {
+    .update({ pronunciation_audio_id: media.id })
+    .eq("id", 1)
+    .select("id");
+  if (error || linked?.length !== 1) {
     await supabase.from("media_assets").delete().eq("id", media.id);
     await discardFiles(supabase, [path]);
     return { error: "The recording could not be linked." };
@@ -128,11 +131,12 @@ export async function removePronunciationAudio(): Promise<void> {
   const supabase = await createClient();
   const oldId = await currentAudio(supabase);
   if (!oldId) return;
-  const { error } = await supabase
+  const { data: cleared, error } = await supabase
     .from("site_settings")
-    .update({ pronunciation_audio_id: null, updated_at: new Date().toISOString() })
-    .eq("id", 1);
-  if (error) throw new Error("The recording could not be removed.");
+    .update({ pronunciation_audio_id: null })
+    .eq("id", 1)
+    .select("id");
+  if (error || cleared?.length !== 1) throw new Error("The recording could not be removed.");
   await discardAudio(supabase, oldId);
   refresh();
 }

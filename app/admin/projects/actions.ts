@@ -86,7 +86,8 @@ export async function removeProjectImage(formData: FormData): Promise<void> {
   const { data: old } = await supabase.from("projects").select("image_id").eq("id", id).single();
   if (!old?.image_id) return;
   const { data: media } = await supabase.from("media_assets").select("object_path").eq("id", old.image_id).maybeSingle();
-  await supabase.from("projects").update({ image_id: null, updated_at: new Date().toISOString() }).eq("id", id);
+  // updated_at is set by a database trigger; the admin role may not write it.
+  await supabase.from("projects").update({ image_id: null }).eq("id", id);
   await supabase.from("media_assets").delete().eq("id", old.image_id);
   if (media?.object_path) await discardFiles(supabase, [media.object_path]);
   revalidatePath("/", "layout");

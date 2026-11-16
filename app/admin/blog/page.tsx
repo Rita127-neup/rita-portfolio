@@ -8,8 +8,9 @@ export const dynamic = "force-dynamic";
 
 const input = "mt-2 w-full rounded-2xl border border-white/10 bg-[#07111f] px-4 py-3 text-white";
 
-export default async function AdminBlog() {
+export default async function AdminBlog({ searchParams }: { searchParams: Promise<{ problem?: string }> }) {
   await requireAdmin();
+  const { problem } = await searchParams;
   const supabase = await createClient();
   const [{ data: settings }, { data: posts, error }] = await Promise.all([
     supabase.from("site_settings").select("blog_enabled").eq("id", 1).single(),
@@ -29,6 +30,14 @@ export default async function AdminBlog() {
         backHref="/admin"
         backLabel="Back to dashboard"
       />
+
+      {problem && (
+        <p role="alert" className="mb-5 rounded-2xl border border-red-400/30 bg-red-400/10 px-5 py-4 text-sm text-red-200">
+          {problem === "address"
+            ? "Another post already uses that web address. Change the title a little and try again."
+            : "That did not save. Please try again."}
+        </p>
+      )}
 
       <Panel>
         <div className="flex flex-wrap items-center justify-between gap-4">
