@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Commissioner, Fraunces } from "next/font/google";
-import { getAboutExtras, getProfileInfo, getSiteSettings } from "@/lib/content";
+import { getAboutExtras, getSiteSettings } from "@/lib/content";
 import { SiteFooter } from "@/app/_components/site-footer";
 import { SiteHeader } from "@/app/_components/site-header";
 import "./globals.css";
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const [site, extras, profile] = await Promise.all([getSiteSettings(), getAboutExtras(), getProfileInfo()]);
+  const [site, extras] = await Promise.all([getSiteSettings(), getAboutExtras()]);
 
   // About now lives on the home page, so the menu goes straight to the other pages.
   // The blog link appears only once the blog has been switched on in the admin.
@@ -35,7 +35,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
         {children}
 
-        <SiteFooter links={navItems} email={profile.email} location={profile.location} />
+        <SiteFooter />
       </body>
     </html>
   );
