@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { SproutMark } from "@/app/_components/sprout-mark";
 
 /**
  * The small print at the bottom of every page: one quiet line with the name in the display serif,
- * a little flower and "Made in Nepal" in small green capitals. The owner login sits on the right.
+ * a little flower and "Made in Nepal" in small green capitals. On the right a tiny sprout is the
+ * way into the owner login; it has no visible words, only a hover tip and a label for screen readers.
  */
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -19,9 +21,11 @@ export function SiteFooter() {
         </p>
         <Link
           href="/admin/login"
-          className="rounded-full px-2 py-1 text-[0.8rem] text-[#7b6670] transition-colors hover:text-[#3f6450] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6f8f78]"
+          aria-label="Owner login"
+          title="Owner login"
+          className="rounded-full p-1 transition-transform duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6f8f78] motion-safe:hover:-rotate-6 motion-safe:hover:scale-110"
         >
-          Owner login
+          <SproutMark className="h-8 w-8" />
         </Link>
       </div>
     </footer>
